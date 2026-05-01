@@ -1,0 +1,241 @@
+{
+  "main": {
+    "id": "d964d99fc1f295f6",
+    "type": "split",
+    "children": [
+      {
+        "id": "c9c777c7bcf42822",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b5457d6bd680e3b6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Shopify How to get app API access token.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Shopify How to get app API access token"
+            }
+          }
+        ]
+      },
+      {
+        "id": "80dbcaeee710b1fe",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b0a3b114f94ac07c",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9c99d53eea812e54",
+    "type": "split",
+    "children": [
+      {
+        "id": "eff2452037021124",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "15e363b003641fc2",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "edc9c2ff604b9688",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "828455662f8bc8c2",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 421.5
+  },
+  "right": {
+    "id": "e2b7d6cd4e917ff4",
+    "type": "split",
+    "children": [
+      {
+        "id": "5f5f034ee2ffc332",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "057a56a5f92070cc",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "amika/PRDs/AMIKA-11722966688-gwp-auto-add-product-trigger.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for AMIKA-11722966688-gwp-auto-add-product-trigger"
+            }
+          },
+          {
+            "id": "cfeff5e7c30410e7",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "amika/PRDs/AMIKA-11722966688-gwp-auto-add-product-trigger.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from AMIKA-11722966688-gwp-auto-add-product-trigger"
+            }
+          },
+          {
+            "id": "c89875fcb6dff085",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "ead43b53eae0f4c2",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "a78916653dfe39e8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "amika/PRDs/AMIKA-11722966688-gwp-auto-add-product-trigger.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of AMIKA-11722966688-gwp-auto-add-product-trigger"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "15e363b003641fc2",
+  "lastOpenFiles": [
+    "Global/claude-code-org-documentation-protocol.md",
+    "Global",
+    "Base Monday Ticket Template.md",
+    "README.md",
+    "Shopify Functions — JavaScript Optimization Guide.md",
+    "shopify_token_doc_review.md",
+    "HH/PRDs/cv-limit-free-gift Config Guide.md",
+    "Shopify How to get app API access token.md",
+    "[draft] Shopify How to get app API access token.md",
+    "SAK/searchspring-meeting-prep.md",
+    "SAK/PRDs/searchspring-ssr-options.pdf",
+    "SAK/PRDs/searchspring-meeting-prep.md",
+    "SAK/PRDs/sak-11829903383.md",
+    "HH/Sitewide 25% Discount.md",
+    "HH/scripts/site wide.md",
+    "HH/scripts/buy 2 get 1.md",
+    "session-context-engineer-communications.md",
+    "client-comms-engineer-guide.html",
+    "HH/PRDs/Migrate Sitewide 25% Discount.md",
+    "HH/PRDs/cv-limit-free-gift Implementation Plan.md",
+    "HH/PRDs/Migrate Free Gift Quantity Limit.md",
+    "Welcome.md",
+    "baubar/cart-transform-migration-handoff.md",
+    "SAK/AIR/sak-11829903383-air-review.md",
+    "Shopify Remix App - Migrate to Postgres DB.md",
+    "SAK/AIR",
+    "SAK/PRDs/searchspring-ssr-options.md",
+    "SAK/PRDs",
+    "SAK",
+    "HH/PRDs/Migrate Buy 2 Get 1 Free Discount.md",
+    "amika/PRDs/AMIKA-11722966688-gwp-auto-add-product-trigger.md",
+    "HH/scripts",
+    "HH/PRDs",
+    "HH",
+    "baubar/PRDs/BAUBAR-11559788034-automated-tests.md",
+    "baubar/PRDs"
+  ]
+}

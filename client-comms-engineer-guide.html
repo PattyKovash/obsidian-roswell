@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Communication — Roswell Engineer Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f7f3;
+  --bg2: #eeecea;
+  --bg3: #e4e1dc;
+  --ink: #1c1b18;
+  --ink2: #5a5850;
+  --ink3: #9a9890;
+  --line: #d8d5cf;
+  --accent: #bf4e2a;
+  --accent-bg: #f7ede8;
+  --green: #2d6644;
+  --green-bg: #e8f2ec;
+  --blue: #1e4f80;
+  --blue-bg: #e6eef7;
+  --amber: #7a5010;
+  --amber-bg: #faf0dc;
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'Syne', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+.topbar {
+  position: sticky; top: 0; z-index: 99;
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 2rem;
+}
+.topbar-brand {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #888;
+}
+.topbar-title {
+  font-size: 12px; color: #bbb; font-family: var(--mono);
+}
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 3rem;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 700px) { .hero { grid-template-columns: 1fr; } }
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  line-height: 1.1;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-desc {
+  font-size: 0.95rem; color: var(--ink2); line-height: 1.7; max-width: 500px;
+}
+.hero-toc {
+  background: var(--bg2);
+  border-radius: 4px;
+  padding: 1.5rem;
+  align-self: start;
+}
+.hero-toc-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink3); margin-bottom: 1rem;
+}
+.hero-toc ol { list-style: none; counter-reset: toc; display: flex; flex-direction: column; gap: 0.5rem; }
+.hero-toc li { counter-increment: toc; }
+.hero-toc a {
+  text-decoration: none; color: var(--ink2); font-size: 0.85rem;
+  display: flex; align-items: baseline; gap: 0.5rem; transition: color 0.15s;
+}
+.hero-toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--mono); font-size: 9px; color: var(--ink3); flex-shrink: 0;
+}
+.hero-toc a:hover { color: var(--accent); }
+
+/* BODY */
+.body { max-width: 980px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+/* SECTION */
+.section { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
+.section:last-child { border-bottom: none; }
+.sec-label {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem;
+}
+.sec-num {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--accent); background: var(--accent-bg);
+  padding: 3px 8px; border-radius: 2px;
+}
+.section h2 {
+  font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 400; color: var(--ink); line-height: 1.2;
+}
+.section p { color: var(--ink2); line-height: 1.7; margin-bottom: 1rem; max-width: 680px; }
+.section p:last-child { margin-bottom: 0; }
+.section h3 { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; }
+
+/* PHRASE TABLE — main pattern */
+.phrase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+}
+.phrase-col-head {
+  padding: 0.6rem 1rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.phrase-col-head.avoid { background: #f5ecea; color: var(--accent); }
+.phrase-col-head.better { background: var(--green-bg); color: var(--green); }
+.phrase-row { display: contents; }
+.phrase-cell {
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem; line-height: 1.55; color: var(--ink2);
+  background: var(--bg);
+}
+.phrase-cell.avoid { border-left: 2px solid #e8c0b5; }
+.phrase-cell.better { border-left: 2px solid #9ecfb5; }
+.phrase-cell strong { font-weight: 500; color: var(--ink); display: block; margin-bottom: 2px; }
+.phrase-cell small { font-size: 0.78rem; color: var(--ink3); font-family: var(--mono); }
+
+/* SCENARIO */
+.scenario { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin: 1.5rem 0; }
+.scenario-head {
+  background: var(--bg2); padding: 0.6rem 1.25rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink2); display: flex; justify-content: space-between; align-items: center;
+}
+.tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; }
+.tag.red { background: var(--accent-bg); color: var(--accent); }
+.tag.grn { background: var(--green-bg); color: var(--green); }
+.scenario-body { padding: 1.1rem 1.25rem; background: var(--bg); }
+.scenario-body p { font-size: 0.88rem; color: var(--ink2); margin-bottom: 0.4rem; max-width: 100%; }
+.scenario-body p:last-child { margin-bottom: 0; }
+.scenario-body strong { color: var(--ink); font-weight: 500; }
+
+/* CALLOUT */
+.callout {
+  display: flex; gap: 0.85rem; padding: 1rem 1.25rem;
+  border-radius: 4px; margin: 1.5rem 0; align-items: flex-start;
+}
+.callout.blue { background: var(--blue-bg); }
+.callout.amber { background: var(--amber-bg); }
+.callout.green { background: var(--green-bg); }
+.callout-tag {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+}
+.blue .callout-tag { background: #c5d8ef; color: var(--blue); }
+.amber .callout-tag { background: #f0d9a8; color: var(--amber); }
+.green .callout-tag { background: #b5d9c5; color: var(--green); }
+.callout p { font-size: 0.875rem; color: var(--ink2); margin: 0; max-width: 100%; line-height: 1.6; }
+
+/* TEMPLATE */
+.tpl { background: var(--ink); border-radius: 4px; overflow: hidden; margin: 1.5rem 0; }
+.tpl-head {
+  background: #2a2926; padding: 0.6rem 1.25rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #777;
+}
+.tpl-body {
+  padding: 1.25rem 1.5rem;
+  font-family: var(--mono); font-size: 0.8rem; line-height: 1.9; color: #bbb;
+  white-space: pre-wrap;
+}
+.tpl-body .k { color: #e07a5f; } /* key */
+.tpl-body .v { color: #8fc99a; } /* value hint */
+.tpl-body .ph { color: #d4a85a; } /* placeholder */
+
+/* QUICK LIST */
+.qlist { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin: 1rem 0 1.5rem; max-width: 680px; }
+.qlist li { font-size: 0.88rem; color: var(--ink2); padding-left: 1.2rem; position: relative; line-height: 1.55; }
+.qlist li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; top: 2px; }
+
+/* PULL */
+.pull {
+  margin: 2rem 0; padding: 1.25rem 1.75rem;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 0 4px 4px 0;
+}
+.pull p {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.1rem; line-height: 1.6; color: var(--ink); margin: 0; max-width: 100%;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--line); padding: 1.75rem 2rem;
+  text-align: center; font-family: var(--mono); font-size: 10px;
+  color: var(--ink3); letter-spacing: 0.08em;
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="topbar-brand">Roswell NYC · Operating Framework</span>
+  <span class="topbar-title">Engineer Field Guide · Client Comms · 2026</span>
+</header>
+
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow">Supplement to the AI-Native Engineer Playbook</div>
+    <h1>Client Communication<br>for <em>Technical People</em></h1>
+    <p class="hero-desc">You're the technical expert in the room. This guide covers how to communicate that expertise clearly on calls and in emails — especially with non-technical clients.</p>
+  </div>
+  <nav class="hero-toc">
+    <div class="hero-toc-label">Contents</div>
+    <ol>
+      <li><a href="#s01">Your role on a client call</a></li>
+      <li><a href="#s02">Translating for non-technical clients</a></li>
+      <li><a href="#s03">What to say / not say</a></li>
+      <li><a href="#s04">When you don't know</a></li>
+      <li><a href="#s05">Framing difficult topics</a></li>
+      <li><a href="#s06">Email best practices</a></li>
+      <li><a href="#s07">Gathering technical requirements</a></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="body">
+
+<!-- 01 -->
+<section class="section" id="s01">
+  <div class="sec-label">
+    <span class="sec-num">01</span>
+    <h2>Your role on a client call</h2>
+  </div>
+
+  <p>Most calls are led by the Merchant Partner. Your job is to be the technical expert — not to run the meeting, but to step in when a question needs a real answer, when something is technically infeasible, or when the client needs to understand a constraint before making a decision.</p>
+
+  <p>Three things to keep in mind before every call:</p>
+
+  <ul class="qlist">
+    <li><strong>You're there to inform, not to impress.</strong> Clients don't need to know how hard something was. They need to know if it's done, when it'll be done, and whether it does what they need.</li>
+    <li><strong>Short answers first, detail on request.</strong> Lead with the bottom line. If they want to go deeper, they'll ask.</li>
+    <li><strong>You always know more than the client about the code — and less about their business.</strong> Respect both.</li>
+  </ul>
+
+  <div class="callout blue">
+    <span class="callout-tag">If solo</span>
+    <p>If you're running a call without the MP, open with a brief framing of what you'll cover, confirm the client's priority for the session, and close by restating next steps and owners clearly. Structure prevents drift.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="section" id="s02">
+  <div class="sec-label">
+    <span class="sec-num">02</span>
+    <h2>Translating for non-technical clients</h2>
+  </div>
+
+  <p>Most Roswell clients are not developers. They run e-commerce businesses. They care about revenue, conversion, speed, and whether the thing works. When you speak in technical terms, you put the burden of translation on them — and they will often nod along rather than admit they don't follow. That's how misaligned expectations happen.</p>
+
+  <p>The rule: <strong>lead with business impact, follow with the technical detail only if they ask.</strong></p>
+
+  <div class="phrase-grid">
+    <div class="phrase-col-head avoid">Technical framing</div>
+    <div class="phrase-col-head better">Client framing</div>
+
+    <div class="phrase-cell avoid"><strong>"We refactored the cart to use the Storefront API."</strong><small>means nothing to them</small></div>
+    <div class="phrase-cell better"><strong>"We rewrote how the cart loads — it's faster and more reliable now, especially on mobile."</strong><small>what they actually care about</small></div>
+
+    <div class="phrase-cell avoid"><strong>"The ReCharge widget has a DOM conflict with the checkout extension."</strong><small>will cause confusion</small></div>
+    <div class="phrase-cell better"><strong>"There's a conflict between two tools in your checkout — we're resolving it before we ship."</strong><small>clear and not alarming</small></div>
+
+    <div class="phrase-cell avoid"><strong>"LCP regressed by 400ms after the script injection."</strong></div>
+    <div class="phrase-cell better"><strong>"The update slowed the page load slightly — we've already fixed it."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"We can't do that in Liquid without breaking the OS2 schema."</strong></div>
+    <div class="phrase-cell better"><strong>"Shopify doesn't support that in the theme layer — we'd need a different approach. Here's what does work."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"The metafield namespace is misconfigured."</strong></div>
+    <div class="phrase-cell better"><strong>"Some of your product data wasn't connected correctly — we fixed the link."</strong></div>
+  </div>
+
+  <p>You don't need to dummy anything down. You need to meet clients at the level of outcomes they actually care about. If they want the technical detail, they'll ask for it — and that's when you go deep.</p>
+
+  <div class="callout amber">
+    <span class="callout-tag">Useful habit</span>
+    <p>Before a call, for every technical item you might be asked about, practice finishing this sentence: <em>"From your end, what this means is…"</em> That's the version you lead with.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="section" id="s03">
+  <div class="sec-label">
+    <span class="sec-num">03</span>
+    <h2>What to say / not say</h2>
+  </div>
+
+  <p>Some phrases shut conversations down or erode client confidence. Others build it. The difference is usually specificity, tone, and whether you're centering the client's concern or your own process.</p>
+
+  <div class="phrase-grid">
+    <div class="phrase-col-head avoid">Don't say</div>
+    <div class="phrase-col-head better">Say instead</div>
+
+    <div class="phrase-cell avoid"><strong>"That's not possible."</strong><small>sounds like a dead end</small></div>
+    <div class="phrase-cell better"><strong>"Shopify doesn't support that directly — here's the closest thing that works and what the tradeoff is."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"That's easy / that's simple."</strong><small>raises expectations, often wrong</small></div>
+    <div class="phrase-cell better"><strong>"That's straightforward — I can have it in front of you by [date]."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"That's really complex."</strong><small>sounds like deflection</small></div>
+    <div class="phrase-cell better"><strong>"That one has a few moving parts — let me think it through and give you a proper estimate."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"I'll try."</strong><small>plants doubt</small></div>
+    <div class="phrase-cell better"><strong>"I'll have a clear answer for you by [time/date]."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"The previous developer did this wrong."</strong><small>unprofessional, unhelpful</small></div>
+    <div class="phrase-cell better"><strong>"The code here needs some cleanup before we build on it — we'll handle it."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"I don't know."</strong><small>okay alone — not alone</small></div>
+    <div class="phrase-cell better"><strong>"I want to look at that properly before I give you a confident answer — I'll follow up by [time]."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"We found a bug."</strong><small>alarms without context</small></div>
+    <div class="phrase-cell better"><strong>"We caught an issue before it reached customers and it's already fixed."</strong></div>
+
+    <div class="phrase-cell avoid"><strong>"It works on my end."</strong><small>shifts blame</small></div>
+    <div class="phrase-cell better"><strong>"I'm not seeing it reproduce here — can you walk me through what you're seeing? I want to make sure we're looking at the same thing."</strong></div>
+  </div>
+
+  <div class="pull">
+    <p>The goal isn't to spin things. It's to communicate clearly. Clients can handle technical constraints — what erodes trust is vagueness, deflection, and surprises they weren't warned about.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="section" id="s04">
+  <div class="sec-label">
+    <span class="sec-num">04</span>
+    <h2>When you don't know</h2>
+  </div>
+
+  <p>Not knowing something on a call is completely normal. The mistake is how people handle it: either they guess (and are wrong), or they go silent, or they apologize excessively. None of those build confidence.</p>
+
+  <p>The right move is to say you'll find out, give them a specific time when you will, and follow through. That is itself a demonstration of competence.</p>
+
+  <h3>Scripts for not knowing</h3>
+
+  <div class="scenario">
+    <div class="scenario-head">When a client asks a technical question you can't answer on the spot</div>
+  </div>
+  <div class="scenario-body" style="border: 1px solid var(--line); border-top: none; border-radius: 0 0 4px 4px; padding: 1rem 1.25rem; background: var(--bg);">
+    <p><strong>"Good question — I want to give you an accurate answer rather than guess. Let me check on that and get back to you [today / by end of week]. Is that timeline okay for you?"</strong></p>
+  </div>
+
+  <div class="scenario" style="margin-top: 1rem;">
+    <div class="scenario-head">When you're asked if something is possible and you genuinely don't know</div>
+  </div>
+  <div class="scenario-body" style="border: 1px solid var(--line); border-top: none; border-radius: 0 0 4px 4px; padding: 1rem 1.25rem; background: var(--bg);">
+    <p><strong>"I don't want to commit to that without understanding your setup better — can I dig into it and come back to you with a proper answer? I'd rather do that than give you a number that turns out to be wrong."</strong></p>
+  </div>
+
+  <div class="scenario" style="margin-top: 1rem;">
+    <div class="scenario-head">When a question is outside your area and the MP isn't on the call</div>
+  </div>
+  <div class="scenario-body" style="border: 1px solid var(--line); border-top: none; border-radius: 0 0 4px 4px; padding: 1rem 1.25rem; background: var(--bg);">
+    <p><strong>"That's a great question for [MP name] — it touches on the commercial side of the project. I'll make sure they follow up with you directly. On the technical piece, here's what I can tell you…"</strong></p>
+  </div>
+
+  <div class="callout green">
+    <span class="callout-tag">Always</span>
+    <p>Close every "I don't know" with a specific follow-up commitment: who will respond, and by when. Then follow through. Reliability on small promises builds the same trust as getting the answer right.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="section" id="s05">
+  <div class="sec-label">
+    <span class="sec-num">05</span>
+    <h2>Framing difficult topics</h2>
+  </div>
+
+  <p>Sometimes you have to deliver news the client won't like — a limitation, a scope expansion, a delay, or a tradeoff. How you frame it determines whether it damages the relationship or strengthens it.</p>
+
+  <h3>Delivering a constraint or platform limitation</h3>
+  <p>Don't just say what can't be done. Immediately follow with what can.</p>
+
+  <div class="scenario">
+    <div class="scenario-head">Platform limitation <span class="tag red">weak</span></div>
+    <div class="scenario-body">
+      <p><strong>"Unfortunately, Shopify doesn't allow that in the checkout. We can't do it."</strong></p>
+    </div>
+  </div>
+  <div class="scenario">
+    <div class="scenario-head">Platform limitation <span class="tag grn">better</span></div>
+    <div class="scenario-body">
+      <p><strong>"Shopify restricts what can be modified in the checkout directly — it's a platform-wide constraint, not specific to your store. The good news is there's a supported way to get close to the same result using [post-purchase flow / checkout extension / alternative]. Want me to walk through what that would look like?"</strong></p>
+    </div>
+  </div>
+
+  <h3>Delivering a scope expansion</h3>
+  <p>Frame it as information, not a negotiation. Give them the options clearly.</p>
+
+  <div class="scenario">
+    <div class="scenario-head">Scope expansion <span class="tag red">weak</span></div>
+    <div class="scenario-body">
+      <p><strong>"This is more work than we thought. It's going to take longer."</strong></p>
+    </div>
+  </div>
+  <div class="scenario">
+    <div class="scenario-head">Scope expansion <span class="tag grn">better</span></div>
+    <div class="scenario-body">
+      <p><strong>"When we got into the build, we found that [X] is connected to [Y] in a way that wasn't visible at scoping — getting this right means also addressing that. That adds roughly [estimate] to the timeline. I want to be upfront about that now rather than deliver it late. We can either include it, defer it to a future sprint, or I can show you a version that works without it."</strong></p>
+    </div>
+  </div>
+
+  <h3>Delivering a delay</h3>
+  <p>Early is always better than late. Never wait until the deadline to flag a slip.</p>
+
+  <div class="scenario">
+    <div class="scenario-head">Delay <span class="tag grn">example</span></div>
+    <div class="scenario-body">
+      <p><strong>"I want to flag early that [ticket] is running behind the original estimate — I found [specific issue] that added complexity. I'm expecting to have it ready by [new date] instead of [original date]. Nothing else in the sprint is affected."</strong></p>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <span class="callout-tag">Pattern</span>
+    <p>For any difficult topic, the structure is: <strong>what happened → why → what the options are.</strong> Don't arrive with just the problem. Arrive with at least one path forward.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="section" id="s06">
+  <div class="sec-label">
+    <span class="sec-num">06</span>
+    <h2>Email best practices</h2>
+  </div>
+
+  <p>Client emails are a written record. They set expectations, document decisions, and reflect on the agency. The standard for email is the same as for everything else: clear, specific, and action-oriented. Nothing vague, nothing buried, nothing that requires the client to read twice to understand what's being asked of them.</p>
+
+  <ul class="qlist">
+    <li><strong>One email, one purpose.</strong> Don't bundle an update, a question, and a decision request into the same message.</li>
+    <li><strong>State the ask in the first two sentences.</strong> If you need something from them, say so at the top — not after four paragraphs of context.</li>
+    <li><strong>Use plain language.</strong> If you wouldn't say the word out loud on a call, don't write it in an email.</li>
+    <li><strong>Specify next steps with owners and dates.</strong> "We'll be in touch" is not an action. "I'll send the updated timeline by Thursday" is.</li>
+    <li><strong>Keep it short.</strong> If it's longer than 150 words, ask yourself what you can cut.</li>
+  </ul>
+
+  <h3>Follow-up after a call</h3>
+
+  <div class="tpl">
+    <div class="tpl-head">Call follow-up — template</div>
+    <div class="tpl-body"><span class="k">Subject:</span> <span class="ph">[Merchant name]</span> — <span class="ph">[brief topic, e.g. "Sprint 12 recap"]</span>
+
+<span class="v">Hi [Name],</span>
+
+<span class="v">Thanks for the time today. Quick recap of what we covered:</span>
+
+<span class="k">What we decided:</span>
+<span class="v">— [Decision 1, one sentence]
+— [Decision 2, one sentence]</span>
+
+<span class="k">Next steps:</span>
+<span class="v">— [Action] — [Owner], by [Date]
+— [Action] — [Owner], by [Date]</span>
+
+<span class="k">Open item (if any):</span>
+<span class="v">— [What's pending, who owns the answer, by when]</span>
+
+<span class="v">Let me know if I missed anything.</span>
+
+<span class="v">[Your name]</span></div>
+  </div>
+
+  <h3>Flagging a technical issue by email</h3>
+
+  <div class="tpl">
+    <div class="tpl-head">Issue flag — template</div>
+    <div class="tpl-body"><span class="k">Subject:</span> <span class="ph">[Merchant name]</span> — heads up on <span class="ph">[brief description]</span>
+
+<span class="v">Hi [Name],</span>
+
+<span class="v">Flagging something we found during [build / testing / review].</span>
+
+<span class="k">What we found:</span>
+<span class="v">[One sentence. What the issue is, from the customer's perspective if relevant.]</span>
+
+<span class="k">Current status:</span>
+<span class="v">[Fixed and shipped / In progress / Needs your input before we proceed.]</span>
+
+<span class="k">What we need from you (if anything):</span>
+<span class="v">[Specific ask, or "Nothing — just keeping you informed."]</span>
+
+<span class="v">[Your name]</span></div>
+  </div>
+
+  <div class="callout blue">
+    <span class="callout-tag">Tone check</span>
+    <p>Before sending, read it as if you're the client receiving it. Does it tell them what they need to know? Is it clear what, if anything, they need to do? If you'd have to follow up to clarify, rewrite it first.</p>
+  </div>
+
+</section>
+
+<!-- 07 -->
+<section class="section" id="s07">
+  <div class="sec-label">
+    <span class="sec-num">07</span>
+    <h2>Gathering technical requirements</h2>
+  </div>
+
+  <p>The biggest source of rework isn't bad code — it's building the wrong thing. Clients often describe what they want in terms of a solution they've already imagined. Your job is to get underneath that to the actual problem, because the solution they're describing may not be the best one, or may not be feasible, or may reveal five other things that need to happen first.</p>
+
+  <p>This is a soft skill disguised as a technical one. You're not just collecting specs — you're figuring out why something matters to the business.</p>
+
+  <div class="pull">
+    <p>"A client asking for a 'buy one get one' feature might actually need to improve conversion on slow-moving inventory. Understanding that changes every decision you make about how to build it."</p>
+  </div>
+
+  <h3>Start with the why, not the what</h3>
+  <p>Before you dig into how something should work, understand why it needs to exist. This single habit surfaces more useful information than any technical checklist.</p>
+
+  <div class="phrase-grid">
+    <div class="phrase-col-head avoid">Jumping to the what</div>
+    <div class="phrase-col-head better">Starting with the why</div>
+
+    <div class="phrase-cell avoid"><strong>"So the button should be in the cart drawer — what color and size?"</strong><small>collecting specs before understanding the goal</small></div>
+    <div class="phrase-cell better"><strong>"Before we get into the details — what's the customer behavior you're trying to change with this?"</strong><small>reveals the actual goal</small></div>
+
+    <div class="phrase-cell avoid"><strong>"Got it — we'll add a pop-up after checkout."</strong><small>accepting the solution at face value</small></div>
+    <div class="phrase-cell better"><strong>"What's the outcome you're hoping the pop-up drives? That'll help me figure out the best place and way to implement it."</strong><small>tests whether a pop-up is actually the right answer</small></div>
+
+    <div class="phrase-cell avoid"><strong>"We can build a custom filter for that."</strong><small>jumping to implementation</small></div>
+    <div class="phrase-cell better"><strong>"Walk me through the customer journey — where are they when they need to filter, and what are they trying to find?"</strong><small>may reveal that a filter isn't the right solution at all</small></div>
+  </div>
+
+  <h3>Questions that surface the real requirement</h3>
+  <p>These work across almost any feature request. You don't need all of them — pick the ones most likely to reveal something the client hasn't told you yet.</p>
+
+  <div class="phrase-grid" style="grid-template-columns: 1fr 1.4fr;">
+    <div class="phrase-col-head avoid" style="background: var(--bg2); color: var(--ink2);">Question</div>
+    <div class="phrase-col-head better" style="background: var(--bg2); color: var(--ink2);">What it surfaces</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"What problem does this solve for your customer?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Whether the request is customer-driven or internal assumption. Often reveals the actual goal.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"What does success look like — how will you know this is working?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Forces a measurable outcome. Prevents "can you just make it better" specs.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"Has anything like this been tried before? What happened?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Reveals constraints, past failures, and context you'd otherwise discover mid-build.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"Who is the customer doing this — can you describe them?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Surfaces mobile vs desktop, guest vs logged-in, B2B vs DTC — before you've written a line.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"Is there an edge case or exception you're worried about?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Clients often know the tricky cases but don't think to mention them. This pulls them out.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"What's the consequence if this doesn't work correctly?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Tells you how critical it is. High consequence = you need more detail before starting, not less.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"Is there anything in your store today that does something similar?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">May reveal an existing pattern to build on, or a conflict you'll run into.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"Are there any tools or apps managing this today that we need to work around?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">The single best question for avoiding app conflicts before they become production incidents.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none;"><strong>"When does this need to be live — is there a specific date or event driving it?"</strong></div>
+    <div class="phrase-cell better" style="border-left: none;">Reveals urgency you might not have known, and whether the timeline is negotiable or fixed.</div>
+  </div>
+
+  <h3>Strategies for requirements conversations</h3>
+
+  <ul class="qlist">
+    <li><strong>Reflect back what you heard before moving on.</strong> "So if I'm understanding correctly, the goal is [X] — is that right?" This catches misalignment early and signals to the client that you're listening, not just collecting tasks.</li>
+    <li><strong>Ask for an example of the behavior they want.</strong> "Can you walk me through what a customer would do, step by step?" Abstract requests become concrete fast when someone has to narrate the flow.</li>
+    <li><strong>Separate the must-haves from the nice-to-haves explicitly.</strong> "If we could only do one thing here, what would it be?" Clients often present a wish list as a requirements list. This forces prioritization.</li>
+    <li><strong>Name your assumptions out loud.</strong> "I'm going to assume this applies to logged-in customers only — is that right?" Stated assumptions get corrected. Unstated ones become bugs.</li>
+    <li><strong>Don't accept "like Amazon does it" as a spec.</strong> Ask them to be specific about what part of the Amazon experience they're describing — clients often have a detail in mind that doesn't match the feature they're referencing.</li>
+    <li><strong>If a request is vague, ask for the failure case.</strong> "What would a bad version of this look like?" is sometimes easier to answer than "what do you want?" and gives you the same information.</li>
+    <li><strong>End every requirements conversation with a written summary.</strong> Send it before you start building. It takes 5 minutes and prevents days of rework.</li>
+  </ul>
+
+  <h3>Recognizing when you don't have enough</h3>
+  <p>You have enough information to start when you can answer all four of these:</p>
+
+  <div class="phrase-grid" style="grid-template-columns: 48px 1fr;">
+    <div class="phrase-col-head avoid" style="background: var(--bg2); color: var(--ink3); text-align: center;">#</div>
+    <div class="phrase-col-head better" style="background: var(--bg2); color: var(--ink2);">You can clearly state...</div>
+
+    <div class="phrase-cell avoid" style="border-left: none; text-align: center; font-family: var(--mono); font-size: 0.95rem; color: var(--ink3);">1</div>
+    <div class="phrase-cell better" style="border-left: none;">Why the client needs this — the business or customer problem it solves.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none; text-align: center; font-family: var(--mono); font-size: 0.95rem; color: var(--ink3);">2</div>
+    <div class="phrase-cell better" style="border-left: none;">Who the end user is and what they're doing when they encounter this feature.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none; text-align: center; font-family: var(--mono); font-size: 0.95rem; color: var(--ink3);">3</div>
+    <div class="phrase-cell better" style="border-left: none;">What "working correctly" looks like — at least one concrete success scenario.</div>
+
+    <div class="phrase-cell avoid" style="border-left: none; text-align: center; font-family: var(--mono); font-size: 0.95rem; color: var(--ink3);">4</div>
+    <div class="phrase-cell better" style="border-left: none;">What constraints exist — apps, platform limits, performance expectations, hard deadlines.</div>
+  </div>
+
+  <p style="margin-top: 1rem;">If you can't answer one of these, that's the gap to close before you open an AI session — not after.</p>
+
+  <div class="callout green">
+    <span class="callout-tag">Remember</span>
+    <p>A client describing a solution is not giving you requirements — they're giving you a starting point. Your job is to understand the problem well enough that if their proposed solution turns out to be wrong, you can still deliver something that works.</p>
+  </div>
+
+</section>
+
+</div>
+
+<footer>
+  Roswell NYC · Engineer Field Guide · Client Communications · 2026
+</footer>
+
+</body>
+</html>
