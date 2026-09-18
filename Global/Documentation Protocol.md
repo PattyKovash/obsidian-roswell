@@ -1,0 +1,185 @@
+# Documentation Protocol
+
+This file governs how documentation is maintained across Roswell merchant engagements. It applies to every ticket regardless of scope.
+
+> **Revision note (2026-07-07):** This file was originally written as a standalone synthesis before the merchant-vault model was fully live. It has been reconciled against the actual current framework (`roswell-operating-framework`, `roswell-vaults`, `roswell-agency`) — several mechanics below (scoped `.claude/context/` files, a named "Session Start Protocol," a fixed "two sprints" cadence) did not exist as described and have been corrected or removed. See **Revision History** at the bottom for what changed and why.
+
+---
+
+## The Core Principle
+
+Documentation is infrastructure, not debt. The codebase and the merchant vault together must always be in a state where a replacement engineer or a fresh AI agent session could be productive within a day — no knowledge transfer required.
+
+Every constraint discovered, every "do not touch" zone identified, every non-obvious architectural decision made during a ticket must be recorded before the PR is raised.
+
+---
+
+## Two Places Documentation Lives — and They're Not the Same Thing
+
+1. **The code repo** — canonical for source code, architecture/ADR-level reasoning, and this repo's own `CLAUDE.md`. Code comments and `CLAUDE.md`'s constraint sections (e.g. "Gotchas & Non-Obvious Decisions") live here and are authoritative.
+2. **The merchant vault** (`roswell-studios/roswell-vaults`, cloned locally, path `vaults/{merchant-slug}/`) — canonical for the Merchant Context Document (MCD), the decisions log, and the do-not-touch list. Also holds a **mirrored, distilled summary** of code-repo architecture knowledge, so a non-technical PM or an AI session working vault-side doesn't need to open the code repo to know the constraint exists.
+
+**The vault is not the same as the merchant's Google Drive brand folder.** Drive holds full source documents in their native format (contracts as PDF, meeting decks as PPTX, financial sheets as XLSX, call transcripts). The vault holds condensed markdown *distillations* of that material. This Drive/Vault split governs business and commercial artifacts — it does not apply to engineering/architecture context, which has no Drive-native source and is authored directly into the vault (see `04-engineering/tech-context.md`, `04-engineering/patterns/*.md`, and the Technical section of `01-mcd/do-not-touch.md` in any live vault for examples).
+
+A canonical-vs-mirrored table, adapted from `roswell-agency/patterns/merchant-repo-template/CLAUDE.md`:
+
+| Artifact | Canonical in code repo | Mirrored to vault |
+|---|---|---|
+| Source code | Yes | No |
+| Architecture / constraint reasoning | Yes | Yes (distilled) |
+| This repo's `CLAUDE.md` | Yes | Referenced from vault |
+| Merchant Context Document (MCD) | No | Yes |
+| Decisions log | No | Yes |
+| Design tokens | No | Yes (`04-engineering/mirrored/`) |
+
+---
+
+## Why Files Stay Small — the Context Budget Principle
+
+Every doc in this system — `CLAUDE.md`, `do-not-touch.md`, `decisions.md`, a pattern doc — gets loaded into a finite AI context window. A single file that tries to hold everything (every mechanism, every integration, every do-not-touch reason, written out in full) eventually becomes too large to load economically, and worse, forces every session to pay the token cost of content that has nothing to do with its ticket.
+
+This is the real reason the model is *many small, topic-scoped files* rather than one comprehensive file:
+
+- `CLAUDE.md` stays short — technical-only, always loaded, no full mechanism writeups living inside it.
+- `04-engineering/patterns/{topic}.md` — one file per reusable pattern or mechanism, loaded only when a session is actually touching that area.
+- `01-mcd/do-not-touch.md` stays a list of short bullets with pointers to the fuller doc, never the full explanation inline (see rule under **What to Update and When** below).
+
+Apply this judgment anywhere a doc is trending toward "explains everything about everything": split it by topic, leave a one-line pointer where the old content used to live, and make sure the split-out file is discoverable (indexed from `CLAUDE.md`, `do-not-touch.md`, or the vault's own `repos.md`/`04-engineering/CLAUDE.md` as appropriate). If a single pattern doc itself grows too large to be one economical load, split it further by sub-topic rather than letting it become a de facto whole-vault dump — this can happen for any merchant with enough surface area in one area (a merchant with a complex checkout, a merchant with a large design system, a merchant leaning on many third-party apps — the trigger is size and blast radius, not any one specific kind of content).
+
+This is also why the old per-repo `.claude/context/{area}.md` scheme (see the callout at the top of this file) got the instinct right — no one wants a 1,200-line `CLAUDE.md` — but the wrong container: it re-invented per-topic granularity inside the code repo instead of using the vault's `04-engineering/patterns/` folder, which already exists for exactly this purpose and is visible to non-technical/vault-side sessions too.
+
+---
+
+## Writing Discipline — What Belongs in a Note
+
+Every entry written under this protocol — a `CLAUDE.md` line, a `do-not-touch.md` bullet, a `decisions.md` entry, a pattern doc — is for a future session, not a record of the current one. Before writing anything, check it against all of these:
+
+- **Not verbose.** Write only what a future session needs to act correctly. A short, precise sentence beats a paragraph that restates context the reader can get from the code or the diff.
+  - **The test isn't "is this in the code" — it's decision-bearing vs. bookkeeping.** A blanket "never repeat what the code shows" rule is wrong: `01-mcd/do-not-touch.md` and the MCD exist specifically to restate constraints in plain language for readers who won't open the code, and that's not redundant, it's the point. The actual distinction: **decision-bearing** (keep, even if specific) — a constraint, a value, a threshold, a reason; anything that *is* the content of the decision or that a non-code reader genuinely needs. `restrictedStates: [PR, AE, AA, AP]` is decision-bearing — that list of codes IS the decision. "`runFunction` fails loading `dist/index.wasm`, use `execSync` instead" is decision-bearing — it's non-obvious tooling behavior nobody would guess. **Bookkeeping** (omit) — an artifact of doing the work that carries no interpretive meaning on its own: fixture names, exact test counts, line numbers, which files got touched. None of that helps someone understand what to do or why; it's just an inventory of the session, and it goes stale the moment the code changes.
+- **Not a play-by-play.** Don't log that work happened, what was tried, or the back-and-forth that led somewhere — only log the *destination*: a decision made, a constraint discovered, a pattern worth reusing. Most of what happens in a session is not documentation-worthy; the bar is "does this change what a future agent should do," not "did this happen."
+- **No editorializing.** State the fact, the decision, or the reason — not commentary about the mistake that preceded it, how obvious the fix was, or narration of the correction process. That belongs in the conversation with the person who asked for the change, not in the file.
+- **No fabrication.** Never write a claim — a file path, "this is enforced by X," "this is standard across the agency," a fact about another repo or vault — without having actually verified it. If you haven't checked, don't state it as settled.
+- **No inference presented as fact.** A guess, a pattern extrapolated from limited evidence, or an assumption must either be verified before it's written down or explicitly flagged as unconfirmed. Never write speculation in the same confident, declarative voice used for verified fact.
+
+These rules apply to every kind of note this protocol produces — `CLAUDE.md` entries, do-not-touch bullets, decisions-log entries, and pattern docs alike.
+
+---
+
+## What to Update and When
+
+### This repo's `CLAUDE.md` — update after every ticket if any of the following are true
+
+- A new constraint was discovered that AI would violate without knowing it, and it's purely a code-level implementation detail — no business/brand reasoning attached, nobody outside engineering needs it
+- The tech stack changed (new dependency, deprecated pattern, changed API version)
+- A new theme/section setting was added that a future engineer needs to know exists
+
+**A newly discovered "do not touch" zone is *not* a `CLAUDE.md`-first case.** It's canonical in the vault's `01-mcd/do-not-touch.md` (see the table below) — that's where a non-technical PM or a vault-side AI session will see it, and it's the single source of truth for the reason. Add a short local pointer in `CLAUDE.md` only if it's directly useful for engineers working day-to-day in this specific repo; don't restate the full reason in both places — see **Why Files Stay Small** above.
+
+**Merge, don't overwrite.** If `CLAUDE.md` already has substantive repo-specific content, add to it — don't replace wholesale. (Only a `CLAUDE.md` under ~30 lines that's pure template placeholder should be overwritten outright.) Source: `roswell-agency/methodology/merging-existing-claude-md.md`.
+
+There is no fixed "N sprints without a change" trip-wire for this repo's `CLAUDE.md` specifically — see **Documentation-Discipline Signal** below for the actual, scored version of that idea.
+
+### Merchant vault — update when the ticket touches merchant-facing constraints, decisions, or reusable patterns
+
+Documentation lives closest to the kind of thing it is, not to an arbitrary code path:
+
+| Kind of thing | Where it goes |
+|---|---|
+| A new non-negotiable constraint ("don't do X") | `vaults/{merchant}/01-mcd/do-not-touch.md` (Brand-level / Technical / Commercial / Editorial sections) |
+| A decision made with real alternatives considered | `vaults/{merchant}/02-decisions/decisions.md` — latest first, dated, with Context / Options considered / Decision / Reasoning / Recorded by |
+| A reusable technical pattern or a deeper mechanism worth its own writeup | `vaults/{merchant}/04-engineering/patterns/{topic}.md` |
+| Anything cross-engagement (useful beyond this one merchant) | Promote to the agency-wide library: `roswell-agency/patterns/` (or `anti-patterns/`, `component-archetypes/`) |
+
+There is no per-component or per-extension scoped file convention (e.g. no `.claude/context/extensions/{name}.md`). The real granularity is **per-merchant**: one `do-not-touch.md`, one `decisions.md`, a `patterns/` folder — not one file per code area.
+
+**Touching something already on the do-not-touch list requires explicit sign-off, not silent compliance or silent override.** If an agent has a legitimate reason to change something flagged in `01-mcd/do-not-touch.md`, it must stop, state the reasoning, and get the engineer's explicit confirmation before proceeding — either to make the change or to continue honoring the constraint as-is. This belongs in every merchant `CLAUDE.md`'s "When making changes" workflow (see the templates).
+
+### Code comments — write for two audiences
+
+Comments serve human engineers and future AI sessions simultaneously. A comment that explains *why* a decision was made prevents a human from second-guessing it and prevents an AI from optimizing it away.
+
+**Comment when:**
+- A pattern deviates from what AI would produce by default
+- A known-safe approach was chosen over a more obvious one due to a conflict or constraint
+- An integration has a non-obvious failure mode already encountered
+
+**Format** (a locally-adopted convention at Roswell, not something mandated by the framework docs — but a good one, kept from the original version of this note):
+```
+// DO NOT [alternative approach].
+// [Specific reason: app conflict, platform constraint, or known failure mode].
+// Validated [date]. See [vault pattern doc or CLAUDE.md section] for full context.
+```
+
+Do not comment to describe what the code does. Comment only to explain why it does it this way instead of the obvious alternative.
+
+---
+
+## At the Start of Every Ticket
+
+There is no framework-wide, named "Session Start Protocol." What actually happens:
+- **Code-repo work:** the engineer/AI reads this repo's root `CLAUDE.md`.
+- **Vault-facing work** (client calls, MCD updates, cross-merchant PM work): read the vault's `04-engineering/CLAUDE.md` and `01-mcd/mcd.md`.
+- Some vaults have hand-rolled their own **"Session Start Checklist"** inside their vault-side `CLAUDE.md` (e.g. checking upcoming calls, the do-not-touch list, and recent call history before client-facing work) — this is a good pattern worth adopting per-merchant, but it's written per-vault, not enforced by a global mechanism. Check whether this merchant's vault already has one before writing a new one.
+
+---
+
+## At the End of Every Ticket
+
+Before raising a PR, run this documentation check:
+
+| Question | Action if yes |
+|---|---|
+| Did I discover a new constraint the next engineer needs to know? | Add to this repo's `CLAUDE.md` and/or the vault's `01-mcd/do-not-touch.md` |
+| Did I write code that deviates from documented patterns? | Add an inline comment explaining the one-off, or update/create a vault pattern doc |
+| Did I find a new "do not touch" zone? | Add it to `01-mcd/do-not-touch.md` with the reason |
+| Did I make a decision with real alternatives on the table? | Add a dated entry to `02-decisions/decisions.md` |
+| Are there non-obvious decisions in my diff with no comments? | Add comments before the PR is raised |
+
+---
+
+## Per-Ticket Documentation (for new features)
+
+For any ticket that adds a meaningful new capability, create or update:
+1. A code-level record (comment and/or `CLAUDE.md` entry) — this is canonical.
+2. A mirrored vault entry (do-not-touch bullet, decisions-log entry, and/or a `04-engineering/patterns/` doc) — this is what a non-technical PM or vault-side AI session sees.
+
+Each should describe: what was built, why it exists, how it works, key files involved, and any decisions/tradeoffs. This is not a changelog — it is a forward-looking constraint record for the next agent or engineer who touches this area.
+
+---
+
+## Documentation-Discipline Signal
+
+There is no fixed "two sprints with no update" rule. The real, scored version of this idea lives in `roswell-operating-framework/the-edge-implementation-plan.md` §13.1 ("Axis 2 — Vault & documentation discipline"), a per-pod composite of:
+- MCD freshness (updated within the last 60 days)
+- Decisions-log density (≥1 entry per sprint)
+- AI-touch-note coverage (`07-audit/ai-touch-notes/`)
+- Design-system drift health (14-day window)
+- Pattern-library contributions
+- Quarterly Judgment Audit completeness
+
+Treat a long gap on any one of these as the actual erosion signal, not a single repo's `CLAUDE.md`.
+
+---
+
+## How the Vault Actually Gets Populated
+
+As of Jul 2026, `roswell-vaults` (the GitHub repo) is fed by an automated ingestion pipeline that opens PRs from: Google Drive brand folders, merchant Slack channels, git repo activity (each repo's PRs are summarized and round-tripped back), email (CC `theedge@roswellstudios.com`), Monday.com issues (interim, until full Edge cutover), and any existing custom-curated vaults. Each PR requires approval from the pod assigned to that merchant before merging. Engineers can also edit the vault directly (clone it, work on a branch, open a PR) — which is the mechanism this protocol assumes for engineer-authored technical content (do-not-touch bullets, decisions, patterns).
+
+---
+
+## Failure Signals
+
+- An AI session produces code that touches a known "do not touch" zone — because that zone was not in `01-mcd/do-not-touch.md` or this repo's `CLAUDE.md`
+- A new engineer asks a question already answered by a previous decision — because that decision was not logged in `02-decisions/decisions.md` or commented in code
+- A PR introduces a pattern that deviates from documented conventions without explanation
+- `CLAUDE.md` and the vault's mirrored summary of the same constraint disagree (drift between canonical and mirrored copies)
+
+---
+
+## Revision History
+
+- **2026-08-28** — Added **Writing Discipline — What Belongs in a Note**: no verbosity, no session play-by-play, no editorializing, no fabricated claims, no inference presented as fact. Found missing while reviewing `SocialThreads_THREADS`'s `CLAUDE.md`, where an unverified claim ("merchant-facing distillation") had been copy-pasted across three merchant repos with no one having checked it against the actual framework.
+- **2026-07-23** — Clarified **"Not verbose"** under Writing Discipline with the decision-bearing vs. bookkeeping test. An initial framing ("include a detail only if it's slower to verify from the code") was the wrong test — it's not about retrieval speed, it's about whether a detail carries decision meaning (a constraint, a value, a reason) versus being a stale-prone inventory of the work session (fixture names, exact counts). Also rejected a stricter "never repeat what the code shows" framing, since `01-mcd/do-not-touch.md` and the MCD exist to restate constraints for readers who won't open the code.
+- **2026-07-20** — Fixed a self-contradiction in **What to Update and When**: the `CLAUDE.md` update-trigger list included "a new 'do not touch' zone was found," which conflicts with the "Kind of thing → Where it goes" table and the end-of-ticket checklist a few lines later, both of which correctly route do-not-touch discoveries to the vault's `01-mcd/do-not-touch.md` as canonical. Found while migrating `Elie_Tahari_TAHARI_2026`'s `CLAUDE.md` — the contradiction produced a `CLAUDE.md` "When making changes" step that told engineers to record do-not-touch zones locally with no vault routing at all. Now the `CLAUDE.md` trigger list only covers pure code-level implementation detail; do-not-touch zones are called out as vault-first, `CLAUDE.md` getting at most a short pointer.
+- **2026-07-10** — Added **Why Files Stay Small — the Context Budget Principle**, during the-sak-vite's migration to this protocol. The previous version described the per-topic-file mechanic (patterns/, do-not-touch bullets-with-pointers) without ever stating the underlying reason (finite AI context windows), which made it easy to mistake the old per-repo `.claude/context/{area}.md` scheme as a reasonable alternative implementation of the same idea rather than the wrong container for it.
+- **2026-07-07** — Reconciled against `roswell-operating-framework`, `roswell-agency`, and `roswell-vaults` after discovering this note's mechanics didn't match the live framework. Changes: replaced `.claude/context/{area}.md` scoped files with the real per-merchant vault model (`01-mcd/do-not-touch.md`, `02-decisions/decisions.md`, `04-engineering/patterns/`); removed the invented "Session Start Protocol" and "two sprints" cadence rule; added the CLAUDE.md merge-not-overwrite rule (previously missing entirely); added the Drive-vs-Vault distinction; added the canonical-vs-mirrored table.
