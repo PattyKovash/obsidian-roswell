@@ -28,7 +28,7 @@ authored: 2026-10-28
 |  **#** |  **Item** |  **Notes** |  **Dev** |  **QA** |
 | --- | --- | --- | --- | --- |
 |  1 |  A signed-out shopper sees the header account icon (tablet and desktop) as the HMG person glyph with the orange "!" badge over the top-right of the head. |   |  ✅ |   |
-|  2 |  A signed-in customer sees the header account icon as the same HMG person glyph with no badge. |   |   |   |
+|  2 |  A signed-in customer sees the header account icon as the same HMG person glyph with no badge. |   |  ✅ |   |
 |  3 |  The glyph's stroke weight and size match the header search and cart icons, and the glyph sits in the same position whether or not the badge shows. |   |  ✅ |   |
 |  4 |  The glyph uses the header text color; the badge is `#D54300` (set via a CSS variable) with a white "!". |   |  ✅ |   |
 |  5 |  Account link destinations and aria-labels are unchanged ("Login" signed out, "Account" signed in). |   |  ✅ |   |
