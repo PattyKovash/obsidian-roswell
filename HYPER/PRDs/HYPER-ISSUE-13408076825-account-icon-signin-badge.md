@@ -13,14 +13,14 @@ authored: 2026-10-28
 
 - Design assets from HMG: `Icon_CustomerHub-LoggedOut.svg` (person glyph + orange `#D54300` circle with white "!" over the top-right of the head) and `Icon_CustomerHub-LoggedIn.svg` (same glyph, no badge). Both 100×100 viewBox. The glyph replaces the current Focal person icon in both states.
 - Goodr reference (reviewed 2026-10-28): 21px person icon plus a separate 18px badge element absolutely positioned over the top-right of the head (`top: -8px; right: -5px`). Their icon links to a hub drawer (`#k-hub`); HMG's links are unchanged.
-- Surface: header account icon, which shows on tablet and desktop (≥741px). On phones the header has no account icon (`hidden-phone`).
+- Surface: header account icon, which shows on tablet and desktop (≥741px). On phones the header has no account icon (`hidden-phone`), and the mobile drawer has no account icon either: the account link there is a text item in the mobile navigation menu.
 - Badge color `#D54300` matches the theme's `primary_button_background`, but is hard-coded via a CSS variable so a button restyle doesn't change it.
 - No new design needed beyond the supplied SVGs.
 
 ## Constraints / Scope:
 
 - In scope: header account icon at the breakpoints where it shows today (tablet, desktop).
-- Out of scope: mobile menu drawer account link (pending client confirmation — see Clarifying Questions); adding an account icon to the phone header; the text-link header variant ("show icons" off), which has no icon.
+- Out of scope: mobile drawer account link (pending client direction — see Clarifying Questions); adding an account icon to the phone header; the text-link header variant ("show icons" off), which has no icon.
 - Badge state is rendered server-side from `customer`; no JavaScript.
 
 ## Objective/Acceptance Criteria:
@@ -40,7 +40,7 @@ File paths, line numbers, and code below reflect a review at authoring time — 
 
 - Icon convention: `snippets/icon.liquid` is a `case` on `icon`, called as `{% render 'icon' with 'name', width:, height:, class: %}`. Each case defaults `width`/`height`, uses `{{ icon_class }}`, `currentColor`, and `settings.icon_stroke_width`. The new icon follows this, plus a `badge` param.
 - Header account link: `sections/header.liquid` ~L285–293, inside `.header__icon-list`, `hidden-phone`. Previously rendered `'header-customer'`.
-- `'header-customer'` stays as-is; it's still used by `snippets/mobile-menu.liquid` ~L154.
+- `'header-customer'` stays as-is. Its only other use, the drawer footer account link in `snippets/mobile-menu.liquid` ~L147–157, is commented out ("assuming account will be a mobile nav item").
 - Glyph geometry: the design glyph (circle `cx 40.58 cy 46.75 r 13.47` + shoulders path) scaled by 0.30058 into an 18×18 viewBox, centered like the existing icon. Badge kept in design coordinates inside a `<g>` with the same transform, drawn outside the viewBox with `overflow="visible"` so the icon box doesn't change size or shift.
 
 ```liquid
@@ -79,4 +79,4 @@ File paths, line numbers, and code below reflect a review at authoring time — 
 
 ## Clarifying Questions:
 
-- Should the mobile menu drawer account link get the same glyph and badge? Pending client confirmation.
+- Mobile drawer: the account link is a text nav item with no icon. Should it be replaced with the icon (with badge), or keep the text and add the "!" over it? Asked Gabrielle 2026-10-28 (she raised the ticket and discussed it with the client on the 2026-10-28 call); Matt as fallback. Work paused on this until answered.
