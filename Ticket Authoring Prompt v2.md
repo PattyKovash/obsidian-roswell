@@ -4,7 +4,11 @@ You are writing a development ticket (PRD) for a Roswell Studios Shopify project
 
 **Default to terse and non-technical.** The Edge ticket body is shared and merchant-visible. Every section is a plain statement of fact: what's true, what's in scope, what's being asked for. No editorializing, no play-by-play of every change, no restating the same point in different words across sections, no filler transitions. If a sentence doesn't give the reader (human or agent) information they need to act, cut it.
 
-**Technical detail lives in the merchant vault, not the PRD.** File-level detail, code, validation results, screenshots, decisions and their reasoning go in the merchant vault (`roswell-vaults/vaults/<merchant>/`). The PRD links to them. See Vault below.
+**Don't put everything in the PRD. Link to the vault.** File-level detail, code, validation results, screenshots, decisions and their reasoning go in the merchant vault (`roswell-vaults/vaults/<merchant>/`), wherever the agent documented them. The PRD references each one by its roswell-vaults GitHub URL (see Vault below) instead of repeating it.
+
+**How technical each section can be:**
+- **All sections except Dev Notes and Implementation Notes:** human-readable for anyone on the team, with technical detail kept to a minimum.
+- **Dev Notes and Implementation Notes:** if it's already in the vault, the PRD only needs the link. If it's helpful context for others, add a short, easy-to-read summary in plain language above the link. Never paste the vault content itself.
 
 **Single source of truth.** Every fact appears in exactly one place. NEVER duplicate the same statement across two sections, or across two columns of the acceptance criteria table. If the vault already documents it, link instead of repeating.
 
@@ -40,7 +44,7 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 ## Reference files (read these first if available)
 - Base structure: `/Users/pk/Documents/obs-roswell/Base Monday Ticket Template.md`, the canonical empty section list, in order.
 - Worked examples:
-  - `/Users/pk/Documents/obs-roswell/Example PRD.md`: a filled-in ticket showing tone, AC table format, and Fathom attribution (pre-Edge; its Dev Notes are more technical than current practice).
+  - `/Users/pk/Documents/obs-roswell/Example PRD.md`: a filled-in pre-execution ticket showing tone, AC table format, Fathom attribution, and short Dev Notes.
   - `/Users/pk/Documents/obs-roswell/HYPER/PRDs/HYPER-166-schema-review-and-merge.md`: the current Edge workflow end to end. Short PRD, technical detail linked to the vault, a section listing changes made to another developer's code, and the Edge link workaround.
 
 ## Section structure (in this order)
@@ -51,7 +55,7 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 4. **Objective/Acceptance Criteria:** The table (spec below), confirmed with the user per the Authoring Workflow.
 5. **Dev Notes:** See dedicated rules below.
 6. **Changes Made to Original Code Updates by `<Author>`:** *(only when the ticket reviews/merges someone else's code)* Short, easy-to-read bullets for the original author: what we changed from their code and why, with the file in parentheses. One line of intro ("Everything else was merged as they wrote it."). Only list actual changes to *their* code; a bug we introduced and fixed ourselves doesn't belong here.
-7. **Implementation Notes:** *(post-execution)* Key decisions in plain language, each linking to its vault entry (decisions log, planning notes).
+7. **Implementation Notes:** *(post-execution)* Key decisions as short, readable summaries, each followed by the link to where it's documented in the vault (decisions log, planning notes). Only summarize what's helpful for others to see; the rest is just the link.
 8. **Testing Notes:** *(post-execution)* How to verify each AC: steps, test data/accounts, environments. For QA to follow, not a restatement of the AC.
 9. **Bugs from QA:** `TBD` placeholder.
 10. **Clarifying Questions:** Only questions still genuinely open after the interview. If none, "None."
@@ -60,12 +64,12 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 
 Short. Not a play-by-play.
 
-- **First bullet:** the Claude Code session to resume, as `claude --resume <session-id>` (the session ID is the current transcript's filename under `~/.claude/projects/<project>/`).
+- **First bullet, always:** the Claude Code session to resume, as `claude --resume SESSION_ID` (the session ID is the current transcript's filename under `~/.claude/projects/<project>/`).
 - Branch name, and how commits are organized if that matters (e.g. "original changes committed as-is as a reference point, review fixes on top").
 - **Open:** items still outstanding (e.g. post-deploy checks).
 - A link to the vault planning notes for changes, test results, screenshots, and cleanup items.
 
-Anything more technical (file paths, line numbers, code, root-cause analysis) goes in the vault notes. When there are no vault notes yet (pre-execution ticket), a short "File paths and code reflect a review at authoring time; confirm before implementing" note plus the key file paths is fine.
+Anything more technical (file paths, line numbers, code, root-cause analysis) goes in the vault notes and is referenced by link. If something there is important for others to see, distill it into a sentence or two of plain language above the link. When there are no vault notes yet (pre-execution ticket), a short "File paths and code reflect a review at authoring time; confirm before implementing" note plus the key file paths is fine.
 
 ## Vault (technical documentation)
 
