@@ -13,31 +13,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Shopify How to get app API access token.md",
+                "file": "file:/Users/pk/Documents/roswell-studios/pod.wonchih/Projects/KayserRoth/deliverables/12846014769-consent-banner-findings.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "Shopify How to get app API access token"
+              "title": "12846014769-consent-banner-findings"
             }
-          }
-        ]
-      },
-      {
-        "id": "80dbcaeee710b1fe",
-        "type": "tabs",
-        "children": [
+          },
           {
-            "id": "b0a3b114f94ac07c",
+            "id": "5669ca4b6e3972ba",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.14.5"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.14.5"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -57,7 +54,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -94,7 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 421.5
+    "width": 536.83984375
   },
   "right": {
     "id": "e2b7d6cd4e917ff4",
@@ -199,43 +198,50 @@
       "bases:Create new base": false
     }
   },
-  "active": "15e363b003641fc2",
+  "active": "5669ca4b6e3972ba",
   "lastOpenFiles": [
-    "Global/claude-code-org-documentation-protocol.md",
-    "Global",
-    "Base Monday Ticket Template.md",
-    "README.md",
-    "Shopify Functions — JavaScript Optimization Guide.md",
-    "shopify_token_doc_review.md",
-    "HH/PRDs/cv-limit-free-gift Config Guide.md",
-    "Shopify How to get app API access token.md",
-    "[draft] Shopify How to get app API access token.md",
-    "SAK/searchspring-meeting-prep.md",
-    "SAK/PRDs/searchspring-ssr-options.pdf",
-    "SAK/PRDs/searchspring-meeting-prep.md",
-    "SAK/PRDs/sak-11829903383.md",
-    "HH/Sitewide 25% Discount.md",
-    "HH/scripts/site wide.md",
-    "HH/scripts/buy 2 get 1.md",
-    "session-context-engineer-communications.md",
-    "client-comms-engineer-guide.html",
-    "HH/PRDs/Migrate Sitewide 25% Discount.md",
-    "HH/PRDs/cv-limit-free-gift Implementation Plan.md",
-    "HH/PRDs/Migrate Free Gift Quantity Limit.md",
-    "Welcome.md",
-    "baubar/cart-transform-migration-handoff.md",
-    "SAK/AIR/sak-11829903383-air-review.md",
-    "Shopify Remix App - Migrate to Postgres DB.md",
-    "SAK/AIR",
-    "SAK/PRDs/searchspring-ssr-options.md",
-    "SAK/PRDs",
-    "SAK",
-    "HH/PRDs/Migrate Buy 2 Get 1 Free Discount.md",
-    "amika/PRDs/AMIKA-11722966688-gwp-auto-add-product-trigger.md",
-    "HH/scripts",
-    "HH/PRDs",
-    "HH",
-    "baubar/PRDs/BAUBAR-11559788034-automated-tests.md",
-    "baubar/PRDs"
+    "HYPER/PRDs/HYPER-166-schema-review-and-merge.md",
+    "HYPER/PRDs/HYPER-ISSUE-13408076825-account-icon-signin-badge.md",
+    "TAHARI/PRD/assets/TAHARI-ISSUE-13231452690/gift-card-mobile-no-trigger.png",
+    "TAHARI/PRD/assets/TAHARI-ISSUE-13231452690/gift-card-desktop-dc-editor.png",
+    "TAHARI/PRD/assets/TAHARI-ISSUE-13231452690/silk-elastane-live-pdp.png",
+    "TAHARI/PRD/assets/TAHARI-ISSUE-13231452690/silk-elastane-storefront-pdp.png",
+    "TAHARI/PRD/assets/TAHARI-ISSUE-13231452690/silk-elastane-admin-options.png",
+    "TAHARI/PRD/assets/TAHARI-ISSUE-13231452690",
+    "TAHARI/PRD/assets",
+    "TAHARI/PRD/TAHARI-ISSUE-13231452690-quick-add-drawer-pdp-alignment.md",
+    "TAHARI/TAHARI-13175307071-context.md",
+    "TAHARI/TAHARI-13175307071-handoff-prompt-2026-10-23.md",
+    "TAHARI/TAHARI-13175307071-agent-guidelines.md",
+    "TAHARI/TAHARI-13175307071-nosto-search-session-transcript-2026-10-23-b25fcc36.jsonl",
+    "TAHARI/PRD/TAHARI-ISSUE-13175307071-nosto-implementation.md",
+    "TAHARI/TAHARI-13175307071-handoff-prompt.md",
+    "TAHARI/PRD/TAHARI-ISSUE-12170552235-pdp-02-gallery.md",
+    "TAHARI/TAHARI-13175307071-nosto-search-session-transcript.jsonl",
+    "THREADS/PRDs/THREADS-ISSUE-13095154767-rewards-trigger-header.md",
+    "HYPER/PRDs/HYPER-ISSUE-13329812332-addon-final-sale-swym-toggle.md",
+    "kayser/consentmo-estimate-internal.md",
+    "kayser/consentmo-recommendation-hue-no-nonsense-v2.md",
+    "kayser/client-breakdown.md",
+    "kayser/agent-prompt-consentmo-shopify-review.md",
+    "kayser/consentmo-recommendation-hue-no-nonsense.md",
+    "kayser/phidel-compliance-email.md",
+    "amika/sanity-image-density-sweep.js",
+    "amika/sanity-image-srcset-fit-max-bug.md",
+    "HH/PRDs/HH-ISSUE-13116910914-meta-pixel-account-form-url.md",
+    "THREADS/PRDs/THREADS-ISSUE-13155849991-desktop-mega-menu-hover.md",
+    "AED/PRDs/AED-ISSUE-TBD-collection-sort-by-non-functional.md",
+    "AED/PRDs/AED-ISSUE-13008335957-faq-schema.md",
+    "AED/PRDs/AED-ISSUE-12432754089-open-graph-meta-tag.md",
+    "Global/ci-silent-failure-audit-prompt.md",
+    "HYPER/PRDs/HYPER-ISSUE-12714680948-shop-products-drawer.md",
+    "HYPER/size-guide-reference-tier3-example.html",
+    "HYPER/size-guide-reference-tier2-generic.html",
+    "HYPER/size-guide-reference-tier1-example.html",
+    "HYPER/size-guide-reference-pemi-15-tier2.html",
+    "HYPER/size-guide-reference-junction.html",
+    "HYPER/the-trailhead-audio-recommendations.md",
+    "THREADS/screenshots/cart-totals-mobile-390.png",
+    "SAK/Screenshot 2026-07-01 at 5.05.41 PM.png"
   ]
 }

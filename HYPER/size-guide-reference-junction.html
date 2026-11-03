@@ -1,0 +1,129 @@
+<!--
+  REFERENCE ONLY — not synced to Shopify, not committed to the theme.
+
+  This is what product.metafields.accentuate.content should contain for the Junction product once
+  ISSUE-024's optimization ships (see vault: 03-pm/issues/ISSUE-024.md, 02-decisions/decisions.md
+  2026-08-06 entry).
+
+  Compared to the current live value:
+  - The <style> block (399 lines, .hmg-sizer-std / .hmg-std-* rules) has been removed — it now lives in
+    assets/size-guide.css (theme-owned, loaded once for every product, not duplicated per metafield).
+  - The <script> block (the torso-length calculator) has been removed — it now lives in
+    assets/size-guide-widget.js as a real custom element, <hmg-size-widget>, loaded via <script src> by
+    the drawer/popover fragment. It initializes itself automatically on insertion (connectedCallback) —
+    no event wiring or polling needed, unaffected by however this markup gets injected into the page.
+  - The root element changed from a plain <div class="hmg-sizer-std"> to <hmg-size-widget
+    class="hmg-sizer-std">. The class stays (that's what assets/size-guide.css targets for styling); the
+    tag is what activates the widget. Everything else — classes, copy, image URLs — is untouched.
+
+  This is "Tier 3" of the three authoring options in assets/size-guide-widget.js's header comment — direct
+  children, no <template> wrapper, full custom markup. Junction's content (unique step copy, its own fit-
+  check gallery) doesn't fit the generic default skeleton, so it stays fully custom rather than using the
+  attributes-only path. See size-guide-reference-tier1-example.html for what a simpler product (one that's
+  fine with the generic default copy/layout) would look like instead — just a `sizes` attribute and a
+  couple of image/link overrides, no markup at all.
+
+  Migrating to this isn't required for things to keep working, though — it's a maintainability/consistency
+  upgrade, not a functional fix. The CURRENT live value (junction-metafield-live-2026-08-06.html, with its
+  own inline <style>/<script>) keeps rendering and functioning correctly as-is under the deferred-loading
+  architecture, with zero content changes required — <size-guide-drawer>/<size-guide-popover> re-execute
+  everything their fetched content contains (execute-scripts="all" in sections/main-product.liquid),
+  precisely so existing, unmigrated accentuate.content doesn't break. This file shows what migrating buys:
+  no per-product <style> block, no hand-authored calculator logic to maintain, shared classes/behavior.
+
+  Update this file, then hand off to Matrixify import once the code side (already on
+  feature/HYPER-ISSUE-12590458751-size-drawer-optimization) is tested and deployed.
+-->
+
+<hmg-size-widget class="hmg-sizer-std">
+  <h2>Find Your Size</h2>
+  <p class="hmg-std-intro">Hyperlite Mountain Gear uses your torso length to match you with the right fit for our backpacks. Check out our <a href="https://hyperlitemountaingear.com/pages/hiking-backpack-size-chart" target="_blank" rel="noopener" class="hmg-std-intro-link">video instructions here</a> or follow the steps below.</p>
+
+  <div class="hmg-std-steps-wrapper">
+    <div class="hmg-std-steps">
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">01</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Find your C7 vertebra</p>
+          <p class="hmg-std-step-body">Tilt your chin to your chest. The most prominent bony bump at the base of your neck is your C7 vertebra. Have a friend mark it.</p>
+        </div>
+      </div>
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">02</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Find your iliac crest</p>
+          <p class="hmg-std-step-body">Stand upright. Place both hands on your hips, thumbs pointing back, and slide down to the top shelf of your hip bones. The imaginary line between your thumbs is the bottom of your measurement.</p>
+          <div class="hmg-std-callout">↕︎ Height and torso length don't reliably match. Always measure — don't estimate from height.</div>
+        </div>
+      </div>
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">03</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Measure along your spine</p>
+          <p class="hmg-std-step-body">Have a friend run a flexible tape from your C7 down along the curve of your spine to the iliac crest line. That distance is your torso length.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hmg-std-measurement-guide">
+      <picture>
+        <source media="(max-width: 649px)" srcset="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2.1.jpg?v=1784314964">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_34799d12-82b4-4623-9510-0cb06f864486.png?v=1784311305" alt="Torso measurement reference guide">
+      </picture>
+    </div>
+  </div>
+
+  <div class="hmg-std-form">
+    <div class="hmg-std-field-group">
+      <span class="hmg-std-field-label">Your torso length</span>
+      <div class="hmg-std-input-row">
+        <input class="hmg-std-input hmg-std-torso" type="number" inputmode="decimal" min="8" max="32" step="0.5" placeholder="e.g. 18" aria-label="Torso length">
+        <div class="hmg-std-unit-group">
+          <button type="button" class="hmg-std-unit-btn hmg-std-unit-in active" data-unit="in" aria-pressed="true">IN</button>
+          <button type="button" class="hmg-std-unit-btn hmg-std-unit-cm" data-unit="cm" aria-pressed="false">CM</button>
+        </div>
+      </div>
+    </div>
+    <div class="hmg-std-error"></div>
+    <button type="button" class="hmg-std-cta">Find My Size</button>
+  </div>
+
+  <div class="hmg-std-result">
+    <div class="hmg-std-result-header">
+      <p class="hmg-std-result-eyebrow">Your pack size</p>
+      <p class="hmg-std-result-size">—</p>
+      <p class="hmg-std-result-range"></p>
+    </div>
+    <!-- Populated by size-guide-widget.js's _renderSizeBar(), generated from this instance's sizes table -->
+    <div class="hmg-std-size-bar"></div>
+    <div class="hmg-std-size-ticks"></div>
+    <div class="hmg-std-result-body">
+      <p class="hmg-std-result-desc"></p>
+      <div class="hmg-std-tip"></div>
+    </div>
+  </div>
+
+  <!-- Fit Check Section - Always Visible -->
+  <div class="hmg-std-fit-check">
+    <p class="hmg-std-fit-check-title">Verify your fit</p>
+    <p class="hmg-std-fit-check-intro">Once your pack arrives, load it with typical gear and weight. Check that your shoulder straps fit correctly using these guides:</p>
+
+    <div class="hmg-std-fit-gallery">
+      <div class="hmg-std-fit-item">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_b7092153-0ab6-4ed3-8a27-98be9f197a81.png?v=1784312296" alt="Too small fit example">
+        <p class="hmg-std-fit-label">Too Small</p>
+      </div>
+      <div class="hmg-std-fit-item">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_0a51237b-65b8-4fc8-9fd3-885b4fd484a8.png?v=1784312324" alt="Just right fit example">
+        <p class="hmg-std-fit-label">Just Right</p>
+      </div>
+      <div class="hmg-std-fit-item">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_7c65e93e-edeb-4303-83f7-51d09d27f91a.png?v=1784312385" alt="Too large fit example">
+        <p class="hmg-std-fit-label">Too Large</p>
+      </div>
+    </div>
+
+    <div class="hmg-std-exchange">
+      <p class="hmg-std-exchange-text"><strong>Not sure?</strong> Easy exchanges within 30 days on new gear. Order your best size and swap if needed.</p>
+    </div>
+  </div>
+</hmg-size-widget>

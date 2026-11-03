@@ -11,11 +11,42 @@ A reference for writing instruction-efficient JavaScript Shopify Functions. Appl
 
   
 
+## Agent Session Protocol
+
+  
+
+When this document is first loaded in a session, verify the following claims before using it to advise on any implementation. Shopify updates resource limits and toolchain specs without notice — stale figures here are worse than no figures.
+
+  
+
+**Claims to verify and where to check:**
+
+  
+
+| Claim | Source to check |
+|---|---|
+| Instruction limit: 11 million for ≤200 line items | https://shopify.dev/docs/api/functions/latest — "Dynamic limits" table |
+| Input size limit: 128 kB | Same page — "Dynamic limits" table |
+| JS overhead vs Rust: ~3× | https://shopify.engineering/javascript-in-webassembly-for-shopify-functions |
+| JS engine is still Javy/QuickJS (not SpiderMonkey) | https://shopify.dev/docs/apps/build/functions/programming-languages/javascript-for-functions |
+| ~40% improvement tied to CLI 3.67 + Javy 3.1 + `@shopify/shopify_function` v1.0 | https://shopify.dev/changelog/javascript-shopify-functions-are-now-40-faster |
+| Input query max size: 3,000 bytes; metafield value cap: 10,000 bytes; max query cost: 30 | https://shopify.dev/docs/api/functions/latest — "Input query limits" table |
+
+  
+
+If any figure has changed, update this document before proceeding and note what changed and when.
+
+  
+
+---
+
+  
+
 ## The Constraint
 
   
 
-Functions have a hard limit of **11 million instructions** for carts up to 200 line items. Above 200 items the limit scales proportionally. JavaScript (via Javy/QuickJS) uses roughly **3–7× more instructions** than equivalent Rust. Every optimization below is aimed at reducing QuickJS bytecode execution overhead.
+Functions have a hard limit of **11 million instructions** for carts up to 200 line items. Above 200 items the limit scales proportionally. JavaScript (via Javy/QuickJS) uses roughly **~3× more instructions** than equivalent Rust. Every optimization below is aimed at reducing QuickJS bytecode execution overhead.
 
   
 
@@ -35,7 +66,7 @@ Functions have a hard limit of **11 million instructions** for carts up to 200 l
 
   
 
-The single highest-leverage step before any code optimization. Shopify CLI 3.67 + Javy 3.1 + `@shopify/shopify_function` v2.0+ delivered a ~40% instruction reduction automatically.
+The single highest-leverage step before any code optimization. Shopify CLI 3.67 + Javy 3.1 + `@shopify/shopify_function` v1.0 delivered a ~40% instruction reduction automatically. `@shopify/shopify_function` v2.0+ adds further binary size and execution improvements on top — always use the latest.
 
   
 
@@ -473,7 +504,7 @@ If your function is still hitting instruction limits after the above:
 
 2. **Simplify the input query** — fewer fields = less deserialization work
 
-3. **Consider Rust** — the same logic in Rust uses ~7× fewer instructions and compiles to a smaller binary. Shopify strongly recommends Rust for production functions on public apps or complex logic: https://shopify.dev/docs/apps/build/functions/programming-languages
+3. **Consider Rust** — the same logic in Rust uses ~3× fewer instructions and compiles to a smaller binary. Shopify strongly recommends Rust for production functions on public apps or complex logic: https://shopify.dev/docs/apps/build/functions/programming-languages
 
   
 

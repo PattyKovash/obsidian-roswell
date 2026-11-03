@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Social Threads: 3.4.0 to 4.1.4 Migration Checklist</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --surface-sunken: #f1efec;
+    --border: #e3e0da;
+    --ink: #201c1a;
+    --ink-soft: #5a5450;
+    --ink-faint: #8a8480;
+    --accent: #c81d40;
+    --accent-soft: #fbe8ec;
+    --ok: #1f7a4d;
+    --ok-soft: #e6f4ec;
+    --warn: #a8660a;
+    --warn-soft: #fbf0dd;
+    --crit: #b8291f;
+    --crit-soft: #fbe9e7;
+    --mono-tint: #f4f2ee;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17140f;
+      --surface: #201c17;
+      --surface-sunken: #1b1814;
+      --border: #383129;
+      --ink: #f2ede6;
+      --ink-soft: #b8b0a6;
+      --ink-faint: #837b71;
+      --accent: #f0526f;
+      --accent-soft: #3a1a22;
+      --ok: #5ec98d;
+      --ok-soft: #17301f;
+      --warn: #e0a53f;
+      --warn-soft: #332507;
+      --crit: #f16a5f;
+      --crit-soft: #3a1712;
+      --mono-tint: #1c1914;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Work Sans", -apple-system, "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0 1.5rem 6rem;
+    line-height: 1.55;
+  }
+
+  .wrap { max-width: 840px; margin: 0 auto; }
+
+  code, .mono { font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace; }
+
+  header.top { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--border); }
+
+  .eyebrow {
+    font-family: "Barlow Condensed", "Work Sans", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: "Barlow Condensed", "Work Sans", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 2.9rem);
+    letter-spacing: -0.01em;
+    margin: 0.5rem 0 0.6rem;
+    text-wrap: balance;
+  }
+
+  .dek { font-size: 1.05rem; color: var(--ink-soft); max-width: 62ch; margin: 0; }
+  .dek .mono { color: var(--ink); font-size: 0.95em; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0 0;
+  }
+
+  .stat { background: var(--surface); padding: 1.1rem 1.2rem; }
+
+  .stat .n {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .stat .n.crit { color: var(--crit); }
+  .stat .n.ok { color: var(--ok); }
+
+  .stat .l {
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-top: 0.35rem;
+  }
+
+  section.block { margin-top: 3.2rem; }
+
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .block-head h2 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  .block-count { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; color: var(--ink-faint); }
+
+  .block-note { color: var(--ink-soft); font-size: 0.95rem; margin: 0.7rem 0 1.3rem; max-width: 65ch; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.3rem 1rem;
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--sev, var(--border));
+  }
+
+  .item + .item { border-top: none; }
+
+  .item .path { font-family: "JetBrains Mono", monospace; font-size: 0.86rem; color: var(--ink); grid-column: 1; }
+
+  .chip {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.18rem 0.55rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    height: fit-content;
+    justify-self: end;
+  }
+
+  .chip.crit { background: var(--crit-soft); color: var(--crit); }
+  .chip.warn { background: var(--warn-soft); color: var(--warn); }
+  .chip.ok { background: var(--ok-soft); color: var(--ok); }
+
+  .item .desc { grid-column: 1 / -1; color: var(--ink-soft); font-size: 0.93rem; margin: 0; }
+
+  .item .desc .mono { background: var(--mono-tint); padding: 0.05rem 0.32rem; border-radius: 2px; font-size: 0.88em; }
+
+  .sev-crit { --sev: var(--crit); }
+  .sev-warn { --sev: var(--warn); }
+  .sev-ok { --sev: var(--ok); }
+
+  .stack { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .carried-wrap {
+    margin: 0;
+    padding: 1.1rem 1.3rem;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 1.5rem;
+    background: var(--ok-soft);
+    border: 1px solid color-mix(in srgb, var(--ok) 30%, var(--border));
+    font-size: 0.88rem;
+  }
+
+  .carried-wrap li { list-style: none; display: flex; gap: 0.5rem; align-items: baseline; }
+  .carried-wrap li::before { content: "✓"; color: var(--ok); font-weight: 700; flex-shrink: 0; }
+
+  @media (max-width: 620px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .carried-wrap { grid-template-columns: 1fr; }
+    .item { grid-template-columns: 1fr; }
+    .chip { justify-self: start; }
+  }
+
+  footer.end {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Theme migration &middot; Dwell (Horizon)</div>
+    <h1>3.4.0 to 4.1.4 migration checklist</h1>
+    <p class="dek">Comparing <span class="mono">dev</span> (live, customized) against theme <span class="mono">131192324178</span>, an unpublished copy Shopify's admin already duplicated and upgraded to 4.1.4. Verified line-by-line against the real upgrade output, not a guess. Also includes a full review of every file Shopify itself changed between versions, independent of any customization (26 findings, see below).</p>
+    <p class="dek" style="margin-top:0.6rem;">Migration workflow assumption: the rebuild always starts from stock 4.1.4 and brings customizations onto it, fixing regressions from that base. Findings below don't repeat this as a warning.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="n">109</div>
+      <div class="l">customizations checked</div>
+    </div>
+    <div class="stat">
+      <div class="n ok">54</div>
+      <div class="l">carried over cleanly</div>
+    </div>
+    <div class="stat">
+      <div class="n">35</div>
+      <div class="l">cosmetic drift only</div>
+    </div>
+    <div class="stat">
+      <div class="n crit">17</div>
+      <div class="l">need rebuilding</div>
+    </div>
+    <div class="stat">
+      <div class="n ok">0</div>
+      <div class="l">broken file references</div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Critical &mdash; customer-facing regressions</h2>
+      <span class="block-count">9 items</span>
+    </div>
+    <p class="block-note">These change what a shopper sees or what data gets sent. Confirm and re-implement before launch.</p>
+
+    <div class="stack">
+      <div class="item sev-crit">
+        <div class="path">layout/theme.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">Two things dropped: the <span class="mono">web_checkout</span> cart-attribute fetch script, and the <span class="mono">{% render 'beam-imports' %}</span> call. The Beam snippet files still exist in the new theme, they're just no longer included anywhere, so Beam won't load at all until this is re-added.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">blocks/_product-details.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The entire "recently viewed" view-counter script is gone, the fetches to <span class="mono">qa.wpweb.co.in/social-threads/view-counter.php</span>, the session tracking, the decrement-on-unload beacon. It was pointed at a <span class="mono">qa.</span> host with debug <span class="mono">console.log</span> calls left in, worth resolving ownership before re-adding.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">blocks/swatches.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The "N RECENTLY VIEWED" badge driven by <span class="mono">metafields.custom.view_count</span> is gone, the display half of the view-counter feature above.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">snippets/text.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The hidden <span class="mono">#viewsCounterRTEA</span> placeholder div is gone, tied to the same view-counter feature above.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">config/settings_schema.json</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">The entire <span class="mono">Beam</span> settings block is gone, including the API key that was present as a schema default. Not confirmed to be a security issue, some app keys are meant to be public-facing; needs a client conversation before deciding how to handle it. Whether this needs rebuilding at all also comes down to one question: is Beam being kept for the relaunch.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">snippets/cart-summary.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The <span class="mono">{% render 'beam-select-nonprofit' %}</span> call is gone from the cart, the nonprofit picker won't show even though Beam is otherwise wired up.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">blocks/_product-card-gallery.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The <span class="mono">{% render 'product-card-badges' %}</span> call is gone. The badge snippet still exists in the new theme, but nothing on this path calls it anymore, so custom badges (bestseller, limited stock, exclusive) stop showing on product cards.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">3 files &middot; final-sale label</div>
+        <span class="chip crit">missing</span>
+        <p class="desc"><span class="mono">blocks/buy-buttons.liquid</span>, <span class="mono">snippets/quick-add.liquid</span>, <span class="mono">snippets/cart-products.liquid</span>, the <span class="mono">product.tags contains 'finalsale'</span> check, hidden line-item property, and "FINAL SALE" cart label are gone from all three add-to-cart paths.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">snippets/cart-bubble.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The <span class="mono">cart-bubble-fix.js</span> script include is gone. This file globally patches <span class="mono">fetch</span>/<span class="mono">XMLHttpRequest</span>, worth checking if 4.1.4's own cart bubble needs it before porting back. If reimplementing, note the theme's old <span class="mono">ThemeEvents.cartUpdate</span> no longer exists in stock 4.1.4, the replacement is <span class="mono">@shopify/events</span>' <span class="mono">CartLinesUpdateEvent</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Moderate &mdash; visual / styling drift</h2>
+      <span class="block-count">6 items</span>
+    </div>
+    <p class="block-note">Nothing breaks, but the storefront will look slightly different from what's live now.</p>
+
+    <div class="stack">
+      <div class="item sev-warn">
+        <div class="path">snippets/pagination-controls.liquid</div>
+        <span class="chip warn">reverted</span>
+        <p class="desc">Brand color <span class="mono">#e51a4e</span> on focus/hover reverted to the default <span class="mono">var(--color-foreground)</span> token.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/price.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">The <span class="mono">price--on-sale</span> class is gone, sale-price styling here falls back to default.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/cart-products.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">Same <span class="mono">price--on-sale</span> class missing on cart line-item prices, plus a custom <span class="mono">--cart-font-size--md</span> override.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">sections/main-cart.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">Seven custom <span class="mono">--cart-font-size--*</span> CSS variables (2xs to 2xl) aren't defined, anything referencing them falls back to the theme default scale.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/quick-add-modal.liquid</div>
+        <span class="chip warn">reverted</span>
+        <p class="desc">One rule's <span class="mono">text-align</span> reverted from <span class="mono">center</span> back to <span class="mono">left</span>.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">sections/header-group.json</div>
+        <span class="chip warn">review</span>
+        <p class="desc">Custom <span class="mono">custom_css</span> array (menu link font-size) and a Yotpo loyalty app block are still present, 95% of this file's custom lines survived. The remaining drift is the color-scheme change above; worth a visual check on the header alongside moving the raw CSS into a stylesheet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Needs a manual pass</h2>
+      <span class="block-count">2 items</span>
+    </div>
+    <p class="block-note">Too large or too store-specific to diff line-by-line with confidence, worth a dedicated review rather than a quick port.</p>
+
+    <div class="stack">
+      <div class="item sev-warn">
+        <div class="path">assets/base.css</div>
+        <span class="chip warn">gone, not relocated</span>
+        <p class="desc">The brand color and related custom rules are gone in 4.1.4, not relocated into the new <span class="mono">*-styles.liquid</span> architecture. The color only survives in <span class="mono">base.min.css</span>, which is unreferenced anywhere in the theme.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">config/settings_data.json</div>
+        <span class="chip crit">design system change</span>
+        <p class="desc">Large diff (~500 changed lines) against the real upgraded theme. Root cause: Horizon replaced its multi-scheme color system (<span class="mono">color_schemes: scheme-1..4</span>, each independently colored) with a single global <span class="mono">color_palette</span> between 3.4.0 and 4.1.4, confirmed separately by diffing the clean baselines directly, to rule out anything specific to this store. Any section that relied on a distinct scheme for contrast (Social Threads used at least 4) won't automatically look the same. Needs a full visual pass through every page, not a settings-editor spot check.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Needs visual QA, not a rebuild</h2>
+      <span class="block-count">34 items</span>
+    </div>
+    <p class="block-note">Functionally present (50 to 98% of their custom lines survived), likely affected by the color-scheme change above. Each needs a look, not a code fix. A 35th file affected by this same drift, <span class="mono">sections/header-group.json</span>, already has its own card above under Moderate, since it also has a separate code-quality issue worth calling out on its own.</p>
+
+    <ul class="carried-wrap" style="background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 30%, var(--border));">
+      <li style="list-style:none"><span class="mono">templates/index.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/search.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/cart.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/404.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/list-collections.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/product.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/product.final-sale.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/product.preorder.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.accessories.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.bottoms-collection.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.dresses-collection.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.fall-preview-sale.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.final-sale.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.gift-guide.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.houseofleo.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.preorder.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.risen-jeans.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.sample-sale.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.tandtparis.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/collection.tops-collection.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.beam.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.connect-with-us.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.contact-us.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.download-the-app.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.email-sign-up.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.faqs.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.our-story.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.returns-exchanges.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.text-club-sign-up.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.text-sign-up-from-email.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.the-showroom.json</span></li>
+      <li style="list-style:none"><span class="mono">templates/page.yotpo-loyalty.json</span></li>
+      <li style="list-style:none"><span class="mono">sections/footer-group.json</span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Upstream-only, no action &mdash; verified safe</h2>
+      <span class="block-count">3 items</span>
+    </div>
+    <p class="block-note">Files Horizon itself removes between 3.4.0 and 4.1.4. We checked whether any customization still depends on them: none do.</p>
+    <div class="stack">
+      <div class="item sev-ok">
+        <div class="path">assets/product-title-truncation.js</div>
+        <span class="chip ok">removed upstream</span>
+        <p class="desc">Only referenced by <span class="mono">snippets/scripts.liquid</span>, which is 100% stock and unmodified, resolves automatically when the new theme's stock file is adopted.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">snippets/color-schemes.liquid</div>
+        <span class="chip ok">renamed</span>
+        <p class="desc">Replaced by <span class="mono">snippets/color-palette.liquid</span> upstream, a full rewrite of the palette engine, not a dropped customization.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">blocks/_media.liquid</div>
+        <span class="chip ok">merged</span>
+        <p class="desc">Folded into the newer media block set upstream. We also confirmed it's unreferenced anywhere in the live theme already, an orphan either way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Already carried over &mdash; no action needed</h2>
+      <span class="block-count">confirmed identical or fully preserved</span>
+    </div>
+    <p class="block-note">Verified byte-for-byte or functionally intact in the real 4.1.4 duplicate.</p>
+
+    <ul class="carried-wrap">
+      <li>All 24 <span class="mono">ai_gen_block_*</span> blocks</li>
+      <li>Swym wishlist integration (2 files)</li>
+      <li>Beam snippet/section files (8 files, orphaned but intact, see Critical above)</li>
+      <li>Yotpo referral &amp; rewards stub templates (3 files, not the main loyalty template, see visual QA)</li>
+      <li>BSS product labels stub</li>
+      <li>Rewind legacy backup files (2 files)</li>
+      <li>5 generic merchant templates (article, blog, contact, page, password)</li>
+      <li><span class="mono">product-card-badges.liquid</span> snippet</li>
+      <li><span class="mono">cart-bubble-fix.js</span> (file itself; include is dropped, see above)</li>
+      <li><span class="mono">pagination.liquid</span> snippet (possibly unused either way)</li>
+      <li>Beam donation snippet files (present, but orphaned, see Critical)</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Vendor changed default behavior, not a customization gap</h2>
+      <span class="block-count">26 findings, ~1.2-3.0 dev + 1.45 QA hours for the non-accessibility decision items</span>
+    </div>
+    <p class="block-note">Every file that changed between stock 3.4.0 and stock 4.1.4 was reviewed, same rigor as the customization audit above, zero customization involved. Nothing here shows up as a customization diff, there's nothing to port, but production will see the effect after upgrading.</p>
+
+    <p class="block-note" style="margin-top:1.5rem; font-weight:600; color:var(--ink);">Already resolved or handled by the 4.1.4 base, no separate action</p>
+    <div class="stack">
+      <div class="item sev-ok">
+        <div class="path">layout/theme.liquid</div>
+        <span class="chip ok">already present</span>
+        <p class="desc">New global renders for Inbox chat, the cart drawer, and the <span class="mono">.page-wrapper</span> scroll container (see <span class="mono">base.css</span> below). Only caution: don't remove these while re-adding Beam/<span class="mono">web_checkout</span>.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">snippets/header-actions.liquid</div>
+        <span class="chip ok">already present</span>
+        <p class="desc">Cart-drawer markup moved to new <span class="mono">cart-drawer-section.liquid</span>/<span class="mono">cart-drawer.liquid</span>, wired up via <span class="mono">theme.liquid</span> above.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">assets/sticky-add-to-cart.js</div>
+        <span class="chip ok">confirmed resolved &middot; 0 / 0.5h</span>
+        <p class="desc">Verified on <span class="mono">develop/_candidate</span>: a real merchant setting (<span class="mono">hide_sticky_add_to_cart_when_chat_active</span>, default off) now controls this instead of the stock hardcoded gate. Genuine new work, confirmed absent on <span class="mono">release/_candidate</span>. Just needs a confirmation pass.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">blocks/_header-menu.liquid</div>
+        <span class="chip ok">confirmed resolved &middot; 0 / 0.5h</span>
+        <p class="desc">Verified: the new click-toggle button was added alongside the existing hover handlers, not instead of them. Hover-to-open still works. Just needs a confirmation pass across menu levels and mobile.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">snippets/product-card.liquid, card-gallery.liquid, blocks/product-title.liquid</div>
+        <span class="chip ok">confirmed resolved &middot; 0 / 0.45h</span>
+        <p class="desc">Originally flagged from a code-level diff as dropping the selected variant from the card link, image link, and title link, defaulting to the base product instead. Verified live on the <span class="mono">develop/_candidate</span> preview theme (shopsocialthreads.com, <span class="mono">preview_theme_id=131219882066</span>): selecting a color swatch on a collection-page card correctly carries that variant through all three links, and the PDP loads with the right color selected. Not reproducible on the actual candidate build. Just needs a confirmation pass.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">blocks/_product-card-gallery.liquid</div>
+        <span class="chip ok">confirmed resolved &middot; 0 / 0.1h</span>
+        <p class="desc">Originally flagged from a code-level diff (a new <span class="mono">product.available</span> guard around the quick-add render) as hiding the quick-add button for out-of-stock products, said to have shown previously. Verified live with explicit <span class="mono">preview_theme_id</span> swaps between the two themes (confirmed <span class="mono">window.Shopify.theme.id</span> at each step, not cookie carryover) on a fully sold-out product: on live 3.4.0 the button is present in the DOM but <span class="mono">disabled</span> and <span class="mono">display:none</span>; on the 4.1.4 candidate it isn't rendered at all. Different implementation, same end-user-visible result: no usable quick-add button once a product is completely sold out, on either version.</p>
+      </div>
+    </div>
+
+    <p class="block-note" style="margin-top:1.5rem; font-weight:600; color:var(--ink);">Confirmed, needs a decision or QA pass</p>
+    <div class="stack">
+      <div class="item sev-crit">
+        <div class="path">assets/base.css</div>
+        <span class="chip crit">confirmed relevant &middot; 0.5-1.5 / 0.5h</span>
+        <p class="desc">New <span class="mono">.page-wrapper</span> div gets <span class="mono">height: 100dvh; overflow-y: auto</span> on desktop, the page now scrolls within the wrapper instead of <span class="mono">html</span>/<span class="mono">body</span> directly, active by default. Any code assuming document-level scroll (scroll-to-top, viewport-rooted observers, scroll tracking) needs verifying against this.</p>
+      </div>
+    </div>
+
+    <p class="block-note" style="margin-top:1.5rem; font-weight:600; color:var(--ink);">Systemic accessibility regression, 5 stock files, none customized here</p>
+    <div class="stack">
+      <div class="item sev-warn">
+        <div class="path">sections/predictive-search.liquid</div>
+        <span class="chip warn">a11y</span>
+        <p class="desc">Removed <span class="mono">aria-live="polite"</span> on the results-count region, <span class="mono">role="listbox"</span> + <span class="mono">aria-labelledby</span> on suggestions. Also a logic change: suggestion pills now render unconditionally rather than only in the "has results" branch.</p>
+      </div>
+      <div class="item sev-warn">
+        <div class="path">snippets/cart-bubble.liquid</div>
+        <span class="chip warn">a11y</span>
+        <p class="desc">Removed <span class="mono">role="status"</span> live region and the screen-reader "cart count: N" text entirely.</p>
+      </div>
+      <div class="item sev-warn">
+        <div class="path">snippets/checkbox.liquid</div>
+        <span class="chip warn">a11y</span>
+        <p class="desc">Removed <span class="mono">role="checkbox"</span>.</p>
+      </div>
+      <div class="item sev-warn">
+        <div class="path">snippets/filter-remove-buttons.liquid</div>
+        <span class="chip warn">a11y</span>
+        <p class="desc">Removed <span class="mono">autofocus</span> on the first filter-remove button after filtering.</p>
+      </div>
+      <div class="item sev-warn">
+        <div class="path">snippets/predictive-search-products-list.liquid</div>
+        <span class="chip warn">a11y</span>
+        <p class="desc">Removed <span class="mono">role="listbox"</span> and <span class="mono">aria-label</span> on the results list.</p>
+      </div>
+    </div>
+
+    <p class="block-note" style="margin-top:1.5rem;">Also checked, low relevance here: <span class="mono">snippets/quick-add.liquid</span> and <span class="mono">blocks/buy-buttons.liquid</span> (stock-side subscription/pickup changes, neither feature in use), <span class="mono">config/settings_schema.json</span> (removed border/shadow settings, none configured), <span class="mono">sections/header.liquid</span> (new additive color settings, not exercised), <span class="mono">sections/main-blog-post.liquid</span> and <span class="mono">product-hotspots.liquid</span> (structural/CSS cleanup, no visible change expected), <span class="mono">blocks/disclosures.liquid</span> (new opt-in block, requires metafield data) and <span class="mono">filters.liquid</span> (minor UI polish). Everything else across the ~370 remaining reviewed files (icons, new styling snippets, locale keys, unused stock templates) was pure refactoring or confirmed not relevant, full detail in the CSV.</p>
+
+    <p class="block-note" style="margin-top:1rem;">Also found: 3.4.0's <span class="mono">ThemeEvents</span> system (<span class="mono">cartUpdate</span>, <span class="mono">variantUpdate</span>, etc) is removed entirely in stock 4.1.4, replaced by <span class="mono">@shopify/events</span>. Nothing currently built references the old names, so nothing breaks today, but it's worth using the new <span class="mono">CartLinesUpdateEvent</span> pattern (not the old one) in any new work, and <span class="mono">CLAUDE.md</span>'s architecture section will need a post-upgrade update since it documents the old model.</p>
+  </section>
+
+  <footer class="end">
+Two open questions drive scope here, independent of the migration itself: whether Beam is being kept for the relaunch (resolves the API key question in <span class="mono">config/settings_schema.json</span> either way, pending confirmation on whether it's actually a security concern), and what the live product-page script calling <span class="mono">qa.wpweb.co.in</span> is for and whether it should carry forward. Both files are already covered above since they're part of the rework list regardless of the answer.
+  </footer>
+
+</div>
+</body>
+</html>

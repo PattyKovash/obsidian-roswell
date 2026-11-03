@@ -1,0 +1,58 @@
+<!--
+  REFERENCE ONLY — not synced to Shopify, not committed to the theme.
+
+  Generic Tier 2 example: a custom <template> inside <hmg-size-widget>, not tied to any real product
+  (compare to size-guide-reference-pemi-15-tier2.html, which is the same pattern with real Pemi copy).
+  This one exists purely to show the minimal shape of the pattern, using the current recommended
+  `data-hmg-*` attributes as the primary hooks (not the legacy `.hmg-std-*` classes, which still work as a
+  fallback for pre-existing content — see assets/size-guide-widget.js header for both).
+
+  Required hooks (all must be present somewhere in the <template>, any structure/nesting is fine):
+    data-hmg-torso-input     the measurement <input>
+    data-hmg-unit-in / -cm   the unit toggle buttons
+    data-hmg-error           empty element for the validation error message
+    data-hmg-cta             the submit button
+    data-hmg-result          wrapper shown/hidden around the result
+    data-hmg-result-size     filled with the matched tier's label
+    data-hmg-result-range    filled with the matched tier's range text
+    data-hmg-result-desc     filled with the matched tier's desc
+    data-hmg-tip             filled with the sizing-up/down tip
+    data-hmg-size-bar / data-hmg-size-ticks   empty containers — auto-populated from `sizes`, leave empty
+
+  Classes (hmg-std-*, hmg-sizer-std) are for styling only (assets/size-guide.css) — rename/reorganize them
+  freely without affecting behavior, since the JS never looks at them when data-hmg-* attributes are used.
+-->
+
+<hmg-size-widget
+  class="hmg-sizer-std"
+  sizes='[
+    {"key":"s","label":"Small","short":"S","minIn":0,"maxIn":10,"desc":"Placeholder description for the small tier."},
+    {"key":"m","label":"Medium","short":"M","minIn":10,"maxIn":20,"desc":"Placeholder description for the medium tier."},
+    {"key":"l","label":"Large","short":"L","minIn":20,"maxIn":99,"desc":"Placeholder description for the large tier."}
+  ]'
+>
+  <template>
+    <h2>Find Your Size</h2>
+    <p>Replace this with your own intro copy.</p>
+
+    <div class="hmg-std-form">
+      <label>
+        Your measurement
+        <input data-hmg-torso-input class="hmg-std-input" type="number" inputmode="decimal">
+      </label>
+      <button type="button" data-hmg-unit-in class="hmg-std-unit-btn active">IN</button>
+      <button type="button" data-hmg-unit-cm class="hmg-std-unit-btn">CM</button>
+      <div data-hmg-error class="hmg-std-error"></div>
+      <button type="button" data-hmg-cta class="hmg-std-cta">Find My Size</button>
+    </div>
+
+    <div data-hmg-result class="hmg-std-result">
+      <p data-hmg-result-size class="hmg-std-result-size">—</p>
+      <p data-hmg-result-range class="hmg-std-result-range"></p>
+      <div data-hmg-size-bar class="hmg-std-size-bar"></div>
+      <div data-hmg-size-ticks class="hmg-std-size-ticks"></div>
+      <p data-hmg-result-desc class="hmg-std-result-desc"></p>
+      <div data-hmg-tip class="hmg-std-tip"></div>
+    </div>
+  </template>
+</hmg-size-widget>

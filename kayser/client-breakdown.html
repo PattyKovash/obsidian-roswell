@@ -1,0 +1,218 @@
+<title>Consent & Tracking Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #F6F7FA; --surface: #FFFFFF; --text: #1A1D23; --text-2: #4A4F5C; --text-3: #6B7280;
+    --border: #D8DCE4; --border-lt: #E8EBF0;
+    --accent: #1B6B6D; --accent-lt: #E8F4F4;
+    --red-bg: #FDF0EF; --red-tx: #9B2C23;
+    --amber-bg: #FDF6E8; --amber-tx: #7A5A00; --amber-bd: #E0C878;
+    --green-bg: #F0FAF5; --green-tx: #166534; --green-bd: #86EFAC;
+    --blue-bg: #EDF3FC; --blue-tx: #2B5EA7;
+    --code-bg: #EDEEF2; --stripe: #FAFBFC;
+    --display: 'DM Serif Display', Georgia, serif;
+    --body: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111318; --surface: #1A1D24; --text: #E4E6EB; --text-2: #A0A4B0; --text-3: #6B7080;
+      --border: #2E323C; --border-lt: #252830; --accent: #3AADAF; --accent-lt: #1A2E2E;
+      --red-bg: #2C1614; --red-tx: #F0A8A2;
+      --amber-bg: #2A2210; --amber-tx: #E8C86A; --amber-bd: #5A4820;
+      --green-bg: #0F1F18; --green-tx: #6EE7A0; --green-bd: #1A4030;
+      --blue-bg: #141E30; --blue-tx: #7EB0E8;
+      --code-bg: #22252E; --stripe: #161820;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111318; --surface: #1A1D24; --text: #E4E6EB; --text-2: #A0A4B0; --text-3: #6B7080;
+    --border: #2E323C; --border-lt: #252830; --accent: #3AADAF; --accent-lt: #1A2E2E;
+    --red-bg: #2C1614; --red-tx: #F0A8A2;
+    --amber-bg: #2A2210; --amber-tx: #E8C86A; --amber-bd: #5A4820;
+    --green-bg: #0F1F18; --green-tx: #6EE7A0; --green-bd: #1A4030;
+    --blue-bg: #141E30; --blue-tx: #7EB0E8;
+    --code-bg: #22252E; --stripe: #161820;
+  }
+
+  body { font-family: var(--body); background: var(--bg); color: var(--text); padding-inline: 24px; line-height: 1.6; max-width: 760px; margin: 0 auto; }
+  h1 { font-family: var(--display); font-size: 1.75rem; font-weight: 400; margin: 0 0 0.2em; }
+  h2 { font-family: var(--display); font-size: 1.25rem; font-weight: 400; margin: 2em 0 0.5em; padding-bottom: 0.3em; border-bottom: 2px solid var(--accent); }
+  h3 { font-family: var(--display); font-size: 1.1rem; font-weight: 400; margin: 1.5em 0 0.4em; }
+  code { font-family: var(--mono); font-size: 0.8rem; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; }
+
+  .header { padding-top: 2.5em; padding-bottom: 1.2em; border-bottom: 1px solid var(--border); }
+  .header .sub { color: var(--text-2); font-size: 0.875rem; margin: 0.2em 0 0; }
+
+  .callout { border-left: 3px solid var(--accent); padding: 12px 16px; margin: 1.2em 0; background: var(--accent-lt); font-size: 0.875rem; }
+  .callout p { margin: 0.3em 0; }
+  .callout strong { color: var(--accent); }
+
+  .alert { background: var(--red-bg); color: var(--red-tx); padding: 14px 18px; border-radius: 4px; margin: 1.5em 0; font-size: 0.875rem; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 1em 0 1.5em; }
+  th { text-align: left; font-family: var(--mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); padding: 8px 10px; border-bottom: 2px solid var(--border); white-space: nowrap; }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--border-lt); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--stripe); }
+  .tbl-wrap { overflow-x: auto; }
+
+  .pill { display: inline-block; font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+  .pill.green { background: var(--green-bg); color: var(--green-tx); border: 1px solid var(--green-bd); }
+  .pill.amber { background: var(--amber-bg); color: var(--amber-tx); border: 1px solid var(--amber-bd); }
+  .pill.red { background: var(--red-bg); color: var(--red-tx); }
+
+  .tier { border: 1px solid var(--border-lt); border-radius: 6px; padding: 20px 24px; margin: 1.2em 0; background: var(--surface); }
+  .tier-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 0.6em; }
+  .tier-title { font-family: var(--display); font-size: 1.15rem; }
+  .tier-est { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+  .tier p { font-size: 0.875rem; margin: 0.4em 0; color: var(--text-2); }
+  .tier ul { padding-left: 1.2em; margin: 0.5em 0; font-size: 0.85rem; }
+  .tier li { margin: 0.3em 0; }
+  .tier .covers { font-size: 0.82rem; margin-top: 0.8em; padding-top: 0.6em; border-top: 1px solid var(--border-lt); color: var(--text-3); }
+
+  .rec { border-left: 3px solid var(--accent); padding: 14px 18px; margin: 1.5em 0; background: var(--accent-lt); font-size: 0.875rem; }
+  .rec strong { color: var(--accent); }
+
+  .needs { background: var(--surface); border: 1px solid var(--border); padding: 16px 20px; border-radius: 4px; margin: 1.5em 0; }
+  .needs h3 { margin: 0 0 0.5em; font-family: var(--body); font-size: 0.9rem; font-weight: 600; }
+  .needs ol { padding-left: 1.3em; margin: 0; font-size: 0.85rem; color: var(--text-2); }
+  .needs li { margin: 0.3em 0; }
+
+  .footer { margin-top: 2.5em; padding: 1em 0; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-3); font-family: var(--mono); }
+
+  @media (max-width: 500px) {
+    body { padding-inline: 16px; }
+    h1 { font-size: 1.5rem; }
+    .tier { padding: 14px 16px; }
+    th, td { padding: 6px 6px; font-size: 0.78rem; }
+  }
+</style>
+
+<div class="header">
+  <h1>Consent &amp; Tracking Plan</h1>
+  <p class="sub">Both stores &middot; Three options based on priority and budget</p>
+</div>
+
+<div class="callout">
+  <p><strong>Why this matters for Triple Whale:</strong> TW&rsquo;s Web Pixel is set to &ldquo;Optimized&rdquo; on both stores, meaning it respects Shopify&rsquo;s consent framework. On NoNonsense, consent is never set (no banner) &mdash; so TW drops <strong>all conversion events</strong> for every new visitor. Enabling a proper consent banner directly fixes TW&rsquo;s conversion tracking for every visitor who accepts.</p>
+  <p>On Hue, the banner hides the &ldquo;Decline&rdquo; button, so most visitors accept and TW fires correctly. The data looks accurate, but the consent is legally void.</p>
+</div>
+
+<!-- ============ TIERS ============ -->
+<h2>Three Options</h2>
+
+<div class="tier">
+  <div class="tier-head">
+    <span class="tier-title">Tier 1 &mdash; Banner + pixel permissions</span>
+    <span class="tier-est">~3 h</span>
+  </div>
+  <p>Get the consent banner live and fix pixel settings. Restores TW conversion data and covers all apps that use Shopify&rsquo;s consent framework.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Task</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td>Remove dark-pattern CSS that hides the decline button (Hue)</td><td>15 min</td></tr>
+        <tr><td>Configure native Shopify banner for agreed regions (both stores)</td><td>30 min</td></tr>
+        <tr><td>Fix &ldquo;Always on&rdquo; pixels: change impact.com, Microsoft Clarity, and Postscript to &ldquo;Optimized&rdquo; so they respect consent</td><td>30 min</td></tr>
+        <tr><td>QA: test banner, consent flow, TW fires after accept</td><td>1 h</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="covers">
+    <strong>Covers:</strong> All Shopify-managed pixels (TW, Attentive, Facebook, Google &amp; YouTube, Pinterest, TikTok, Yotpo, and the three &ldquo;Always on&rdquo; pixels above).<br>
+    <strong>Does not fix:</strong> Hardcoded theme scripts (Klaviyo, ShopMy, Postscript on Hue) still fire outside the consent framework. The Klaviyo pixel is disconnected on both stores &mdash; the only thing running Klaviyo right now is the hardcoded snippet, which bypasses consent.
+  </div>
+</div>
+
+<div class="tier" style="border-color: var(--accent);">
+  <div class="tier-head">
+    <span class="tier-title">Tier 2 &mdash; Banner + full cleanup</span>
+    <span class="tier-est">~6&ndash;9 h</span>
+  </div>
+  <p>Everything in Tier 1 plus investigating and resolving hardcoded scripts that bypass the consent framework.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Task</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td>Everything in Tier 1</td><td>3 h</td></tr>
+        <tr><td>Investigate hardcoded scripts vs. pixel/app requirements. <em>For each app (Klaviyo, Postscript, ShopMy, Dash Hudson): does the app require both theme code AND a pixel? Will removing theme code break frontend features (popups, forms, widgets)? Must be answered before removing anything.</em></td><td>1&ndash;1.5 h</td></tr>
+        <tr><td>Resolve Klaviyo (both stores). <em>Pixel is disconnected. The hardcoded snippet sends PII without consent but may also power onsite forms/popups. Determine what breaks if removed, then either remove and reconnect the pixel, or gate behind consent.</em></td><td>30 min</td></tr>
+        <tr><td>Resolve Postscript (Hue). <em>Has both a pixel (&ldquo;Always on&rdquo;) and hardcoded theme code. Theme code may be required for SMS popup/widget functionality &mdash; not just tracking. Verify before removing.</em></td><td>30 min</td></tr>
+        <tr><td>Resolve ShopMy (NoNonsense). <em>Pixel exists on both stores. Verify the hardcoded script is purely tracking (affiliate click tracker) and not required for other functionality.</em></td><td>15 min</td></tr>
+        <tr><td>Clean up DataGrail/GTM bridge code (both stores). <em>Appears non-functional based on prior investigation and GTM container status &mdash; verify during admin recon before removing.</em></td><td>30 min</td></tr>
+        <tr><td>Evaluate Dash Hudson social gallery (NoNonsense)</td><td>15 min</td></tr>
+        <tr><td>Extended QA: verify no tracking before consent, no broken popups/forms/widgets</td><td>1&ndash;1.5 h</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="covers">
+    <strong>Covers:</strong> Full consent compliance for everything in theme code and pixel settings &mdash; each hardcoded script investigated before being removed or gated, not blindly deleted.
+  </div>
+</div>
+
+<div class="tier">
+  <div class="tier-head">
+    <span class="tier-title">Tier 3 &mdash; Tiers 1+2 + GTM rebuild</span>
+    <span class="tier-est">Scope TBD</span>
+  </div>
+  <p>Everything above plus Phase 2: rebuilding the analytics pipeline so ad platforms (Google Ads, Meta) get clean conversion data for bid optimization.</p>
+  <p><strong>This scope depends on what Phidel is handling vs. what we handle.</strong> Key questions for the Phidel conversation:</p>
+  <ul>
+    <li>Who builds the tags, triggers, and variables in the new GTM containers?</li>
+    <li>Who builds the consent bridge (Shopify consent &rarr; Google Consent Mode v2)?</li>
+    <li>End-to-end QA &mdash; joint or separate?</li>
+  </ul>
+  <div class="covers">
+    <strong>We should not estimate Tier 3 until after that conversation.</strong> A Phase 2 playbook exists internally and can inform the scoping discussion.
+  </div>
+</div>
+
+<div class="rec">
+  <strong>Recommendation: Tier 2.</strong> Tier 1 gets TW working and covers most pixels, but leaves Klaviyo sending customer emails and names on every page with no consent &mdash; that&rsquo;s the hardest exposure to defend. The cost difference is ~3 hours. Tier 3 (GTM rebuild) can follow on its own timeline &mdash; the playbook is ready when Phidel is.
+</div>
+
+<!-- ============ PIXEL STATUS ============ -->
+<h2>Current Pixel Status</h2>
+<p style="font-size:0.82rem; color:var(--text-2);">From Shopify admin (Settings &gt; Customer events), 2026-09-21.</p>
+
+<div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Pixel</th><th>Hue</th><th>NoNonsense</th><th>Consent</th><th>Issue?</th></tr></thead>
+    <tbody>
+      <tr><td>Attentive</td><td><span class="pill green">Active</span></td><td><span class="pill green">Active</span></td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td>Collabs</td><td><span class="pill green">Active</span></td><td>&mdash;</td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td>Facebook &amp; Instagram</td><td><span class="pill green">Active</span> S+W</td><td><span class="pill green">Active</span> S+W</td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td>Google &amp; YouTube</td><td><span class="pill green">Active</span> S+W</td><td><span class="pill green">Active</span> S+W</td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td>Pinterest</td><td><span class="pill green">Active</span> S+W</td><td><span class="pill green">Active</span> S+W</td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td>TikTok</td><td><span class="pill green">Active</span> S+W</td><td><span class="pill green">Active</span> S+W</td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td>TripleWhale</td><td><span class="pill green">Active</span></td><td><span class="pill green">Active</span></td><td>Optimized</td><td>Drops conversions on NoNo (no consent set)</td></tr>
+      <tr><td>Yotpo Reviews</td><td><span class="pill green">Active</span></td><td>Disconnected</td><td>Optimized</td><td>&mdash;</td></tr>
+      <tr><td><strong>impact.com</strong></td><td><span class="pill red">Active</span></td><td><span class="pill red">Active</span></td><td><strong>Always on</strong></td><td>Fires without consent</td></tr>
+      <tr><td><strong>Microsoft Clarity</strong></td><td>&mdash;</td><td><span class="pill red">Active</span></td><td><strong>Always on</strong></td><td>Session recording without consent</td></tr>
+      <tr><td><strong>Postscript SMS</strong></td><td><span class="pill red">Active</span></td><td><span class="pill red">Active</span></td><td><strong>Always on</strong></td><td>Fires without consent</td></tr>
+      <tr><td>Elevar - Checkout</td><td>Disconnected</td><td>Disconnected</td><td>&mdash;</td><td>Not active</td></tr>
+      <tr><td>Google AdWords</td><td>Disconnected</td><td>Disconnected</td><td>&mdash;</td><td>Not active</td></tr>
+      <tr><td>GTM (Cart.com)</td><td>Disconnected</td><td>Disconnected</td><td>&mdash;</td><td>Dead containers</td></tr>
+      <tr><td>Klaviyo</td><td>Disconnected</td><td>Disconnected</td><td>&mdash;</td><td>Only hardcoded snippet runs</td></tr>
+      <tr><td>Loop Returns</td><td>Disconnected</td><td>Disconnected</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td>Swish (Wishlist King)</td><td>Disconnected</td><td>Disconnected</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td>ShopMy Checkout</td><td><span class="pill green">Active</span></td><td><span class="pill green">Active</span></td><td>&mdash;</td><td>Also hardcoded in theme (NoNo)</td></tr>
+      <tr><td>Upsellit pixel</td><td><span class="pill green">Active</span></td><td><span class="pill green">Active</span></td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td>noibu-pixel</td><td><span class="pill green">Active</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ DECISIONS ============ -->
+<div class="needs">
+  <h3>We need three decisions before configuring the banner</h3>
+  <ol>
+    <li><strong>Which regions</strong> should see the consent banner? (UK/EEA is automatic if those are active markets. US, Canada, and others are opt-in.)</li>
+    <li><strong>Do you need a US data-sharing opt-out page?</strong> (Depends on whether your business qualifies under CCPA/CPRA.)</li>
+    <li><strong>Is your privacy policy current?</strong> It must be published and linked before the banner can go live.</li>
+  </ol>
+</div>
+
+<div class="footer">
+  Audit performed 2026-09-21. Pixel status from Shopify admin screenshots. Theme code reviewed across both stores.
+</div>

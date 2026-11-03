@@ -69,7 +69,7 @@ File paths, line numbers, and code below reflect a review at authoring time — 
 
 - Preview: `https://hyperlite.myshopify.com/?preview_theme_id=187329314861` (confirm `window.Shopify.theme.id`).
 - Signed out, desktop (1440px) and tablet (800px): account icon shows the "!" badge over the top-right of the head; link goes to the sign-in page; aria-label "Login".
-- Sign in, return to any storefront page: badge gone, glyph in the same spot; link goes to the account page; aria-label "Account".
+- Sign in, return to any storefront page: badge gone, icon in the same spot; link goes to the account page; aria-label "Account".
 - Compare the account glyph's stroke and size against the search and cart icons.
 - Phone (390px): header has no account icon, same as before.
 

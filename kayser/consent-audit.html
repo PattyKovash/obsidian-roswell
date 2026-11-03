@@ -1,0 +1,778 @@
+<title>Consent & Tracking Audit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #F6F7FA;
+    --surface: #FFFFFF;
+    --text: #1A1D23;
+    --text-secondary: #4A4F5C;
+    --text-tertiary: #6B7280;
+    --border: #D8DCE4;
+    --border-light: #E8EBF0;
+    --accent: #1B6B6D;
+    --accent-light: #E8F4F4;
+    --critical-bg: #FDF0EF;
+    --critical-text: #9B2C23;
+    --critical-border: #E8ADA8;
+    --high-bg: #FDF6E8;
+    --high-text: #7A5A00;
+    --high-border: #E0C878;
+    --medium-bg: #EDF3FC;
+    --medium-text: #2B5EA7;
+    --medium-border: #A8C4E8;
+    --unknown-bg: #F0F1F4;
+    --unknown-text: #4A4F5C;
+    --unknown-border: #C8CCD4;
+    --yes-text: #1B6B3A;
+    --yes-bg: #E8F5ED;
+    --no-text: #9B2C23;
+    --no-bg: #FDF0EF;
+    --nav-bg: rgba(246,247,250,0.92);
+    --code-bg: #EDEEF2;
+    --stripe: #FAFBFC;
+    --display: 'DM Serif Display', Georgia, serif;
+    --body: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111318;
+      --surface: #1A1D24;
+      --text: #E4E6EB;
+      --text-secondary: #A0A4B0;
+      --text-tertiary: #6B7080;
+      --border: #2E323C;
+      --border-light: #252830;
+      --accent: #3AADAF;
+      --accent-light: #1A2E2E;
+      --critical-bg: #2C1614;
+      --critical-text: #F0A8A2;
+      --critical-border: #5C2620;
+      --high-bg: #2A2210;
+      --high-text: #E8C86A;
+      --high-border: #5A4820;
+      --medium-bg: #141E30;
+      --medium-text: #7EB0E8;
+      --medium-border: #2A4060;
+      --unknown-bg: #1E2028;
+      --unknown-text: #888DA0;
+      --unknown-border: #3A3E48;
+      --yes-text: #5EC87A;
+      --yes-bg: #142018;
+      --no-text: #F0A8A2;
+      --no-bg: #2C1614;
+      --nav-bg: rgba(17,19,24,0.92);
+      --code-bg: #22252E;
+      --stripe: #161820;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111318;
+    --surface: #1A1D24;
+    --text: #E4E6EB;
+    --text-secondary: #A0A4B0;
+    --text-tertiary: #6B7080;
+    --border: #2E323C;
+    --border-light: #252830;
+    --accent: #3AADAF;
+    --accent-light: #1A2E2E;
+    --critical-bg: #2C1614;
+    --critical-text: #F0A8A2;
+    --critical-border: #5C2620;
+    --high-bg: #2A2210;
+    --high-text: #E8C86A;
+    --high-border: #5A4820;
+    --medium-bg: #141E30;
+    --medium-text: #7EB0E8;
+    --medium-border: #2A4060;
+    --unknown-bg: #1E2028;
+    --unknown-text: #888DA0;
+    --unknown-border: #3A3E48;
+    --yes-text: #5EC87A;
+    --yes-bg: #142018;
+    --no-text: #F0A8A2;
+    --no-bg: #2C1614;
+    --nav-bg: rgba(17,19,24,0.92);
+    --code-bg: #22252E;
+    --stripe: #161820;
+  }
+
+  body {
+    font-family: var(--body);
+    background: var(--bg);
+    color: var(--text);
+    padding-inline: 24px;
+    line-height: 1.55;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; }
+  h1 { font-size: 2rem; margin: 0 0 0.25em; letter-spacing: -0.01em; }
+  h2 { font-size: 1.5rem; margin: 2.5em 0 0.6em; padding-bottom: 0.4em; border-bottom: 2px solid var(--accent); text-wrap: balance; }
+  h3 { font-size: 1.15rem; margin: 1.8em 0 0.5em; color: var(--text-secondary); }
+
+  .header { padding-top: 3em; padding-bottom: 1.5em; border-bottom: 1px solid var(--border); }
+  .header p { color: var(--text-secondary); font-size: 0.875rem; margin: 0.3em 0 0; }
+  .header .date { font-family: var(--mono); font-size: 0.8rem; color: var(--text-tertiary); }
+
+  .nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: var(--nav-bg); backdrop-filter: blur(12px);
+    display: flex; gap: 6px; flex-wrap: wrap;
+    padding: 10px 0; margin-bottom: 1em;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav a {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+    color: var(--accent); text-decoration: none;
+    padding: 4px 10px; border-radius: 4px;
+    border: 1px solid var(--border-light);
+    background: var(--surface);
+    white-space: nowrap;
+  }
+  .nav a:hover { background: var(--accent-light); }
+
+  .severity {
+    display: inline-block; font-family: var(--mono); font-size: 0.7rem;
+    font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 3px; vertical-align: middle;
+  }
+  .severity.critical { background: var(--critical-bg); color: var(--critical-text); border: 1px solid var(--critical-border); }
+  .severity.high { background: var(--high-bg); color: var(--high-text); border: 1px solid var(--high-border); }
+  .severity.medium { background: var(--medium-bg); color: var(--medium-text); border: 1px solid var(--medium-border); }
+  .severity.unknown { background: var(--unknown-bg); color: var(--unknown-text); border: 1px solid var(--unknown-border); }
+
+  .consent-yes { font-family: var(--mono); font-size: 0.8rem; font-weight: 500; color: var(--yes-text); background: var(--yes-bg); padding: 1px 6px; border-radius: 3px; }
+  .consent-no { font-family: var(--mono); font-size: 0.8rem; font-weight: 500; color: var(--no-text); background: var(--no-bg); padding: 1px 6px; border-radius: 3px; }
+  .consent-unk { font-family: var(--mono); font-size: 0.8rem; font-weight: 500; color: var(--unknown-text); background: var(--unknown-bg); padding: 1px 6px; border-radius: 3px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1em 0 1.5em; }
+  th {
+    text-align: left; font-family: var(--mono); font-size: 0.7rem;
+    font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-tertiary); padding: 8px 12px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--stripe); }
+  .tbl-wrap { overflow-x: auto; }
+
+  code, .file {
+    font-family: var(--mono); font-size: 0.8rem;
+    background: var(--code-bg); padding: 1px 5px; border-radius: 3px;
+    word-break: break-all;
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px; margin: 1.2em 0;
+    background: var(--accent-light);
+    font-size: 0.875rem;
+  }
+  .callout p { margin: 0.3em 0; }
+  .callout strong { color: var(--accent); }
+
+  .risk-list { list-style: none; padding: 0; margin: 1em 0; display: flex; flex-direction: column; gap: 10px; }
+  .risk-list li {
+    padding: 10px 14px; border: 1px solid var(--border-light);
+    border-radius: 4px; font-size: 0.875rem;
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--surface);
+  }
+  .risk-list li > span:first-child { flex-shrink: 0; margin-top: 1px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1em 0; display: flex; flex-direction: column; gap: 6px; }
+  .checklist li {
+    font-size: 0.875rem; padding: 6px 0;
+    display: flex; gap: 8px; align-items: baseline;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .checklist li::before {
+    content: '☐'; font-size: 1rem; flex-shrink: 0;
+    color: var(--text-tertiary);
+  }
+
+  .store-label {
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5em;
+  }
+
+  .cross-ref {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 16px 20px; margin: 2em 0; border-radius: 4px;
+  }
+  .cross-ref h3 { margin-top: 0; color: var(--text); }
+
+  .summary-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 1.5em 0;
+  }
+  .summary-cell {
+    padding: 16px; border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface);
+  }
+  .summary-cell .store-label { margin-bottom: 0.8em; }
+  .stat { font-family: var(--display); font-size: 1.8rem; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.2em; }
+
+  @media (max-width: 600px) {
+    body { padding-inline: 16px; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.25rem; }
+    .summary-grid { grid-template-columns: 1fr; }
+    th, td { padding: 8px 8px; font-size: 0.8rem; }
+  }
+
+  .mp-draft {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 20px 24px; margin: 1.5em 0; border-radius: 4px;
+    font-size: 0.875rem;
+  }
+  .mp-draft .label {
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-bottom: 0.6em;
+  }
+</style>
+
+<div class="header">
+  <h1>Consent &amp; Tracking Audit</h1>
+  <p>Two-store theme audit for cookie consent, GTM, and third-party tracking compliance</p>
+  <p class="date">2026-09-21 &middot; Read-only audit &middot; No changes made</p>
+</div>
+
+<nav class="nav">
+  <a href="#summary">Summary</a>
+  <a href="#hue-gtm">Hue: GTM</a>
+  <a href="#hue-tracking">Hue: Tracking</a>
+  <a href="#hue-banner">Hue: Banner</a>
+  <a href="#hue-consent">Hue: Consent API</a>
+  <a href="#hue-risks">Hue: Risks</a>
+  <a href="#nono-gtm">NoNo: GTM</a>
+  <a href="#nono-tracking">NoNo: Tracking</a>
+  <a href="#nono-consent">NoNo: Consent</a>
+  <a href="#nono-risks">NoNo: Risks</a>
+  <a href="#cross">Cross-Store</a>
+  <a href="#human">Human Checks</a>
+  <a href="#mp">MP Draft</a>
+</nav>
+
+<!-- ============ SUMMARY ============ -->
+<section id="summary">
+  <h2>At a Glance</h2>
+  <div class="summary-grid">
+    <div class="summary-cell">
+      <div class="store-label">Hue (Brand A)</div>
+      <div class="stat">2</div><div class="stat-label">critical findings</div>
+      <div style="margin-top:0.6em; font-size:0.85rem; color:var(--text-secondary)">
+        Dark-pattern CSS hides decline button. Postscript SDK loads unconditionally on line 1 of &lt;head&gt;. Klaviyo sends PII without consent. GTM container ID unknown (metafield-driven). No Google Consent Mode v2.
+      </div>
+    </div>
+    <div class="summary-cell">
+      <div class="store-label">NoNonsense (Brand B)</div>
+      <div class="stat">0</div><div class="stat-label">banner or consent mechanism</div>
+      <div style="margin-top:0.6em; font-size:0.85rem; color:var(--text-secondary)">
+        No cookie banner exists. Klaviyo, ShopMy affiliate tracker, and Dash Hudson all fire without consent. Same GTM/DataGrail bridge code as Hue but likely inert. Microsoft Clarity enabled as app embed.
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>Shared pattern:</strong> Both themes use an identical <code>c-gtm-datagrail.liquid</code> snippet. GTM container IDs are metafield-driven (not hardcoded). The DataGrail consent bridge code exists in both but depends on DataGrail loading through GTM&mdash;if the old GTM container is inaccessible, this bridge is dead code on both stores.</p>
+  </div>
+</section>
+
+<!-- ============ HUE: GTM ============ -->
+<section id="hue-gtm">
+  <h2>Hue &mdash; GTM</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Location</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>GTM loader</td>
+          <td><code>snippets/c-gtm-datagrail.liquid:11-21</code></td>
+          <td>Standard GTM init. Container ID pulled from <code>shop.metafields.custom.cart_gtm_id</code>&mdash;no hardcoded <code>GTM-XXXXXXX</code> anywhere in the theme. Gated by metafield being non-blank and <code>request.design_mode</code> being false.</td>
+        </tr>
+        <tr>
+          <td>Rendered from</td>
+          <td><code>layout/theme.liquid:101</code></td>
+          <td><code>{% render 'c-gtm-datagrail' %}</code></td>
+        </tr>
+        <tr>
+          <td>Noscript iframe</td>
+          <td>&mdash;</td>
+          <td>None found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <p><strong>Key unknown:</strong> The actual GTM container ID is stored as a shop metafield. If the old, inaccessible container is still set there, GTM is still loading it on the live site. A human must check the metafield value or inspect the live page source.</p>
+  </div>
+</section>
+
+<!-- ============ HUE: TRACKING ============ -->
+<section id="hue-tracking">
+  <h2>Hue &mdash; Hardcoded Tracking Scripts</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Vendor</th><th>Location</th><th>What it does</th><th>Consent?</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Postscript</strong> (SMS)</td>
+          <td><code>layout/theme.liquid:4</code></td>
+          <td>Loads <code>sdk.postscript.io/sdk.bundle.js</code> with hardcoded shopId=428163. First line after doctype, before even &lt;meta&gt; tags.</td>
+          <td><span class="consent-no">No</span></td>
+          <td>Move to Shopify custom pixel or add consent gate</td>
+        </tr>
+        <tr>
+          <td><strong>Klaviyo</strong> (theme snippet)</td>
+          <td><code>snippets/c-klaviyo.liquid:1-5</code><br>rendered at <code>theme.liquid:328</code></td>
+          <td>Loads <code>klaviyo.js</code>, pushes identify (email, name), plus Homepage Visit, Category View, Cart View, Search, Viewed Product events.</td>
+          <td><span class="consent-no">No</span></td>
+          <td>Remove hardcoded snippet; rely on Klaviyo app embed only</td>
+        </tr>
+        <tr>
+          <td><strong>Klaviyo</strong> (app embed)</td>
+          <td><code>settings_data.json:87-91</code></td>
+          <td>Separate app embed <em>in addition to</em> the hardcoded snippet. Potential double-loading.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Verify app pixel permissions in admin</td>
+        </tr>
+        <tr>
+          <td><strong>Attentive</strong> (tag)</td>
+          <td><code>settings_data.json:112-116</code></td>
+          <td>App embed block, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Attentive</strong> (footer form)</td>
+          <td><code>snippets/rs-attentive-footer.liquid</code><br>via <code>sections/footer.liquid:66</code></td>
+          <td>Custom email signup form hitting <code>attentive-proxy.rs-workers.workers.dev</code>. Form submission, not a tracking pixel.</td>
+          <td>N/A</td>
+          <td>Low risk; document proxy endpoint in privacy policy</td>
+        </tr>
+        <tr>
+          <td><strong>Triple Whale</strong></td>
+          <td><code>settings_data.json:92-96</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Impact.com</strong></td>
+          <td><code>settings_data.json:102-106</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Yotpo</strong> (Reviews + Loyalty)</td>
+          <td><code>settings_data.json:74-86</code></td>
+          <td>Two app embed blocks, both enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Rebuy</strong></td>
+          <td><code>settings_data.json:107-111</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>AMP Back in Stock</strong></td>
+          <td><code>settings_data.json:97-101</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Loop Returns</strong></td>
+          <td><code>settings_data.json:117-133</code></td>
+          <td>Two app embed blocks (coverage disabled, storefront enabled).</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.85rem; color:var(--text-secondary)">No hardcoded <code>gtag.js</code>, GA4 (<code>G-</code>), Google Ads (<code>AW-</code>), Meta (<code>fbq</code>), TikTok (<code>ttq</code>), or Pinterest (<code>pintrk</code>) found in theme files.</p>
+</section>
+
+<!-- ============ HUE: BANNER ============ -->
+<section id="hue-banner">
+  <h2>Hue &mdash; Existing Cookie Banner</h2>
+
+  <ul class="risk-list">
+    <li>
+      <span><span class="severity critical">Critical</span></span>
+      <div>
+        <strong>Dark-pattern CSS hides the decline button.</strong>
+        In <code>config/settings_data.json:311</code>, under <code>platform_customizations &gt; custom_css</code>:
+        <div style="margin-top:0.5em; padding:8px 12px; background:var(--code-bg); border-radius:3px; font-family:var(--mono); font-size:0.78rem; overflow-x:auto;">
+          #shopify-pc__banner__btn-decline,<br>#shopify-pc__prefs__header-decline { display: none; }
+        </div>
+        <p style="margin-top:0.5em">This hides both the main "Decline" button and the preferences-modal "Decline" button on Shopify's native privacy banner. Visitors see only "Accept" with no equally prominent way to refuse. This is a textbook GDPR/ePrivacy violation.</p>
+        <p><strong>Location:</strong> Added via Shopify admin (Theme Settings &gt; Custom CSS), not in liquid files. Must be removed in admin.</p>
+      </div>
+    </li>
+  </ul>
+
+  <h3>How the banner works today</h3>
+  <p style="font-size:0.875rem">The banner is rendered by <strong>DataGrail</strong>, which loads through GTM (not hardcoded in the theme). The snippet <code>c-gtm-datagrail.liquid</code> provides the bridge between DataGrail's <code>DG_BANNER_API</code> and Shopify's Customer Privacy API. If the GTM container is the old, inaccessible one, DataGrail's banner may still be loading through it&mdash;removing or swapping the GTM container will also kill the DataGrail banner, which is the intended outcome since it's being replaced with Shopify's native banner.</p>
+</section>
+
+<!-- ============ HUE: CONSENT API ============ -->
+<section id="hue-consent">
+  <h2>Hue &mdash; Consent API &amp; dataLayer</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>API/Call</th><th>Location</th><th>What it does</th><th>Concern?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>Shopify.loadFeatures</code></td>
+          <td><code>c-gtm-datagrail.liquid:42-47</code></td>
+          <td>Loads consent-tracking-api. Proper usage.</td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><code>setTrackingConsent</code></td>
+          <td><code>c-gtm-datagrail.liquid:53-59</code></td>
+          <td>Sets consent from DataGrail banner choices. Sets <code>analytics</code> and <code>marketing</code> from <code>DG_BANNER_API.categoryEnabled()</code>.</td>
+          <td><span class="severity high">High</span> <code>preferences: true</code> is hardcoded (line 56). Preference consent is always granted regardless of visitor choice.</td>
+        </tr>
+        <tr>
+          <td><code>dataLayer.push</code></td>
+          <td><code>c-gtm-datagrail.liquid:13-14</code></td>
+          <td>Standard GTM init: <code>{'gtm.start': ...}</code></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><code>gtag('consent', ...)</code></td>
+          <td>&mdash;</td>
+          <td>Not found anywhere. No Google Consent Mode v2 implemented.</td>
+          <td><span class="severity medium">Medium</span> Phase 2 concern</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.85rem; color:var(--text-secondary)">No <code>visitorConsentCollected</code> or <code>trackingConsentAccepted</code> event listeners found. The entire consent flow is mediated through DataGrail callbacks, not Shopify's native events.</p>
+</section>
+
+<!-- ============ HUE: RISKS ============ -->
+<section id="hue-risks">
+  <h2>Hue &mdash; Risks &amp; Recommended Actions</h2>
+  <ul class="risk-list">
+    <li>
+      <span><span class="severity critical">Critical</span></span>
+      <div><strong>Remove dark-pattern CSS</strong> from <code>settings_data.json</code> (platform_customizations &gt; custom_css). This hides the decline button and constitutes a GDPR violation. Must be done in Shopify admin.</div>
+    </li>
+    <li>
+      <span><span class="severity critical">Critical</span></span>
+      <div><strong>Postscript SDK fires unconditionally</strong> at <code>theme.liquid:4</code>. No consent check. Must be moved to a Shopify custom pixel (so the consent framework governs it) or gated behind consent logic.</div>
+    </li>
+    <li>
+      <span><span class="severity high">High</span></span>
+      <div><strong>Klaviyo loads unconditionally</strong> and sends PII (email, name) plus behavioral tracking. The hardcoded snippet (<code>c-klaviyo.liquid</code>) should be removed; Klaviyo should operate solely through its app embed, which the consent framework can govern. Currently loading twice (snippet + app embed).</div>
+    </li>
+    <li>
+      <span><span class="severity high">High</span></span>
+      <div><strong><code>preferences: true</code> hardcoded</strong> in the DataGrail bridge. Preference consent is never actually asked for. Becomes moot when DataGrail is removed but indicates the prior implementation was flawed.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Medium</span></span>
+      <div><strong>GTM container ID unknown.</strong> Stored in <code>shop.metafields.custom.cart_gtm_id</code>. If the old inaccessible container is set, GTM is still loading it. Check the metafield value in admin or inspect the live site.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Medium</span></span>
+      <div><strong>No Google Consent Mode v2.</strong> No <code>gtag('consent', 'default', ...)</code> or <code>gtag('consent', 'update', ...)</code> calls anywhere. Phase 2 concern&mdash;must be built before any GTM tags go live.</div>
+    </li>
+    <li>
+      <span><span class="severity unknown">Check</span></span>
+      <div><strong>8 app embeds need admin verification.</strong> Triple Whale, Impact.com, Attentive, Yotpo (2), Rebuy, AMP Back in Stock, Loop Returns. Their consent behavior depends on pixel permission settings in Shopify admin.</div>
+    </li>
+  </ul>
+</section>
+
+<!-- ============ NONO: GTM ============ -->
+<section id="nono-gtm">
+  <h2>NoNonsense &mdash; GTM</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Location</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>GTM loader</td>
+          <td><code>snippets/c-gtm-datagrail.liquid:11-22</code></td>
+          <td>Identical to Hue. Container ID from <code>shop.metafields.custom.cart_gtm_id</code>. Gated by metafield non-blank + not design mode.</td>
+        </tr>
+        <tr>
+          <td>Rendered from</td>
+          <td><code>layout/theme.liquid:102</code></td>
+          <td><code>{% render 'c-gtm-datagrail' %}</code></td>
+        </tr>
+        <tr>
+          <td>Noscript iframe</td>
+          <td>&mdash;</td>
+          <td>None found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.85rem; color:var(--text-secondary)">Same metafield-driven pattern as Hue. A human must check whether <code>cart_gtm_id</code> is populated on this store.</p>
+</section>
+
+<!-- ============ NONO: TRACKING ============ -->
+<section id="nono-tracking">
+  <h2>NoNonsense &mdash; Hardcoded Tracking Scripts</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Vendor</th><th>Location</th><th>What it does</th><th>Consent?</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Klaviyo</strong> (theme snippet)</td>
+          <td><code>snippets/c-klaviyo.liquid:1-209</code><br>rendered at <code>theme.liquid:344</code></td>
+          <td>Loads <code>klaviyo.js</code>, pushes identify (email, name), Homepage Visit, Category View, Cart View, Search, Viewed Product events.</td>
+          <td><span class="consent-no">No</span></td>
+          <td>Remove hardcoded snippet; rely on app embed</td>
+        </tr>
+        <tr>
+          <td><strong>ShopMy</strong> (affiliate)</td>
+          <td><code>layout/theme.liquid:363</code></td>
+          <td>Loads <code>static.shopmy.us/Affiliates/sms_aff_clicktrack.js</code> with domain=nononsense.com. Sets 30-day cookie on every page load.</td>
+          <td><span class="consent-no">No</span></td>
+          <td>Move to custom pixel or add consent gate</td>
+        </tr>
+        <tr>
+          <td><strong>Dash Hudson</strong></td>
+          <td><code>blocks/c-block-dashhudson.liquid:16-27</code></td>
+          <td>Loads <code>cdn.dashhudson.com</code> social gallery carousel script when block is placed.</td>
+          <td><span class="consent-no">No</span></td>
+          <td>Evaluate if consent gate is needed (functional vs. marketing)</td>
+        </tr>
+        <tr>
+          <td><strong>Klaviyo</strong> (app embed)</td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled. In addition to hardcoded snippet.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Microsoft Clarity</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>Two app embed blocks, both enabled. Session recording &amp; heatmaps.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions&mdash;session recording has high privacy sensitivity</td>
+        </tr>
+        <tr>
+          <td><strong>Triple Whale</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Impact.com</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Yotpo</strong> (Reviews + Loyalty)</td>
+          <td><code>settings_data.json</code></td>
+          <td>App embeds, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Attentive</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Rebuy</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>AMP Back in Stock</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+        <tr>
+          <td><strong>Loop Returns</strong></td>
+          <td><code>settings_data.json</code></td>
+          <td>App embed, enabled.</td>
+          <td><span class="consent-unk">Unknown</span></td>
+          <td>Check app pixel permissions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.85rem; color:var(--text-secondary)">No hardcoded <code>gtag.js</code>, GA4, Google Ads, Meta, TikTok, or Pinterest found in theme files. Note: NoNonsense has <strong>ShopMy</strong> and <strong>Dash Hudson</strong> (not present on Hue) and <strong>Microsoft Clarity</strong> (not present on Hue), but does <strong>not</strong> have Postscript (which Hue does).</p>
+</section>
+
+<!-- ============ NONO: CONSENT ============ -->
+<section id="nono-consent">
+  <h2>NoNonsense &mdash; Banner &amp; Consent</h2>
+
+  <div class="callout">
+    <p><strong>Confirmed: No cookie banner exists on this store.</strong> No consent popup, GDPR bar, or third-party consent library (OneTrust, Cookiebot, etc.) found in theme code.</p>
+  </div>
+
+  <h3>Dead consent bridge code</h3>
+  <p style="font-size:0.875rem">The <code>c-gtm-datagrail.liquid</code> snippet contains DataGrail bridge code identical to Hue&mdash;it references <code>DG_BANNER_API</code>, registers callbacks on <code>window.dgEvent</code>, and calls <code>setTrackingConsent</code>. But DataGrail is not loaded from theme code; it would need to load through GTM. If DataGrail is not installed or the GTM container is dead, this code never fires, meaning <strong>Shopify's consent state is never explicitly set</strong> by the theme. In regions where the native banner is not configured, all processing defaults to allowed.</p>
+
+  <h3>Same <code>preferences: true</code> issue</h3>
+  <p style="font-size:0.875rem">The bridge code at <code>c-gtm-datagrail.liquid:53-61</code> hardcodes <code>preferences: true</code> and maps <code>sale_of_data</code> to <code>categoryEnabled("marketing")</code>&mdash;same flaw as Hue. The <code>sale_of_data</code> mapping may not be correct for CCPA/CPRA opt-out requirements.</p>
+
+  <h3>dataLayer</h3>
+  <p style="font-size:0.875rem">Only the standard GTM init push (<code>{'gtm.start': ...}</code>) exists. No <code>gtag('consent', ...)</code> calls, no custom dataLayer pushes for e-commerce events.</p>
+</section>
+
+<!-- ============ NONO: RISKS ============ -->
+<section id="nono-risks">
+  <h2>NoNonsense &mdash; Risks &amp; Recommended Actions</h2>
+  <ul class="risk-list">
+    <li>
+      <span><span class="severity critical">Critical</span></span>
+      <div><strong>No consent mechanism at all.</strong> No banner, no consent code, nothing governing when tracking fires. All scripts run on every page load for every visitor worldwide. Enable Shopify's native banner for the agreed regions.</div>
+    </li>
+    <li>
+      <span><span class="severity high">High</span></span>
+      <div><strong>Klaviyo fires unconditionally</strong> with PII (email, name) and behavioral events. Same issue as Hue&mdash;remove the hardcoded snippet, keep the app embed.</div>
+    </li>
+    <li>
+      <span><span class="severity high">High</span></span>
+      <div><strong>ShopMy sets a 30-day affiliate cookie</strong> on every page load at <code>theme.liquid:363</code>. No consent check. Move to custom pixel or gate behind consent.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Medium</span></span>
+      <div><strong>Microsoft Clarity</strong> (session recording) is enabled as an app embed. Session recording has elevated privacy sensitivity. Verify its pixel permissions are set to "Required" in admin.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Medium</span></span>
+      <div><strong>Dash Hudson</strong> loads unconditionally when the block is placed. Evaluate whether this is functional content (a gallery) or marketing tracking, and gate accordingly.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Medium</span></span>
+      <div><strong>GTM container ID unknown.</strong> Same metafield pattern as Hue. Check if <code>cart_gtm_id</code> is populated.</div>
+    </li>
+    <li>
+      <span><span class="severity unknown">Check</span></span>
+      <div><strong>11 app embeds need admin verification.</strong> Includes Microsoft Clarity, Triple Whale, Impact.com, Attentive, Yotpo (2), Rebuy, AMP Back in Stock, Klaviyo, Loop Returns. Check Settings &gt; Customer events for each.</div>
+    </li>
+  </ul>
+</section>
+
+<!-- ============ CROSS-STORE ============ -->
+<section id="cross">
+  <h2>Cross-Store Observations</h2>
+  <div class="cross-ref">
+    <h3>Shared code, divergent tracking</h3>
+    <p style="font-size:0.875rem; margin-bottom:0.8em">Both themes share <code>c-gtm-datagrail.liquid</code> and <code>c-klaviyo.liquid</code> as common snippets, likely from the same base theme or developer. The DataGrail consent bridge is identical. However, each store has distinct additional scripts:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Script</th><th>Hue</th><th>NoNonsense</th></tr></thead>
+        <tbody>
+          <tr><td>Postscript SMS</td><td>Yes (hardcoded, no consent)</td><td>No</td></tr>
+          <tr><td>ShopMy affiliate</td><td>No</td><td>Yes (hardcoded, no consent)</td></tr>
+          <tr><td>Dash Hudson</td><td>No</td><td>Yes (hardcoded, no consent)</td></tr>
+          <tr><td>Microsoft Clarity</td><td>No</td><td>Yes (app embed)</td></tr>
+          <tr><td>Klaviyo (hardcoded)</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Klaviyo (app embed)</td><td>Yes (double-load risk)</td><td>Yes (double-load risk)</td></tr>
+          <tr><td>Dark-pattern CSS</td><td>Yes (hides decline btn)</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="cross-ref">
+    <h3>What this means for Phase 1 scope</h3>
+    <p style="font-size:0.875rem">The work is <strong>not</strong> just "enable the native banner." Phase 1 must include:</p>
+    <ul style="font-size:0.875rem; padding-left:1.2em; margin:0.5em 0">
+      <li><strong>Hue:</strong> Remove dark-pattern CSS (admin). Remove or consent-gate Postscript (<code>theme.liquid:4</code>). Remove hardcoded Klaviyo snippet. Clean up or remove the DataGrail bridge code. Verify/swap GTM metafield.</li>
+      <li><strong>NoNonsense:</strong> Remove or consent-gate ShopMy (<code>theme.liquid:363</code>). Evaluate Dash Hudson. Remove hardcoded Klaviyo snippet. Clean up or remove the DataGrail bridge code. Verify/swap GTM metafield.</li>
+      <li><strong>Both:</strong> Enable native Shopify banner for agreed regions. Audit all custom pixel permission settings in admin. Verify app embed consent behavior.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ HUMAN CHECKS ============ -->
+<section id="human">
+  <h2>Required Human Checks (Shopify Admin)</h2>
+  <p style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:0.5em">These cannot be determined from theme code. Someone with admin access must check both stores.</p>
+
+  <h3>Both stores</h3>
+  <ul class="checklist">
+    <li><strong>Settings &gt; Customer events:</strong> List all app pixels and custom pixels. For each custom pixel, check the Permission setting (Required vs. Not required).</li>
+    <li><strong>Settings &gt; Customer privacy:</strong> Current banner status, configured regions, data sharing opt-out page, privacy policy link.</li>
+    <li><strong>Shop metafield <code>custom.cart_gtm_id</code>:</strong> Is it populated? What container ID is stored? Is it the old (inaccessible) or new container?</li>
+    <li><strong>Installed apps:</strong> Is DataGrail installed/active? Is the Google &amp; YouTube channel app installed? Meta? Others?</li>
+    <li><strong>Sales channel apps:</strong> Which are installed&mdash;Google &amp; YouTube, Meta, TikTok, Pinterest?</li>
+    <li><strong>Privacy policy:</strong> Must be published and linked before the native banner can be enabled.</li>
+  </ul>
+
+  <h3>Hue only</h3>
+  <ul class="checklist">
+    <li><strong>Platform custom CSS:</strong> Confirm the dark-pattern CSS (<code>#shopify-pc__banner__btn-decline { display: none }</code>) and remove it via Theme Customize &gt; Theme Settings.</li>
+    <li><strong>Live site:</strong> Visit the live site from an EU IP / VPN. Does the DataGrail banner currently appear? Is the decline button hidden?</li>
+  </ul>
+
+  <h3>NoNonsense only</h3>
+  <ul class="checklist">
+    <li><strong>Microsoft Clarity pixel permissions:</strong> Given session recording sensitivity, confirm its permission is set to "Required" (analytics + marketing purposes).</li>
+  </ul>
+</section>
+
+<!-- ============ MP DRAFT CORRECTIONS ============ -->
+<section id="mp">
+  <h2>MP Draft &mdash; Issues &amp; Corrections</h2>
+
+  <div class="mp-draft">
+    <div class="label">Original draft</div>
+    <p><em>Scope: This 6-hour estimate is strictly for the native shopify consent setup. It excludes GTM/analytics integration, so no data will be sent to tracking tools yet.</em></p>
+    <p><em>Recommendation: While we ideally advise routing all tracking through GTM, as an immediate first step toward full compliance, we recommend implementing a consent banner now.</em></p>
+    <p><em>Next Steps: Please let us know if you'd like to proceed with the direct setup now, start with an audit of existing Shopify scripts/tracking, or hold off and do everything in one go.</em></p>
+  </div>
+
+  <h3>What's wrong</h3>
+  <ul class="risk-list">
+    <li>
+      <span><span class="severity critical">Issue</span></span>
+      <div><strong>"No data will be sent to tracking tools yet"</strong> is false. Data is <em>already</em> being sent, right now, without consent. Postscript, Klaviyo, and ShopMy fire on every page load. The banner doesn't stop these&mdash;they're hardcoded in the theme and bypass Shopify's consent framework entirely. This sentence gives the client false comfort.</div>
+    </li>
+    <li>
+      <span><span class="severity high">Issue</span></span>
+      <div><strong>"6 hours strictly for the native Shopify consent setup"</strong> misframes the work. Enabling the native banner is an admin toggle. The actual hours go into the cleanup: removing dark-pattern CSS, pulling out hardcoded scripts, verifying app pixel permissions, and testing. The estimate isn't wrong per se, but the description of what the time covers is.</div>
+    </li>
+    <li>
+      <span><span class="severity high">Issue</span></span>
+      <div><strong>"Start with an audit" presented as an alternative</strong> to proceeding. The audit is a prerequisite, not an option. You can't safely enable a consent banner without knowing what bypasses it&mdash;and now the audit has found scripts that do exactly that.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Issue</span></span>
+      <div><strong>"Hold off and do everything in one go"</strong> understates compliance exposure. Brand A has a dark-pattern banner today. Brand B has no banner at all. Both have scripts firing without consent. Waiting increases risk.</div>
+    </li>
+    <li>
+      <span><span class="severity medium">Issue</span></span>
+      <div><strong>Fidel framing implies nothing can start.</strong> Phase 1 has zero GTM dependency. Fidel's work (GTM rebuild + consent bridge) is Phase 2. The draft conflates the two phases.</div>
+    </li>
+  </ul>
+</section>
+
+<div style="margin-top:3em; padding:1.5em 0; border-top:1px solid var(--border); font-size:0.8rem; color:var(--text-tertiary); font-family:var(--mono);">
+  Audit performed 2026-09-21. Theme code only&mdash;Shopify admin settings require human verification. No changes were made to either store.
+</div>

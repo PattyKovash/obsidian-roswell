@@ -1,0 +1,418 @@
+<title>Consent Compliance Roadmap</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #F6F7FA;
+    --surface: #FFFFFF;
+    --text: #1A1D23;
+    --text-2: #4A4F5C;
+    --text-3: #6B7280;
+    --border: #D8DCE4;
+    --border-lt: #E8EBF0;
+    --accent: #1B6B6D;
+    --accent-lt: #E8F4F4;
+    --critical-bg: #FDF0EF; --critical-tx: #9B2C23; --critical-bd: #E8ADA8;
+    --high-bg: #FDF6E8; --high-tx: #7A5A00; --high-bd: #E0C878;
+    --med-bg: #EDF3FC; --med-tx: #2B5EA7; --med-bd: #A8C4E8;
+    --human-bg: #FBF5FF; --human-tx: #6B21A8; --human-bd: #D4B0E8;
+    --agent-bg: #F0FAF5; --agent-tx: #166534; --agent-bd: #86EFAC;
+    --both-bg: #FFFBEB; --both-tx: #92400E; --both-bd: #FCD34D;
+    --code-bg: #EDEEF2;
+    --stripe: #FAFBFC;
+    --display: 'DM Serif Display', Georgia, serif;
+    --body: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111318; --surface: #1A1D24; --text: #E4E6EB; --text-2: #A0A4B0; --text-3: #6B7080;
+      --border: #2E323C; --border-lt: #252830; --accent: #3AADAF; --accent-lt: #1A2E2E;
+      --critical-bg: #2C1614; --critical-tx: #F0A8A2; --critical-bd: #5C2620;
+      --high-bg: #2A2210; --high-tx: #E8C86A; --high-bd: #5A4820;
+      --med-bg: #141E30; --med-tx: #7EB0E8; --med-bd: #2A4060;
+      --human-bg: #1E1028; --human-tx: #C4A0E0; --human-bd: #4A2870;
+      --agent-bg: #0F1F18; --agent-tx: #6EE7A0; --agent-bd: #1A4030;
+      --both-bg: #1F1A0E; --both-tx: #F0D070; --both-bd: #5A4820;
+      --code-bg: #22252E; --stripe: #161820;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111318; --surface: #1A1D24; --text: #E4E6EB; --text-2: #A0A4B0; --text-3: #6B7080;
+    --border: #2E323C; --border-lt: #252830; --accent: #3AADAF; --accent-lt: #1A2E2E;
+    --critical-bg: #2C1614; --critical-tx: #F0A8A2; --critical-bd: #5C2620;
+    --high-bg: #2A2210; --high-tx: #E8C86A; --high-bd: #5A4820;
+    --med-bg: #141E30; --med-tx: #7EB0E8; --med-bd: #2A4060;
+    --human-bg: #1E1028; --human-tx: #C4A0E0; --human-bd: #4A2870;
+    --agent-bg: #0F1F18; --agent-tx: #6EE7A0; --agent-bd: #1A4030;
+    --both-bg: #1F1A0E; --both-tx: #F0D070; --both-bd: #5A4820;
+    --code-bg: #22252E; --stripe: #161820;
+  }
+
+  body { font-family: var(--body); background: var(--bg); color: var(--text); padding-inline: 24px; line-height: 1.55; max-width: 900px; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; }
+  h1 { font-size: 2rem; margin: 0 0 0.25em; letter-spacing: -0.01em; }
+  h2 { font-size: 1.4rem; margin: 2.5em 0 0.6em; padding-bottom: 0.4em; border-bottom: 2px solid var(--accent); text-wrap: balance; }
+  h3 { font-size: 1.1rem; margin: 1.5em 0 0.4em; color: var(--text-2); }
+  code { font-family: var(--mono); font-size: 0.8rem; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; }
+
+  .header { padding-top: 3em; padding-bottom: 1.5em; border-bottom: 1px solid var(--border); }
+  .header p { color: var(--text-2); font-size: 0.875rem; margin: 0.3em 0 0; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 3px; white-space: nowrap;
+  }
+  .pill.human { background: var(--human-bg); color: var(--human-tx); border: 1px solid var(--human-bd); }
+  .pill.agent { background: var(--agent-bg); color: var(--agent-tx); border: 1px solid var(--agent-bd); }
+  .pill.both { background: var(--both-bg); color: var(--both-tx); border: 1px solid var(--both-bd); }
+  .pill.critical { background: var(--critical-bg); color: var(--critical-tx); border: 1px solid var(--critical-bd); }
+
+  .step {
+    border: 1px solid var(--border-lt); border-radius: 6px;
+    padding: 20px 24px; margin: 1.2em 0;
+    background: var(--surface);
+    position: relative;
+  }
+  .step-head {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 0.6em;
+  }
+  .step-num {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+    color: var(--accent); letter-spacing: 0.03em;
+  }
+  .step-title { font-family: var(--display); font-size: 1.15rem; }
+  .step-meta {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    margin-bottom: 0.8em;
+  }
+  .est {
+    font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);
+    background: var(--stripe); padding: 2px 8px; border-radius: 3px;
+  }
+  .step ul { padding-left: 1.2em; margin: 0.4em 0; font-size: 0.875rem; }
+  .step li { margin: 0.3em 0; }
+  .step p { font-size: 0.875rem; margin: 0.4em 0; }
+
+  .dep {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--text-3);
+    margin-top: 0.8em; padding-top: 0.6em; border-top: 1px solid var(--border-lt);
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent); padding: 12px 16px; margin: 1.2em 0;
+    background: var(--accent-lt); font-size: 0.875rem;
+  }
+  .callout p { margin: 0.3em 0; }
+  .callout strong { color: var(--accent); }
+
+  .totals {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin: 1.5em 0;
+  }
+  .total-cell {
+    padding: 14px 16px; border-radius: 4px; text-align: center;
+  }
+  .total-cell.human-c { background: var(--human-bg); border: 1px solid var(--human-bd); }
+  .total-cell.agent-c { background: var(--agent-bg); border: 1px solid var(--agent-bd); }
+  .total-cell.both-c { background: var(--both-bg); border: 1px solid var(--both-bd); }
+  .total-val { font-family: var(--display); font-size: 1.6rem; }
+  .total-cell.human-c .total-val { color: var(--human-tx); }
+  .total-cell.agent-c .total-val { color: var(--agent-tx); }
+  .total-cell.both-c .total-val { color: var(--both-tx); }
+  .total-label { font-family: var(--mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 0.2em; }
+
+  .note { font-size: 0.82rem; color: var(--text-2); font-style: italic; margin: 0.6em 0; }
+
+  @media (max-width: 600px) {
+    body { padding-inline: 16px; }
+    h1 { font-size: 1.5rem; }
+    .totals { grid-template-columns: 1fr; }
+    .step { padding: 14px 16px; }
+  }
+
+  .phase-divider {
+    margin: 3em 0 1em;
+    padding: 10px 16px;
+    background: var(--accent-lt);
+    border-left: 4px solid var(--accent);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>
+
+<div class="header">
+  <h1>Consent Compliance Roadmap</h1>
+  <p>Phase 1 order of operations, estimates, and execution model (human vs. AI agent)</p>
+  <p style="font-family:var(--mono); font-size:0.8rem; color:var(--text-3); margin-top:0.5em">2026-09-21 &middot; Based on theme audit findings &middot; Both stores</p>
+</div>
+
+<section>
+  <h2>Estimate Overview</h2>
+  <div class="totals">
+    <div class="total-cell human-c">
+      <div class="total-val">3&ndash;4h</div>
+      <div class="total-label">Human only</div>
+    </div>
+    <div class="total-cell agent-c">
+      <div class="total-val">1&ndash;2h</div>
+      <div class="total-label">AI agent (guided)</div>
+    </div>
+    <div class="total-cell both-c">
+      <div class="total-val">5&ndash;7h</div>
+      <div class="total-label">Total Phase 1</div>
+    </div>
+  </div>
+  <p class="note">"AI agent (guided)" means Claude executes the code changes with a human reviewing and approving. The human still needs to be present&mdash;this isn't unattended. The time estimate reflects elapsed time including review.</p>
+
+  <div class="callout">
+    <p><strong>Why this isn't 6 hours of "banner setup":</strong> The banner toggle itself is ~15 minutes per store. The hours go into the cleanup the audit surfaced&mdash;hardcoded scripts that bypass consent, dark-pattern CSS, dead DataGrail bridge code, GTM metafield verification, and QA. Framing it as "banner setup" undersells the scope and misleads the client about what they're paying for.</p>
+  </div>
+</section>
+
+<!-- ============ ORDER OF OPERATIONS ============ -->
+<section>
+  <h2>Order of Operations</h2>
+
+  <div class="phase-divider">Prerequisite &mdash; Before touching anything</div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">01</span>
+      <span class="step-title">Admin reconnaissance</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill human">Human only</span>
+      <span class="est">~45 min (both stores)</span>
+    </div>
+    <p>A human with Shopify admin access documents the current state. This informs every subsequent step.</p>
+    <ul>
+      <li><strong>Settings &gt; Customer events:</strong> Screenshot or list every app pixel and custom pixel. For each custom pixel, note the Permission setting (Required vs. Not required).</li>
+      <li><strong>Settings &gt; Customer privacy:</strong> Current banner status, configured regions (if any), data sharing opt-out page, privacy policy link.</li>
+      <li><strong>Shop metafield <code>custom.cart_gtm_id</code>:</strong> What container ID is stored? Check via Settings &gt; Custom data, or inspect the live page source for <code>gtm.js?id=GTM-XXXXXXX</code>.</li>
+      <li><strong>Installed apps:</strong> Is DataGrail installed? Google &amp; YouTube channel? Meta? List all apps that could have tracking implications.</li>
+      <li><strong>Privacy policy:</strong> Is it published and linked? The native banner requires it.</li>
+    </ul>
+    <div class="dep">Blocks: everything. This step produces the information needed for steps 2&ndash;7.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">02</span>
+      <span class="step-title">Client decisions</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill human">Human only</span>
+      <span class="est">Async (not billable, but blocks step 6)</span>
+    </div>
+    <p>Legal and regional decisions that belong to the client, not the agency:</p>
+    <ul>
+      <li>Which regions get the banner? (UK/EEA is automated if those are active markets; US, Canada, and other regions are opt-in.)</li>
+      <li>Is a US data-sharing opt-out page needed? (Depends on whether they sell data under CCPA/CPRA definitions.)</li>
+      <li>Confirm the privacy policy is current and covers all the tracking the audit found (Postscript, Klaviyo, ShopMy, Dash Hudson, etc.).</li>
+    </ul>
+    <div class="dep">Blocks: step 6 (banner configuration). Steps 3&ndash;5 can proceed in parallel.</div>
+  </div>
+
+  <div class="phase-divider">Theme cleanup &mdash; Can run in parallel with client decisions</div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">03</span>
+      <span class="step-title">Remove dark-pattern CSS</span>
+      <span class="pill critical">Urgent</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill human">Human only</span>
+      <span class="est">~15 min (Hue only)</span>
+    </div>
+    <p>In Shopify admin for Hue: Online Store &gt; Themes &gt; Customize &gt; Theme Settings, find the platform custom CSS field and delete:</p>
+    <div style="padding:8px 12px; background:var(--code-bg); border-radius:3px; font-family:var(--mono); font-size:0.78rem; margin:0.5em 0; overflow-x:auto;">
+      #shopify-pc__banner__btn-decline,<br>#shopify-pc__prefs__header-decline { display: none; }
+    </div>
+    <p>This is the most urgent fix&mdash;it's an active GDPR violation. It must be done in admin because it's in <code>platform_customizations</code>, not a liquid file.</p>
+    <p class="note">NoNonsense does not have this CSS. Hue only.</p>
+    <div class="dep">No dependencies. Do this first, today if possible.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">04</span>
+      <span class="step-title">Remove/gate hardcoded tracking scripts</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill agent">AI agent + review</span>
+      <span class="est">~45 min (both stores)</span>
+    </div>
+    <p>An AI agent can execute these code changes with human review before pushing:</p>
+
+    <h3 style="font-size:0.95rem; margin-top:1em;">Hue</h3>
+    <ul>
+      <li><strong>Remove Postscript SDK</strong> from <code>layout/theme.liquid:4</code>. The client should re-add it as a Shopify custom pixel with Permission set to "Required" (marketing), so the consent framework governs it.</li>
+      <li><strong>Remove hardcoded Klaviyo snippet</strong>&mdash;delete the <code>{% render 'c-klaviyo' %}</code> call from <code>layout/theme.liquid:328</code>. Klaviyo already has an app embed enabled; the hardcoded snippet causes double-loading and bypasses consent.</li>
+    </ul>
+
+    <h3 style="font-size:0.95rem; margin-top:1em;">NoNonsense</h3>
+    <ul>
+      <li><strong>Remove ShopMy affiliate script</strong> from <code>layout/theme.liquid:363</code>. Re-add as a custom pixel with "Required" permission if the client still uses it.</li>
+      <li><strong>Evaluate Dash Hudson</strong> (<code>blocks/c-block-dashhudson.liquid</code>). If it's a social gallery embed (functional content), it may not need consent gating. If it includes tracking/analytics beyond the gallery, it should be gated. Flag for human decision.</li>
+      <li><strong>Remove hardcoded Klaviyo snippet</strong>&mdash;same as Hue. Delete the <code>{% render 'c-klaviyo' %}</code> call from <code>layout/theme.liquid:344</code>.</li>
+    </ul>
+
+    <p class="note">After removing these, the Klaviyo app embed handles Klaviyo on both stores. Postscript and ShopMy move to custom pixels (human creates those in admin). Verify the Attentive footer form proxy (<code>attentive-proxy.rs-workers.workers.dev</code>) is documented in the privacy policy.</p>
+    <div class="dep">Depends on: step 1 (to confirm app embeds are active before removing hardcoded duplicates).</div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">05</span>
+      <span class="step-title">Clean up GTM &amp; DataGrail bridge code</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill agent">AI agent + review</span>
+      <span class="est">~30 min (both stores)</span>
+    </div>
+    <p>The <code>c-gtm-datagrail.liquid</code> snippet on both stores contains:</p>
+    <ul>
+      <li>GTM loader (container ID from metafield)</li>
+      <li>DataGrail consent bridge (<code>DG_BANNER_API</code> callbacks &rarr; <code>setTrackingConsent</code>)</li>
+    </ul>
+    <p>Two possible paths depending on step 1 findings:</p>
+    <ul>
+      <li><strong>If the old GTM container is in the metafield:</strong> Clear the metafield value (human, in admin) or swap it to the new container ID. If swapping, leave the GTM loader code intact for Phase 2. If clearing, the loader becomes inert (gated by <code>!= blank</code>).</li>
+      <li><strong>DataGrail bridge code:</strong> Remove the entire DataGrail section (lines ~25&ndash;74 in both files) regardless. It references an API that's being decommissioned, hardcodes <code>preferences: true</code>, and will be replaced by Shopify's native consent + a new GTM bridge in Phase 2.</li>
+    </ul>
+    <p>An AI agent can strip the DataGrail bridge code. The metafield change is human (admin).</p>
+    <div class="dep">Depends on: step 1 (to know the metafield value and whether DataGrail is installed).</div>
+  </div>
+
+  <div class="phase-divider">Banner activation &mdash; After cleanup and client decisions</div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">06</span>
+      <span class="step-title">Configure native Shopify banner</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill human">Human only</span>
+      <span class="est">~30 min (both stores)</span>
+    </div>
+    <p>In Shopify admin for each store: Settings &gt; Customer privacy.</p>
+    <ul>
+      <li>Enable the cookie banner for the regions the client agreed to in step 2.</li>
+      <li>Link the privacy policy (required before the banner activates).</li>
+      <li>If the client wants a US data-sharing opt-out: create the opt-out page and link it.</li>
+      <li>Review the banner text/appearance options if any customization is desired.</li>
+    </ul>
+    <p class="note">This is an admin-only operation. The banner is not theme code&mdash;it's a Shopify platform feature. "Enable" is the right word, but it's not a single toggle: you're configuring regions, linking policies, and making choices about data-sharing opt-out. Allocate time for reading the options and making deliberate choices.</p>
+    <div class="dep">Depends on: step 2 (client decisions on regions), step 3 (dark-pattern CSS removed).</div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">07</span>
+      <span class="step-title">Audit and fix custom pixel permissions</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill human">Human only</span>
+      <span class="est">~30 min (both stores)</span>
+    </div>
+    <p>In Settings &gt; Customer events, review every custom pixel:</p>
+    <ul>
+      <li>Any custom pixel set to <strong>"Not required"</strong> fires regardless of consent. Change to <strong>"Required"</strong> and select the appropriate purposes (analytics, marketing, etc.) unless there's a specific reason it must always fire.</li>
+      <li>Pay special attention to <strong>Microsoft Clarity</strong> on NoNonsense&mdash;session recording has elevated privacy sensitivity and should definitely require analytics consent.</li>
+      <li>App pixels (vs. custom pixels) declare their own permissions&mdash;you can't change those, but you can verify they're reasonable.</li>
+    </ul>
+    <div class="dep">Depends on: step 1 (to have the list of pixels).</div>
+  </div>
+
+  <div class="phase-divider">Verification</div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-num">08</span>
+      <span class="step-title">QA consent behavior</span>
+    </div>
+    <div class="step-meta">
+      <span class="pill both">Human + AI guidance</span>
+      <span class="est">1.5&ndash;2h (both stores)</span>
+    </div>
+    <p>Test from inside and outside configured regions. An AI agent can provide the QA checklist and help interpret network logs, but a human must operate the browser.</p>
+
+    <h3 style="font-size:0.95rem; margin-top:1em;">From a configured region (EU VPN)</h3>
+    <ul>
+      <li>Banner appears on first visit</li>
+      <li>Decline button is visible and equally prominent as Accept</li>
+      <li>Before consent: no marketing/analytics cookies set, no tracking network requests (check DevTools &gt; Network for klaviyo, postscript, shopmy, clarity, triplewhale, impact domains)</li>
+      <li>After accepting: appropriate scripts fire</li>
+      <li>After declining: scripts do <em>not</em> fire</li>
+      <li>Preferences can be changed after initial choice</li>
+      <li>Consent persists across page navigation</li>
+    </ul>
+
+    <h3 style="font-size:0.95rem; margin-top:1em;">From a non-configured region (US, unless configured)</h3>
+    <ul>
+      <li>No banner appears (expected default)</li>
+      <li>All processing allowed by default (expected behavior)</li>
+    </ul>
+
+    <h3 style="font-size:0.95rem; margin-top:1em;">Edge cases</h3>
+    <ul>
+      <li>Test the community-reported issue: does the sandboxed <code>visitor_consent_collected</code> pixel event fire for Shopify's native banner? If not, custom pixels that rely on it won't get consent signals.</li>
+      <li>Verify the Klaviyo app embed properly respects consent (it should, through Shopify's pixel framework, but confirm).</li>
+      <li>Check that removing the hardcoded Klaviyo snippet doesn't break any functionality that the app embed doesn't cover (e.g., specific event tracking the snippet had).</li>
+    </ul>
+    <div class="dep">Depends on: steps 3&ndash;7 all complete.</div>
+  </div>
+</section>
+
+<!-- ============ WHAT THIS DOESN'T COVER ============ -->
+<section>
+  <h2>What Phase 1 Does Not Cover</h2>
+  <p style="font-size:0.875rem">These belong to Phase 2 (Fidel, GTM rebuild). Listing them here so the scope boundary is clear:</p>
+  <ul style="font-size:0.875rem; padding-left:1.2em;">
+    <li>Building the GTM consent bridge (<code>gtag('consent', 'default', ...)</code> and <code>gtag('consent', 'update', ...)</code>)</li>
+    <li>Deciding where GTM loads (theme.liquid, custom pixel, or both)</li>
+    <li>Building tags, triggers, and variables in the new GTM containers</li>
+    <li>Google Consent Mode v2 implementation</li>
+    <li>Checkout tracking (GTM in checkout requires a custom pixel with sandbox limitations)</li>
+    <li>End-to-end QA of the full analytics pipeline</li>
+  </ul>
+</section>
+
+<!-- ============ PARALLEL TRACKS ============ -->
+<section>
+  <h2>Parallelism &amp; Dependencies</h2>
+  <div style="font-family:var(--mono); font-size:0.78rem; line-height:1.8; padding:16px 20px; background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow-x:auto; white-space:pre;">
+01 Admin recon ─────────┬──▶ 03 Remove dark CSS (urgent, do immediately)
+                        │
+02 Client decisions ────┼──▶ 06 Configure banner (needs regions + policy)
+                        │
+                        ├──▶ 04 Remove/gate scripts (AI agent)  ──┐
+                        │                                          │
+                        └──▶ 05 Clean up GTM/DataGrail (AI agent) ┼──▶ 08 QA
+                                                                   │
+                             07 Audit pixel permissions ───────────┘</div>
+  <p style="font-size:0.85rem; color:var(--text-2); margin-top:0.8em;">Steps 3, 4, 5, and 7 can run in parallel after step 1. Step 6 waits on client decisions. Step 8 (QA) waits on everything.</p>
+</section>
+
+<!-- ============ CRITICAL PATH ============ -->
+<section>
+  <h2>Critical Path for the MP</h2>
+  <div class="callout">
+    <p><strong>What the client needs to hear:</strong></p>
+    <p>The audit found tracking scripts on both stores that fire without consent&mdash;including scripts that send customer emails and set cookies on every page load. On Hue, the existing cookie banner has CSS that hides the "Decline" button. On NoNonsense, there is no consent mechanism at all.</p>
+    <p style="margin-top:0.6em">Phase 1 fixes this. It's 5&ndash;7 hours across both stores: removing the non-compliant code, enabling Shopify's native consent banner for the agreed regions, and verifying everything works. It does not require GTM or Fidel&mdash;that's Phase 2.</p>
+    <p style="margin-top:0.6em">We need three things from the client before we can configure the banner: (1) which regions, (2) whether a US data-sharing opt-out page is needed, and (3) confirmation the privacy policy is current. The cleanup work can start immediately while those decisions are pending.</p>
+  </div>
+</section>
+
+<div style="margin-top:3em; padding:1.5em 0; border-top:1px solid var(--border); font-size:0.8rem; color:var(--text-3); font-family:var(--mono);">
+  Roadmap based on theme audit findings from 2026-09-21. Estimates assume AI agent execution for code changes with human review. Admin-only tasks require Shopify admin access.
+</div>

@@ -1,0 +1,93 @@
+<!--
+  REFERENCE ONLY — not synced to Shopify, not committed to the theme.
+
+  Tier 2 example (see assets/size-guide-widget.js header): a custom <template> inside <hmg-size-widget>,
+  for a product that wants the calculator BEHAVIOR but not the built-in default LAYOUT/copy.
+
+  Why Pemi needs this instead of Tier 1 (attributes only): Pemi measures by CHEST circumference, not
+  torso length — genuinely different fit copy and a different sizing concept, not just different numbers
+  in the same table. The built-in default skeleton's steps ("Find your C7 vertebra", "Find your iliac
+  crest") and field label ("Your torso length") are torso-specific; they don't make sense here. Chest copy
+  below is adapted from Matt's original Pemi content (size-drawer-content-pemi.html, shared at the start
+  of this work) — same fit guidance, wired into the new widget instead of a hand-authored static table.
+
+  Important: the widget's JS looks for a fixed set of class names — .hmg-std-torso, .hmg-std-unit-in/-cm,
+  .hmg-std-cta, .hmg-std-error, .hmg-std-result(-size/-range/-desc), .hmg-std-tip — regardless of what's
+  actually being measured. Keeping `.hmg-std-torso` as the input's class even though it's chest
+  measurement here is a naming quirk of reusing the widget's behavior for a non-torso measurement, not a
+  bug — the class is just the JS's internal hook name.
+
+  sizes table sourced from snippets/product-form.liquid:286-292 — the theme's own existing "Chest" swatch-
+  label convention (34"-38"=S, 38"-40"=M, 40"-42"=L, 42"-44"=XL), same approach as the Aero 28 example.
+-->
+
+<hmg-size-widget
+  class="hmg-sizer-std"
+  sizes='[
+    {"key":"s","label":"Small","short":"S","minIn":34,"maxIn":38,"desc":"Athletic/alpine build with a larger chest tapering to a narrower waist — sizing toward the smaller end of your chest measurement may fit more comfortably."},
+    {"key":"m","label":"Medium","short":"M","minIn":38,"maxIn":40,"desc":"The most common fit for the Pemi 15."},
+    {"key":"l","label":"Large","short":"L","minIn":40,"maxIn":42,"desc":"Straight build with less discrepancy between chest and waist, or a preference for a relaxed fit / more layers."},
+    {"key":"xl","label":"X-Large","short":"XL","minIn":42,"maxIn":99,"desc":"Largest chest fit for the Pemi 15."}
+  ]'
+>
+  <template>
+    <h2>Find Your Size</h2>
+    <p class="hmg-std-intro">The Pemi 15 is sized by <strong>chest circumference</strong>, not torso length. A snug, wrap-around fit is essential to limit bounce while running.</p>
+
+    <div class="hmg-std-steps">
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">01</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Find the widest point</p>
+          <p class="hmg-std-step-body">Measure around the fullest part of your chest.</p>
+        </div>
+      </div>
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">02</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Wrap it around</p>
+          <p class="hmg-std-step-body">Keep the tape level, under your armpits and across your shoulder blades.</p>
+        </div>
+      </div>
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">03</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Check the fit</p>
+          <p class="hmg-std-step-body">Take the measurement while breathing normally, wearing the layers you intend to run in.</p>
+          <div class="hmg-std-callout">Athletic/alpine build (larger chest, narrower waist)? Consider sizing down. Straight build or prefer a relaxed fit? Consider sizing up.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hmg-std-form">
+      <div class="hmg-std-field-group">
+        <span class="hmg-std-field-label">Your chest measurement</span>
+        <div class="hmg-std-input-row">
+          <!-- .hmg-std-torso is the widget's fixed input hook — see file note above on why it's kept
+               even though this measures chest, not torso. -->
+          <input class="hmg-std-input hmg-std-torso" type="number" inputmode="decimal" min="28" max="52" step="0.5" placeholder="e.g. 39" aria-label="Chest measurement">
+          <div class="hmg-std-unit-group">
+            <button type="button" class="hmg-std-unit-btn hmg-std-unit-in active" data-unit="in" aria-pressed="true">IN</button>
+            <button type="button" class="hmg-std-unit-btn hmg-std-unit-cm" data-unit="cm" aria-pressed="false">CM</button>
+          </div>
+        </div>
+      </div>
+      <div class="hmg-std-error"></div>
+      <button type="button" class="hmg-std-cta">Find My Size</button>
+    </div>
+
+    <div class="hmg-std-result">
+      <div class="hmg-std-result-header">
+        <p class="hmg-std-result-eyebrow">Your fit</p>
+        <p class="hmg-std-result-size">—</p>
+        <p class="hmg-std-result-range"></p>
+      </div>
+      <div class="hmg-std-size-bar"></div>
+      <div class="hmg-std-size-ticks"></div>
+      <div class="hmg-std-result-body">
+        <p class="hmg-std-result-desc"></p>
+        <div class="hmg-std-tip"></div>
+      </div>
+    </div>
+  </template>
+</hmg-size-widget>

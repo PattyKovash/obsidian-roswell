@@ -1,0 +1,38 @@
+<!--
+  REFERENCE ONLY — not synced to Shopify, not committed to the theme.
+
+  Generic Tier 2 example: a custom <template> inside <hmg-size-widget>, not tied to any real product
+  (compare to size-guide-reference-pemi-15-tier2.html, which is the same pattern with real Pemi copy).
+  This one exists purely to show the minimal shape of the pattern, using the current recommended
+  `data-hmg-*` attributes as the primary hooks (not the legacy `.hmg-std-*` classes, which still work as a
+  fallback for pre-existing content — see assets/size-guide-widget.js header for both).
+
+  Required hooks (all must be present somewhere in the <template>, any structure/nesting is fine):
+    data-hmg-torso-input     the measurement <input>
+    data-hmg-unit-in / -cm   the unit toggle buttons
+    data-hmg-error           empty element for the validation error message
+    data-hmg-cta             the submit button
+    data-hmg-result          wrapper shown/hidden around the result
+    data-hmg-result-size     filled with the matched tier's label
+    data-hmg-result-range    filled with the matched tier's range text
+    data-hmg-result-desc     filled with the matched tier's desc
+    data-hmg-tip             filled with the sizing-up/down tip
+    data-hmg-size-bar / data-hmg-size-ticks   empty containers — auto-populated from `sizes`, leave empty
+
+  Classes (hmg-std-*, hmg-sizer-std) are for styling only (assets/size-guide.css) — rename/reorganize them
+  freely without affecting behavior, since the JS never looks at them when data-hmg-* attributes are used.
+-->
+
+<hmg-size-widget
+  class="hmg-sizer-std"
+  sizes='[
+    {"key":"s","label":"Small","short":"S","minIn":0,"maxIn":10,"desc":"Placeholder description for the small tier."},
+    {"key":"m","label":"Medium","short":"M","minIn":10,"maxIn":20,"desc":"Placeholder description for the medium tier."},
+    {"key":"l","label":"Large","short":"L","minIn":20,"maxIn":99,"desc":"Placeholder description for the large tier."}
+  ]'
+  video-url="https://hyperlitemountaingear.com/pages/our-story"
+  measurement-image="https://cdn.shopify.com/s/files/1/3004/4846/files/23_06ea81fc-d2fe-4a96-8686-46ca18825d95.jpg?v=1786375876"
+>
+</hmg-size-widget>
+
+

@@ -1,0 +1,36 @@
+#,Item,Notes,Dev
+A1,"When no metafield is configured on the discount function, the function returns no operations and no shipping discount is applied.",,✅
+A2,"When both discountCodeMatches and buyerTags are empty or absent, the function returns no operations regardless of cart state.",,✅
+B1,"When discountCodeMatches is configured and any entered code contains any of the match strings (case-insensitive substring, ANY match), and the tag gate also passes, a 100% shipping discount is applied to all delivery options.",,✅
+B2,"When discountCodeMatches is configured and the entered code does not contain the match string, the function returns no operations.",,✅
+B3,"When discountCodeMatches is configured and no codes are entered at checkout, the function returns no operations.",,✅
+B4,"Code matching is case-insensitive: a discountCodeMatches of rs-test matches an entered code of RS-TEST-ORDER-2026 (Shopify normalizes entered codes to uppercase).",,✅
+B5,"When only discountCodeMatches is configured (buyerTags is empty), the discount applies when the entered code matches regardless of buyer identity.",,✅
+B6,"Code matching uses substring containment: a match string found in the middle of the entered code (e.g. RS-BBEMP-TEST contains BBEMP) still triggers the discount.",,✅
+B7,"When multiple codes are entered at checkout, the gate passes if any of them contains any configured match string (e.g. first code misses, second code matches).",,✅
+B8,"When multiple match strings are configured, the gate passes if any entered code contains any of them — the first string failing does not block a match on the second string.",,✅
+C1,"When only buyerTags is configured (discountCodeMatches is empty or absent), the discount applies when the authenticated buyer has any matching tag regardless of entered codes.",,✅
+C2,"When buyerTags is configured and the authenticated buyer has no matching tag, the function returns no operations.",,✅
+C3,"When buyerTags is configured and the buyer is a guest (no customer account), the function returns no operations.",,✅
+C4,"When buyerTags is configured and buyerIdentity is entirely absent (null), the function returns no operations.",,✅
+C5,"Buyer tag matching is case-sensitive: a configured tag of Employee does not match a real customer account whose tag is employee. Verify on a real account in staging.",,
+D1,"When deliveryOptionMatches is absent or empty, the discount targets every delivery group (all options in all groups are discounted).",,✅
+D2,"When deliveryOptionMatches is configured and an option's title contains one of the match strings (case-sensitive substring), that delivery option is targeted individually and discounted.",,✅
+D3,"When deliveryOptionMatches is configured and no delivery option title contains any of the match strings, the function returns no operations.",,✅
+D4,"Delivery option title matching is case-sensitive: a match string of standard does not match an option titled Standard Shipping.",,✅
+D5,"When one deliveryOptionMatches string matches more than one delivery option title, all matching options are collected into a single candidate's targets array.",,✅
+D6,"When multiple deliveryOptionMatches strings are configured, any option whose title contains at least one of them is discounted; options matching none of the strings are excluded.",,✅
+D7,"When a specific delivery option scope is configured, options whose titles do not match any of the configured strings remain undiscounted.",,✅
+E1,"When discountType is fixed and discountValue is 10, the function applies a fixed $10 discount to applicable delivery options.",,✅
+E2,"When discountType is percentage and discountValue is 50, the function applies a 50% discount to applicable delivery options.",,✅
+E3,"When discountType and discountValue are both absent, the function defaults to 100% (free shipping).",,✅
+E4,"When discountType is absent but discountValue is set, the function treats it as a percentage discount at the specified value.",,✅
+F1,"Discount scoped to specific customers via Shopify's native eligibility controls: an ineligible buyer cannot apply the discount at checkout.",,
+F2,"Discount scoped to a customer segment via Shopify's native eligibility controls: a buyer outside the segment cannot apply the discount.",,
+G1,"When the discount whose code the buyer enters is not configured to combine with shipping discounts, enteredDiscountCodes is empty and the function returns no operations.",,
+G2,"When combination settings are correctly configured on both discounts (the entered code's discount allows shipping combinations), the code is visible to the function and the discount applies.",,
+G3,"When the employee shipping discount is not configured to combine with the code's discount type, the function may not receive the code — verify both sides of the combination setting.",,
+H1,"When multiple delivery groups exist and no deliveryOptionMatches is configured, a 100% shipping discount operation is produced for each delivery group.",,✅
+H2,"End-to-end: buyer enters a matching code, has a matching tag, and combination settings are correctly configured — all applicable shipping options are discounted at checkout.",,
+H3,"End-to-end: buyer enters a matching code but the code's discount is not configured to combine with shipping discounts — enteredDiscountCodes is empty and no discount is applied.",,
+H4,"End-to-end: fixed discount type with a specific delivery option filter and a matching code — only the matched options receive the fixed discount at checkout.",,

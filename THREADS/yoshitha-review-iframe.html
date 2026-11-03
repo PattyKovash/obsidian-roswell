@@ -1,0 +1,522 @@
+<html><head><!-- frame-runtime --><base href="/_f/1787710900-60c5/"><script>window.__FRAME_PREAMBLE={"v":1,"capabilities":{"artifact":"artifact.oqIe8shs.js","assets":"assets.DBUJcvq_.js","comments":"comments.GLuHR3zP.js","db":"db.CRhVHzSt.js","downloads":"downloads.C3GSvEDP.js","embed":"embed.CxGAyc-v.js","mcp":"mcp.Bvma3qD7.js","network":"network.B5UA9Su4.js","permissions":"permissions.BNySkLV5.js","room":"room.DE7EMui-.js","sample":"sample.BW2Uysoh.js","self":"artifact.oqIe8shs.js","user":"user.BpKav-Rf.js"},"transforms":"_transforms.CQm3TZ9K.js","comments":"_comments.PBVy184F.js","translate":"_translate.5HCW4BJh.js"}</script><script>(function(){"use strict";var X=["light","dark","system"],G=/^[A-Za-z0-9_-]{1,64}$/,D=/^[a-zA-Z_:][a-zA-Z0-9_:.-]{0,127}$/,V=new Set(["class","hidden","value","checked"]);function Z(e){const t=e.toLowerCase();return t.startsWith("data-")||t.startsWith("aria-")||V.has(t)}var Ae="http://www.w3.org/1999/xhtml",J="http://www.w3.org/2000/svg",Q=new Set(["script","style","iframe","noscript","noframes","noembed","xmp","plaintext","template","title","textarea","object","embed"]),ee=new Set(["script","style"]);function te(e){const t=e.localName.toLowerCase();return e.namespaceURI==="http://www.w3.org/1999/xhtml"?!Q.has(t):e.namespaceURI===J?!ee.has(t):!1}var re=new Set(["html","head","body","frameset"]);function ne(e){return e.namespaceURI==="http://www.w3.org/1999/xhtml"&&re.has(e.localName)}function oe(e){if(e===null||typeof e!="object")return!1;const t=e;if(typeof t.target!="string"||!G.test(t.target)||t.text!==void 0&&typeof t.text!="string")return!1;if(t.attrsSet!==void 0){if(t.attrsSet===null||typeof t.attrsSet!="object")return!1;for(const[r,o]of Object.entries(t.attrsSet))if(!D.test(r)||typeof o!="string")return!1}if(t.attrsRemoved!==void 0){if(!Array.isArray(t.attrsRemoved))return!1;for(const r of t.attrsRemoved)if(typeof r!="string"||!D.test(r))return!1}return!0}function se(e,t){if(e===null||typeof e!="object")return!1;const{seq:r,elements:o}=e;if(typeof r!="number"||!Number.isSafeInteger(r)||!Array.isArray(o)||o.length===0||o.length>64)return!1;for(let a=0;a<o.length;a++)if(!t(o[a]))return!1;return!0}function ae(e){return e===null||typeof e!="object"?!1:se(e.__frame_patch,oe)}function ie(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_init;return t!==null&&typeof t=="object"}function le(e){return e!==null&&typeof e=="object"&&e.__frame_size_poke===!0}function ce(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_theme;if(t===null||typeof t!="object")return!1;const r=t.theme;return typeof r=="string"&&X.includes(r)}function ue(){return{post(e,t){parent.postMessage(e,t)},on(e){const t=r=>{r.source===parent&&e(r.data,r.origin)};return addEventListener("message",t),()=>removeEventListener("message",t)}}}var C="__frame_scroll",fe=150,pe=310,de=160,me=3e4;function he(){let e=0,t=!1,r=!1,o=!1,a=0,i=null;const u=l=>{try{sessionStorage.setItem(C,JSON.stringify({y:l}))}catch{}},f=()=>{if(clearTimeout(e),i===null)return;const l=i;i=null,u(l)},R=()=>{if(t){t=!1;return}r=!0,i=scrollY,clearTimeout(e),e=setTimeout(f,fe)};try{addEventListener("scroll",R,{passive:!0}),addEventListener("pagehide",f)}catch{}const y=()=>{let l;try{l=sessionStorage.getItem(C)}catch{return null}if(l===null)return null;let d;try{d=JSON.parse(l)}catch{d=null}const p=d?.y;if(!(typeof p=="number"&&Number.isFinite(p)&&p>=0)){try{sessionStorage.removeItem(C)}catch{}return null}return p};let E=!1;const v=l=>{try{const d=scrollY;scrollTo({top:l,left:0,behavior:"instant"}),a=l,o=!0,clearTimeout(e),i=null,u(l);const p=scrollY;p!==d&&(t=!0),p!==l&&!E&&(E=!0,addEventListener("load",()=>{try{if(scrollY===p){const h=y();v(h!==null?h:a)}}catch{}},{once:!0}))}catch{}},w=()=>{try{return!!location.hash}catch{return!0}};let b=!1;const n=()=>{try{if(b||innerWidth>pe||innerHeight>de)return;b=!0;const l=Date.now(),d=()=>{try{removeEventListener("resize",d)}catch{}if(Date.now()-l>me||r||w())return;const p=y();v(p!==null?p:a)};addEventListener("resize",d)}catch{}};let c=!1,_=!1;return{restore(){if(c||(c=!0,w()))return;const l=y();l!==null&&(v(l),n())},promoted(){if(_||(_=!0,w()))return;const l=y();l!==null?(v(l),n()):o&&v(a)}}}var Se="modulepreload",Re=function(e){return"/"+e},ke={},_e=function(t,r,o){let a=Promise.resolve();function i(u){const f=new Event("vite:preloadError",{cancelable:!0});if(f.payload=u,window.dispatchEvent(f),!f.defaultPrevented)throw u}return a.then(u=>{for(const f of u||[])f.status==="rejected"&&i(f.reason);return t().catch(i)})},m=ue();(function(){const e=Object.defineProperty,t=globalThis,r=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let o=0;for(let a=0;a<r.length;a++){const i=r[a];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&o++}if(o&&window!==top)try{m.post({__frame_rtc_lockdown_failed:o},"*")}catch{}})();var ve=1e4,ye=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function F(e){for(const t of ye)if(t.endsWith(":*"))try{const r=new URL(e);if(`${r.protocol}//${r.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}var k=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities}),M=window.__FRAME_PREAMBLE?.transforms,O=window.__FRAME_PREAMBLE?.comments,j=window.__FRAME_PREAMBLE?.translate,T=/^[\w.-]+\.js$/;function L(e){return _e(()=>import("/_runtime/"+e),void 0)}function z(e,t){return{contract:e.contract,changes:new Set(e.changes??[]),flags:new Set(e.flags??[]),capabilities:e.capabilities??{},capBudgets:e.capBudgets??{},transforms:new Map,shellOrigin:t,mount:W,pipe:()=>({wrap:(r,o)=>(...a)=>{try{return o(...a)}catch(i){return Promise.reject(i)}}})}}var P=null,g=null;function q(e,t,r){try{Object.defineProperty(e,t,{value:r,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:r,writable:!1,configurable:!0,enumerable:!0})}catch{}}}var N=!1;function we(e,t){const r=[];for(const o of e.elements){const a=document.querySelector(`[data-id="${o.target}"]`);if(!a){m.post({__frame_patch_miss:{seq:e.seq}},t);return}if([...Object.keys(o.attrsSet??{}),...o.attrsRemoved??[]].some(i=>!Z(i))){m.post({__frame_patch_miss:{seq:e.seq}},t);return}if(o.text!==void 0&&(!te(a)||ne(a))){m.post({__frame_patch_miss:{seq:e.seq}},t);return}for(const[i,u]of Object.entries(o.attrsSet??{}))if(!$(a,i)){try{a.setAttribute(i,u)}catch{}H(a,i,u)}for(const i of o.attrsRemoved??[])$(a,i)||(a.removeAttribute(i),H(a,i,null));typeof o.text=="string"&&(a.textContent=o.text),r.push(o.target)}try{document.dispatchEvent(new CustomEvent("claude:edit",{detail:{seq:e.seq,targets:r}}))}catch{}}function H(e,t,r){if(!(e instanceof HTMLInputElement))return;const o=t.toLowerCase();o==="checked"?e.checked=r!==null:o==="value"&&e.type!=="file"&&(e.value=r??"")}function $(e,t){const r=t.toLowerCase(),o=e;return r==="data-id"||(r==="value"||r==="checked")&&(o.__artifactSecret===!0||/^(password|hidden|file)$/.test(o.type??"")||/(^|\s)(cc-|one-time-code|current-password|new-password)/i.test(`${e.getAttribute("autocomplete")??""} ${o.autocomplete??""}`))}function K(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,N=!0):N&&(delete t.dataset.theme,t.style.colorScheme="",N=!1)}var S=new Map;function be(){let e;const t={u:new Promise(r=>{e=r}),r:r=>{t.done=!0,e(r)},done:!1,nulled:!1};return t}var ge=Object.freeze(Object.assign(Object.create(null),{call:Function.prototype.call,apply:Function.prototype.apply,bind:Function.prototype.bind})),W=(e,t)=>{const r=S.get(e);if(!r||r.done){r?.nulled&&g&&m.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:e}},g);return}const o=typeof t=="function"?Object.setPrototypeOf(t,ge):Object.assign(Object.create(null),t);typeof o.then=="function"&&delete o.then,r.r(Object.freeze(o))},I=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(I&&I.writable===!1)){const e=M&&T.test(M)?L(M).catch(()=>{}):Promise.resolve(void 0),t=n=>{if(n.type==="auxclick"&&n.button!==1)return;const c=n.target,_=c&&c.closest?c.closest("a[href],area[href]"):null;if(!_)return;const l=_.getAttribute("href");if(!l)return;let d;try{d=new URL(l,document.baseURI)}catch{return}if((d.protocol==="http:"||d.protocol==="https:")&&d.origin!==location.origin){n.preventDefault();const p=(_.getAttribute("target")??"").toLowerCase(),h=n.type==="auxclick"||n.metaKey||n.ctrlKey||n.shiftKey||n.altKey||!["","_self","_top","_parent"].includes(p);m.post({__frame_nav:!0,url:d.href,newTab:h},"*")}};addEventListener("click",t,!0),addEventListener("auxclick",t,!0);const r={},o=n=>{n.isTrusted&&(r.pointer=!0)},a=n=>{n.isTrusted&&(r.click=!0)};addEventListener("pointermove",o,{capture:!0,passive:!0}),addEventListener("click",a,{capture:!0,passive:!0}),e.then(n=>{n?.wireNav&&(n.wireNav(),removeEventListener("click",t,!0),removeEventListener("auxclick",t,!0),removeEventListener("pointermove",o,!0),removeEventListener("click",a,!0),n.wireEngagement?.(r))});let i=null;try{i=he()}catch{}const u=I?.value??{};q(window,"claude",u);for(const n of Object.keys(k)){if(u[n]!==void 0){q(u,n,u[n]);continue}S.set(n,be())}if(u.use===void 0){const n=c=>{if(typeof c!="string"||!Object.hasOwn(k,c))return Promise.resolve(null);const _=S.get(c);return _?_.u:Promise.resolve(u[c]??null)};try{Object.defineProperty(u,"use",{value:n,writable:!0,configurable:!0,enumerable:!1})}catch{}}let f=null,R=null,y=0;const E=m.on((n,c)=>{F(c)&&ie(n)&&(f=n.__frame_init,g=c,E(),clearTimeout(y),R?.())});m.post({__frame_connect:!0},"*");const v=new Promise(n=>{R=n,y=setTimeout(()=>{E(),n()},ve)}),w=document.readyState==="loading"?new Promise(n=>document.addEventListener("DOMContentLoaded",()=>n(),{once:!0})):Promise.resolve();w.then(()=>{try{i?.restore()}catch{}});const b={cb:null};m.on((n,c)=>{if(F(c)&&le(n)){try{i?.promoted()}catch{}b.cb?.()}}),v.then(async()=>{if(!f||!g){for(const s of S.values())s.nulled=!0,s.r(null);return}K(f.theme);const n=g;let c=!1,_=!1;m.on((s,B)=>{if(B!==n)return;ce(s)&&K(s.__frame_theme.theme),ae(s)&&we(s.__frame_patch,n);const A=s?.__fc_mode;A&&typeof A=="object"&&!c&&O&&T.test(O)&&(c=!0,L(O).then(x=>x.install?.(n,A.on===!0)).catch(()=>{}));const U=s?.__ft_cmd;U&&typeof U=="object"&&!_&&j&&T.test(j)&&(_=!0,L(j).then(x=>x.install?.(n,U)).catch(()=>{}))});const l=Object.keys(f.capabilities??{}).filter(s=>Object.hasOwn(k,s)).map(s=>[s,k[s]]).filter(s=>typeof s[1]=="string"&&T.test(s[1])),d=await Promise.allSettled(l.map(([,s])=>L(s))),p=await e,h=g;if(p?.buildBoot||m.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:"_transforms"}},h),p?.buildBoot)try{P=p.buildBoot(f,p.TRANSFORMS??{},{shellOrigin:h,mount:W},s=>m.post({__frame_cap_telemetry:s},h))}catch{m.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:"_transforms"}},h),P=z(f,h)}else P=z(f,h);const Y=s=>m.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:s}},h),Ee=P;d.forEach((s,B)=>{const A=l[B][0];if(s.status!=="fulfilled"){Y(A);return}try{s.value?.install?.(Ee)}catch{Y(A)}});for(const s of S.values())s.done||(s.nulled=!0,s.r(null));await w,m.post({__frame_ready:!0},g),e.then(s=>s?.installSizeReporter?.(h,b))})}})();</script><!-- /frame-runtime --><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>Horizon Migration Checklist (Copy)</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --surface-sunken: #f1efec;
+    --border: #e3e0da;
+    --ink: #201c1a;
+    --ink-soft: #5a5450;
+    --ink-faint: #8a8480;
+    --accent: #c81d40;
+    --accent-soft: #fbe8ec;
+    --ok: #1f7a4d;
+    --ok-soft: #e6f4ec;
+    --warn: #a8660a;
+    --warn-soft: #fbf0dd;
+    --crit: #b8291f;
+    --crit-soft: #fbe9e7;
+    --mono-tint: #f4f2ee;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #17140f;
+      --surface: #201c17;
+      --surface-sunken: #1b1814;
+      --border: #383129;
+      --ink: #f2ede6;
+      --ink-soft: #b8b0a6;
+      --ink-faint: #837b71;
+      --accent: #f0526f;
+      --accent-soft: #3a1a22;
+      --ok: #5ec98d;
+      --ok-soft: #17301f;
+      --warn: #e0a53f;
+      --warn-soft: #332507;
+      --crit: #f16a5f;
+      --crit-soft: #3a1712;
+      --mono-tint: #1c1914;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #17140f;
+    --surface: #201c17;
+    --surface-sunken: #1b1814;
+    --border: #383129;
+    --ink: #f2ede6;
+    --ink-soft: #b8b0a6;
+    --ink-faint: #837b71;
+    --accent: #f0526f;
+    --accent-soft: #3a1a22;
+    --ok: #5ec98d;
+    --ok-soft: #17301f;
+    --warn: #e0a53f;
+    --warn-soft: #332507;
+    --crit: #f16a5f;
+    --crit-soft: #3a1712;
+    --mono-tint: #1c1914;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Work Sans", -apple-system, "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0 1.5rem 6rem;
+    line-height: 1.55;
+  }
+
+  .wrap {
+    max-width: 840px;
+    margin: 0 auto;
+  }
+
+  code, .mono {
+    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  /* ---------- Header ---------- */
+
+  header.top {
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: "Barlow Condensed", "Work Sans", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: "Barlow Condensed", "Work Sans", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 2.9rem);
+    letter-spacing: -0.01em;
+    margin: 0.5rem 0 0.6rem;
+    text-wrap: balance;
+  }
+
+  .dek {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .dek .mono { color: var(--ink); font-size: 0.95em; }
+
+  /* ---------- Stat bar ---------- */
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0 0;
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 1.1rem 1.2rem;
+  }
+
+  .stat .n {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .stat .n.crit { color: var(--crit); }
+  .stat .n.ok { color: var(--ok); }
+
+  .stat .l {
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-top: 0.35rem;
+  }
+
+  /* ---------- Section framing ---------- */
+
+  section.block {
+    margin-top: 3.2rem;
+  }
+
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .block-head h2 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  .block-count {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  .block-note {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: 0.7rem 0 1.3rem;
+    max-width: 65ch;
+  }
+
+  /* ---------- Item cards ---------- */
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.3rem 1rem;
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--sev, var(--border));
+  }
+
+  .item + .item { border-top: none; }
+
+  .item .path {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.86rem;
+    color: var(--ink);
+    grid-column: 1;
+  }
+
+  .chip {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.18rem 0.55rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    height: fit-content;
+    justify-self: end;
+  }
+
+  .chip.crit { background: var(--crit-soft); color: var(--crit); }
+  .chip.warn { background: var(--warn-soft); color: var(--warn); }
+  .chip.ok { background: var(--ok-soft); color: var(--ok); }
+
+  .item .desc {
+    grid-column: 1 / -1;
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    margin: 0;
+  }
+
+  .item .desc .mono {
+    background: var(--mono-tint);
+    padding: 0.05rem 0.32rem;
+    border-radius: 2px;
+    font-size: 0.88em;
+  }
+
+  .sev-crit { --sev: var(--crit); }
+  .sev-warn { --sev: var(--warn); }
+  .sev-ok { --sev: var(--ok); }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  /* ---------- Carried-over list ---------- */
+
+  .carried {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 1.5rem;
+    background: var(--ok-soft);
+    border: 1px solid color-mix(in srgb, var(--ok) 30%, var(--border));
+    padding: 1.1rem 1.3rem;
+    font-size: 0.88rem;
+  }
+
+  .carried li {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .carried li::before {
+    content: "✓";
+    color: var(--ok);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .carried ul {
+    margin: 0;
+    padding: 0;
+    display: contents;
+  }
+
+  .carried-wrap {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 1.5rem;
+  }
+
+  @media (max-width: 620px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .carried-wrap { grid-template-columns: 1fr; }
+    .item { grid-template-columns: 1fr; }
+    .chip { justify-self: start; }
+  }
+
+  footer.end {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Theme migration · Dwell (Horizon)</div>
+    <h1>3.4.0 → 4.1.4 migration checklist</h1>
+    <p class="dek">Comparing <span class="mono">old theme</span> (live, customized) against <span class="mono">new theme</span> (already duplicated to 4.1.4). Most customizations carried over automatically when the theme was duplicated — this list is what didn't.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="n">368</div>
+      <div class="l">files differ</div>
+    </div>
+    <div class="stat">
+      <div class="n ok">~145</div>
+      <div class="l">custom files intact</div>
+    </div>
+    <div class="stat">
+      <div class="n crit">16</div>
+      <div class="l">need re-work</div>
+    </div>
+    <div class="stat">
+      <div class="n">1</div>
+      <div class="l">file dropped upstream</div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Critical — customer-facing regressions</h2>
+      <span class="block-count">6 items</span>
+    </div>
+    <p class="block-note">These change what a shopper sees or what data gets sent. Confirm and re-implement before launch.</p>
+
+    <div class="stack">
+      <div class="item sev-crit">
+        <div class="path">layout/theme.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">Two things dropped from the document head/body: the <span class="mono">web_checkout</span> cart-attribute fetch script, and the <span class="mono">{% render 'beam-imports' %}</span> call between the BEAM START/END markers. The Beam snippet files themselves still exist in the new theme — they're just no longer included anywhere, so Beam won't load at all until this render call is re-added.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">blocks/_product-details.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The entire live "recently viewed" view-counter script is gone — the fetches to <span class="mono">qa.wpweb.co.in/social-threads/view-counter.php</span>, the session tracking, the decrement-on-unload beacon. Note it's pointed at a <span class="mono">qa.</span> host with debug <span class="mono">console.log</span> calls left in, worth cleaning up on re-add.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">blocks/swatches.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The "N RECENTLY VIEWED" badge driven by the <span class="mono">metafields.custom.view_count</span> value is gone — this is the display half of the view-counter feature above.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">blocks/_product-card-gallery.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The <span class="mono">{% render 'product-card-badges' %}</span> call was removed along with a wrapper-div comment-out. The badge snippet exists in the new theme, but nothing on the product-card-gallery path calls it anymore.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">snippets/cart-summary.liquid</div>
+        <span class="chip crit">missing</span>
+        <p class="desc">The <span class="mono">{% render 'beam-select-nonprofit' %}</span> call (BEAM START/END block) is gone from the cart summary — the nonprofit picker won't show in cart even though Beam is otherwise wired up.</p>
+      </div>
+
+      <div class="item sev-crit">
+        <div class="path">3 files · final-sale label</div>
+        <span class="chip crit">missing</span>
+        <p class="desc"><span class="mono">blocks/buy-buttons.liquid</span>, <span class="mono">snippets/quick-add.liquid</span>, <span class="mono">snippets/cart-products.liquid</span> — the <span class="mono">product.tags contains 'finalsale'</span> check that adds the hidden line-item property and the "FINAL SALE" cart label is gone from all three add-to-cart paths.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Moderate — visual / styling drift</h2>
+      <span class="block-count">7 items</span>
+    </div>
+    <p class="block-note">Nothing breaks, but the storefront will look slightly different from what's live now.</p>
+
+    <div class="stack">
+      <div class="item sev-warn">
+        <div class="path">snippets/pagination-controls.liquid</div>
+        <span class="chip warn">reverted</span>
+        <p class="desc">Brand color <span class="mono">#e51a4e</span> on focus/hover states reverted to the default <span class="mono">var(--color-foreground)</span> token.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/price.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">The <span class="mono">price--on-sale</span> class on the price container/span is gone — sale-price styling on this partial will fall back to default.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/cart-products.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">Same <span class="mono">price--on-sale</span> class missing on cart line-item prices, plus a custom <span class="mono">--cart-font-size--md</span> override on one rule.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">sections/main-cart.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">Seven custom <span class="mono">--cart-font-size--*</span> CSS variables (2xs → 2xl) aren't defined — anything still referencing them will fall back to the theme default scale.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/cart-bubble.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">The <span class="mono">cart-bubble-fix.js</span> script tag include is gone. Check whether the bug it patched still exists in 4.1.4's cart bubble before deciding this needs porting back.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/text.liquid</div>
+        <span class="chip warn">missing</span>
+        <p class="desc">The hidden <span class="mono">#viewsCounterRTEA</span> placeholder div (product template only) is gone — tied to the same view-counter feature above.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">snippets/quick-add-modal.liquid</div>
+        <span class="chip warn">reverted</span>
+        <p class="desc">One rule's <span class="mono">text-align</span> reverted from <span class="mono">center</span> back to <span class="mono">left</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Needs a manual pass</h2>
+      <span class="block-count">3 items</span>
+    </div>
+    <p class="block-note">Too large or too store-specific to diff line-by-line with confidence — worth a dedicated review rather than a quick port.</p>
+
+    <div class="stack">
+      <div class="item sev-warn">
+        <div class="path">assets/base.css</div>
+        <span class="chip warn">review</span>
+        <p class="desc">~59 lines of custom CSS in the old theme don't appear verbatim in the new file. Some of this is likely superseded by 4.1.4's new <span class="mono">*-styles.liquid</span> snippet architecture (styles moved out of base.css into per-component snippets) rather than actually lost — needs a side-by-side pass, not a blind copy.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">config/settings_schema.json</div>
+        <span class="chip warn">review</span>
+        <p class="desc">~25 lines of custom setting definitions don't match. Separately: <span class="mono">config/settings_data.json</span> holds ~600 lines of live design/content configuration that Shopify never auto-migrates between theme IDs — every section's content on every template needs to be checked in the theme editor regardless of what this diff shows.</p>
+      </div>
+
+      <div class="item sev-warn">
+        <div class="path">assets/product-title-truncation.js</div>
+        <span class="chip warn">verify</span>
+        <p class="desc">Referenced from <span class="mono">snippets/scripts.liquid</span> in the old theme but the file doesn't exist in the new one at all. Check long product titles render correctly in 4.1.4 before assuming this is safe to drop — it may now be handled with CSS line-clamping instead.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Upstream-only, no action</h2>
+      <span class="block-count">2 items</span>
+    </div>
+    <div class="stack">
+      <div class="item sev-ok">
+        <div class="path">snippets/color-schemes.liquid</div>
+        <span class="chip ok">renamed</span>
+        <p class="desc">Replaced by <span class="mono">snippets/color-palette.liquid</span> upstream — a full rewrite of the palette engine, not a dropped customization.</p>
+      </div>
+      <div class="item sev-ok">
+        <div class="path">blocks/_media.liquid</div>
+        <span class="chip ok">merged</span>
+        <p class="desc">Folded into the newer media block set (<span class="mono">_media-without-appearance.liquid</span>, <span class="mono">_product-media-gallery.liquid</span>) in 4.1.4's restructured product-media blocks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Already carried over — no action needed</h2>
+      <span class="block-count">confirmed identical</span>
+    </div>
+    <p class="block-note">Byte-for-byte identical in the new theme already. Duplicating the theme in admin brought these across cleanly.</p>
+
+    <ul class="carried-wrap">
+      <li>Beam donation snippets (6 files)</li>
+      <li>Swym wishlist integration</li>
+      <li><span class="mono">beam-cumulative-impact.liquid</span> section</li>
+      <li>All 24 <span class="mono">ai_gen_block_*</span> blocks</li>
+      <li>12 custom collection templates</li>
+      <li>9 custom page templates</li>
+      <li>Rewards / Yotpo loyalty page</li>
+      <li>Product final-sale &amp; preorder templates</li>
+      <li><span class="mono">product-card-badges.liquid</span> snippet</li>
+      <li><span class="mono">pagination.liquid</span> snippet</li>
+      <li><span class="mono">base.min.css</span>, <span class="mono">cart-bubble-fix.js</span></li>
+    </ul>
+  </section>
+
+  <footer class="end">
+    Not carried forward regardless of what this diff shows: <span class="mono">templates/rewind_menu_backup_do_not_delete.liquid</span> — a backup file, absent from the new theme. Confirm nothing still points at it before treating that as safe.
+  </footer>
+
+</div>
+
+</body></html>

@@ -1,0 +1,16 @@
+<!--
+  REFERENCE ONLY — not synced to Shopify, not committed to the theme.
+
+  Demonstrates Tier 1 (see assets/size-guide-widget.js header): attributes only, no markup. The widget
+  clones its built-in default skeleton (snippets/hmg-size-widget-default-template.liquid) and fills in
+  this product's own size table, video link, and images via attributes. This is the minimal-effort path —
+  a hypothetical different pack model (different torso breakpoints than Junction's) would look exactly
+  like this, no HTML to paste at all beyond this one tag.
+
+  `sizes` follows the same {key,label,minIn,maxIn,desc} shape as the default table in size-guide-widget.js.
+  `fit-images` is optional — up to 3 {src,alt,label} entries; fewer than 3 removes the extra gallery slots.
+-->
+
+<hmg-size-widget
+  class="hmg-sizer-std"
+></hmg-size-widget>

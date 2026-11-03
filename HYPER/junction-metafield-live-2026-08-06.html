@@ -1,0 +1,676 @@
+<!-- SCRATCH — not for commit. Pulled live from product.metafields.accentuate.content on Junction, 2026-08-06, for quick reference. Unaffected by the theme code changes (this is Shopify product data, not theme code) — matches what the Matrixify export showed earlier in this session. -->
+
+<!-- HYPERLITE MOUNTAIN GEAR — Backpacks Size Widget (Multi-Instance Safe) -->
+
+<style>
+.hmg-sizer-std {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: rgb(23, 23, 23);
+  line-height: 1.6;
+}
+
+.hmg-sizer-std h2 {
+  font-family: "Geogrotesque W01", Helvetica, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 24px !important;
+  line-height: 28px !important;
+  color: rgb(23, 23, 23) !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 0 16px 0 !important;
+}
+
+.hmg-std-intro {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgb(23, 23, 23);
+  margin: 0 0 20px 0;
+}
+
+.hmg-std-intro-link {
+  color: rgb(23, 23, 23);
+  text-decoration: underline;
+  text-decoration-color: #999;
+  font-weight: 600;
+}
+
+.hmg-std-intro-link:hover {
+  text-decoration-color: rgb(23, 23, 23);
+}
+
+/* Two-column measurement section */
+.hmg-sizer-std .hmg-std-steps-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.hmg-sizer-std .hmg-std-steps {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.hmg-sizer-std .hmg-std-measurement-guide {
+  flex-shrink: 0;
+  width: 140px;
+  margin-top: 0;
+}
+
+.hmg-sizer-std .hmg-std-measurement-guide img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.hmg-std-steps {
+  margin-bottom: 24px;
+}
+
+.hmg-std-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hmg-std-step-num {
+  display: flex;
+  align-items: flex-start;
+  font-weight: 700;
+  font-size: 16px;
+  color: #999;
+  flex-shrink: 0;
+  min-width: 32px;
+}
+
+.hmg-std-step-content {
+  flex: 1;
+}
+
+.hmg-std-step-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.hmg-std-step-body {
+  font-size: 13px;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+/* Override site-wide p+p margin rules (boosted specificity to beat .rte p:not(.heading)+p) */
+.hmg-sizer-std p+p,
+.hmg-sizer-std p:not(.heading)+p {
+  margin-block-start: 0 !important;
+}
+
+.hmg-std-callout {
+  background: #f5f5f5;
+  border-left: 3px solid rgb(23, 23, 23);
+  padding: 12px;
+  font-size: 12px;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+.hmg-std-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.hmg-std-field-group {
+  margin-bottom: 16px;
+}
+
+.hmg-std-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.hmg-std-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hmg-std-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.hmg-std-input:focus {
+  outline: none;
+  border-color: rgb(23, 23, 23);
+}
+
+.hmg-std-input::placeholder {
+  color: #aaa;
+  font-weight: 400;
+}
+
+.hmg-std-unit-group {
+  display: flex;
+  gap: 4px;
+}
+
+.hmg-std-unit-btn {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.hmg-std-unit-btn.active {
+  background: rgb(23, 23, 23);
+  color: white;
+  border-color: rgb(23, 23, 23);
+}
+
+.hmg-std-error {
+  color: #c00;
+  font-size: 12px;
+  margin: 8px 0;
+  display: none;
+}
+
+.hmg-std-cta {
+  width: 100%;
+  padding: 12px;
+  background: rgb(23, 23, 23);
+  color: white;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background 0.2s ease;
+}
+
+.hmg-std-cta:hover {
+  background: #000;
+}
+
+.hmg-std-result {
+  display: none;
+}
+
+.hmg-std-result-header {
+  margin-bottom: 20px;
+}
+
+.hmg-std-result-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.hmg-std-result-size {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.hmg-std-result-range {
+  font-size: 12px;
+  color: #666;
+  margin: 6px 0 0 0;
+}
+
+.hmg-std-size-bar {
+  display: flex;
+  height: 24px;
+  gap: 2px;
+  margin: 16px 0 0 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hmg-std-size-seg {
+  flex: 1;
+  background: #e9e9e9;
+  border-radius: 2px;
+}
+
+.hmg-std-size-seg.active {
+  background: rgb(23, 23, 23);
+}
+
+.hmg-std-size-ticks {
+  display: flex;
+  gap: 2px;
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.hmg-std-size-ticks span {
+  flex: 1;
+  text-align: center;
+}
+
+.hmg-std-result-body {
+  border-top: 1px solid #ddd;
+  padding-top: 16px;
+}
+
+.hmg-std-result-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.hmg-std-tip {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* Fit Check Section - Always Visible */
+.hmg-std-fit-check {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #ddd;
+}
+
+.hmg-std-fit-check-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
+  margin-bottom: 12px;
+}
+
+.hmg-std-fit-check-intro {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  color: rgb(23, 23, 23);
+}
+
+.hmg-std-exchange {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.hmg-std-exchange-text {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.hmg-std-fit-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.hmg-std-fit-item {
+  text-align: center;
+}
+
+.hmg-std-fit-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  margin: 5px 0 !important;
+}
+
+.hmg-std-fit-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgb(23, 23, 23);
+}
+
+@media (max-width: 649px) {
+  .hmg-sizer-std .hmg-std-steps-wrapper {
+    flex-direction: column;
+  }
+
+  .hmg-sizer-std .hmg-std-measurement-guide {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hmg-std-step {
+    gap: 4px;
+  }
+
+  .hmg-std-step-title {
+    margin: 0 0 4px 0;
+  }
+
+  .hmg-sizer-std h2 {
+    font-size: 20px !important;
+    line-height: 24px !important;
+  }
+
+  .hmg-std-result-size {
+    font-size: 32px;
+  }
+
+  .hmg-std-fit-gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .hmg-std-fit-item img {
+    margin: 5px 0 !important;
+  }
+
+  .hmg-std-fit-label {
+    font-size: 10px;
+  }
+}
+</style>
+
+<div class="hmg-sizer-std">
+  <h2>Find Your Size</h2>
+  <p class="hmg-std-intro">Hyperlite Mountain Gear uses your torso length to match you with the right fit for our backpacks. Check out our <a href="https://hyperlitemountaingear.com/pages/hiking-backpack-size-chart" target="_blank" rel="noopener" class="hmg-std-intro-link">video instructions here</a> or follow the steps below.</p>
+
+  <div class="hmg-std-steps-wrapper">
+    <div class="hmg-std-steps">
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">01</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Find your C7 vertebra</p>
+          <p class="hmg-std-step-body">Tilt your chin to your chest. The most prominent bony bump at the base of your neck is your C7 vertebra. Have a friend mark it.</p>
+        </div>
+      </div>
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">02</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Find your iliac crest</p>
+          <p class="hmg-std-step-body">Stand upright. Place both hands on your hips, thumbs pointing back, and slide down to the top shelf of your hip bones. The imaginary line between your thumbs is the bottom of your measurement.</p>
+          <div class="hmg-std-callout">↕︎ Height and torso length don't reliably match. Always measure — don't estimate from height.</div>
+        </div>
+      </div>
+      <div class="hmg-std-step">
+        <span class="hmg-std-step-num">03</span>
+        <div class="hmg-std-step-content">
+          <p class="hmg-std-step-title">Measure along your spine</p>
+          <p class="hmg-std-step-body">Have a friend run a flexible tape from your C7 down along the curve of your spine to the iliac crest line. That distance is your torso length.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hmg-std-measurement-guide">
+      <picture>
+        <source media="(max-width: 649px)" srcset="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2.1.jpg?v=1784314964">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_34799d12-82b4-4623-9510-0cb06f864486.png?v=1784311305" alt="Torso measurement reference guide">
+      </picture>
+    </div>
+  </div>
+
+  <div class="hmg-std-form">
+    <div class="hmg-std-field-group">
+      <span class="hmg-std-field-label">Your torso length</span>
+      <div class="hmg-std-input-row">
+        <input class="hmg-std-input hmg-std-torso" type="number" inputmode="decimal" min="8" max="32" step="0.5" placeholder="e.g. 18" aria-label="Torso length">
+        <div class="hmg-std-unit-group">
+          <button type="button" class="hmg-std-unit-btn hmg-std-unit-in active" data-unit="in" aria-pressed="true">IN</button>
+          <button type="button" class="hmg-std-unit-btn hmg-std-unit-cm" data-unit="cm" aria-pressed="false">CM</button>
+        </div>
+      </div>
+    </div>
+    <div class="hmg-std-error"></div>
+    <button type="button" class="hmg-std-cta">Find My Size</button>
+  </div>
+
+  <div class="hmg-std-result">
+    <div class="hmg-std-result-header">
+      <p class="hmg-std-result-eyebrow">Your pack size</p>
+      <p class="hmg-std-result-size">—</p>
+      <p class="hmg-std-result-range"></p>
+    </div>
+    <div class="hmg-std-size-bar">
+      <div class="hmg-std-size-seg" data-seg="xs"></div>
+      <div class="hmg-std-size-seg" data-seg="s"></div>
+      <div class="hmg-std-size-seg" data-seg="m"></div>
+      <div class="hmg-std-size-seg" data-seg="l"></div>
+      <div class="hmg-std-size-seg" data-seg="t"></div>
+    </div>
+    <div class="hmg-std-size-ticks">
+      <span data-tick="xs">XS</span>
+      <span data-tick="s">S</span>
+      <span data-tick="m">M</span>
+      <span data-tick="l">L</span>
+      <span data-tick="t">Tall</span>
+    </div>
+    <div class="hmg-std-result-body">
+      <p class="hmg-std-result-desc"></p>
+      <div class="hmg-std-tip"></div>
+    </div>
+  </div>
+
+  <!-- Fit Check Section - Always Visible -->
+  <div class="hmg-std-fit-check">
+    <p class="hmg-std-fit-check-title">Verify your fit</p>
+    <p class="hmg-std-fit-check-intro">Once your pack arrives, load it with typical gear and weight. Check that your shoulder straps fit correctly using these guides:</p>
+
+    <div class="hmg-std-fit-gallery">
+      <div class="hmg-std-fit-item">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_b7092153-0ab6-4ed3-8a27-98be9f197a81.png?v=1784312296" alt="Too small fit example">
+        <p class="hmg-std-fit-label">Too Small</p>
+      </div>
+      <div class="hmg-std-fit-item">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_0a51237b-65b8-4fc8-9fd3-885b4fd484a8.png?v=1784312324" alt="Just right fit example">
+        <p class="hmg-std-fit-label">Just Right</p>
+      </div>
+      <div class="hmg-std-fit-item">
+        <img src="https://cdn.shopify.com/s/files/1/3004/4846/files/sizechart2_7c65e93e-edeb-4303-83f7-51d09d27f91a.png?v=1784312385" alt="Too large fit example">
+        <p class="hmg-std-fit-label">Too Large</p>
+      </div>
+    </div>
+
+    <div class="hmg-std-exchange">
+      <p class="hmg-std-exchange-text"><strong>Not sure?</strong> Easy exchanges within 30 days on new gear. Order your best size and swap if needed.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var STD_SIZES = [
+    { key: 'xs', label: 'Extra Small', minIn: 0, maxIn: 15,
+      desc: 'Extra-small torso. Only the Southwest 40L is offered in XS.' },
+    { key: 's', label: 'Small', minIn: 15, maxIn: 17,
+      desc: 'Small torso. The most widely available size.' },
+    { key: 'm', label: 'Medium', minIn: 17, maxIn: 19,
+      desc: 'Medium torso. The most common size — our full lineup is available in Medium.' },
+    { key: 'l', label: 'Large', minIn: 19, maxIn: 21,
+      desc: 'Large torso. Maximum pack options available in this size.' },
+    { key: 't', label: 'Tall', minIn: 21, maxIn: 99,
+      desc: 'Tall torso. Available across our main backpacking lineup.' }
+  ];
+
+  function toInches(val, unit) {
+    return unit === 'cm' ? val / 2.54 : val;
+  }
+
+  function cmRound(inch) {
+    return Math.round(inch * 2.54);
+  }
+
+  function rangeDual(aIn, bIn, unit) {
+    var inc = aIn.toFixed(1) + '"–' + bIn.toFixed(1) + '"';
+    var cm = cmRound(aIn) + '–' + cmRound(bIn) + ' cm';
+    return unit === 'cm' ? cm + ' (' + inc + ')' : inc + ' (' + cm + ')';
+  }
+
+  // Sets up ONE widget instance, fully scoped to its own container.
+  // Safe to call once per .hmg-sizer-std element found on the page,
+  // even if the theme renders the metafield content more than once
+  // (e.g. once in a desktop drawer, once in a mobile popover).
+  function setupInstance(root) {
+    if (root.__hmgInitialized) return;
+    root.__hmgInitialized = true;
+
+    var torsoInput = root.querySelector('.hmg-std-torso');
+    var unitBtnIn = root.querySelector('.hmg-std-unit-in');
+    var unitBtnCm = root.querySelector('.hmg-std-unit-cm');
+    var errEl = root.querySelector('.hmg-std-error');
+    var ctaBtn = root.querySelector('.hmg-std-cta');
+    var resultEl = root.querySelector('.hmg-std-result');
+    var sizeEl = root.querySelector('.hmg-std-result-size');
+    var rangeEl = root.querySelector('.hmg-std-result-range');
+    var descEl = root.querySelector('.hmg-std-result-desc');
+    var tipEl = root.querySelector('.hmg-std-tip');
+
+    var stdUnit = 'in';
+
+    function showError(msg) {
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+    }
+
+    function clearError() {
+      errEl.style.display = 'none';
+    }
+
+    function setBar(activeKey) {
+      root.querySelectorAll('[data-seg]').forEach(function(seg) {
+        seg.classList.toggle('active', seg.getAttribute('data-seg') === activeKey);
+      });
+      root.querySelectorAll('[data-tick]').forEach(function(tick) {
+        tick.classList.toggle('active', tick.getAttribute('data-tick') === activeKey);
+      });
+    }
+
+    function toggleUnit(newUnit) {
+      if (newUnit === stdUnit) return;
+
+      var val = parseFloat(torsoInput.value);
+      if (!isNaN(val) && torsoInput.value !== '') {
+        var converted;
+        if (stdUnit === 'in' && newUnit === 'cm') {
+          converted = val * 2.54;
+        } else if (stdUnit === 'cm' && newUnit === 'in') {
+          converted = val / 2.54;
+        }
+        if (converted !== undefined) {
+          torsoInput.value = (Math.round(converted * 10) / 10).toString();
+        }
+      }
+
+      stdUnit = newUnit;
+      unitBtnIn.classList.toggle('active', newUnit === 'in');
+      unitBtnCm.classList.toggle('active', newUnit === 'cm');
+      torsoInput.placeholder = newUnit === 'in' ? 'e.g. 18' : 'e.g. 46';
+    }
+
+    unitBtnIn.addEventListener('click', function() { toggleUnit('in'); });
+    unitBtnCm.addEventListener('click', function() { toggleUnit('cm'); });
+
+    function calcStandard() {
+      clearError();
+      var raw = parseFloat(torsoInput.value);
+
+      if (!raw || isNaN(raw)) {
+        showError('Please enter your torso measurement.');
+        return;
+      }
+
+      var inches = toInches(raw, stdUnit);
+
+      if (inches < 10 || inches > 30) {
+        showError('That measurement looks off — most torsos are 14"–22". Please remeasure.');
+        return;
+      }
+
+      var match = STD_SIZES[STD_SIZES.length - 1];
+      for (var i = 0; i < STD_SIZES.length; i++) {
+        if (inches >= STD_SIZES[i].minIn && inches < STD_SIZES[i].maxIn) {
+          match = STD_SIZES[i];
+          break;
+        }
+      }
+
+      sizeEl.textContent = match.label.toUpperCase();
+
+      var stdBound = stdUnit === 'cm' ? cmRound(match.minIn) + ' cm' : match.minIn.toFixed(1) + '"';
+      var stdRange;
+
+      if (match.key === 'xs') {
+        stdRange = stdUnit === 'cm' ? 'Under ' + cmRound(15) + ' cm (under 15")' : 'Under 15" (under ' + cmRound(15) + ' cm)';
+      } else if (match.key === 't') {
+        stdRange = stdUnit === 'cm' ? cmRound(21) + ' cm+ (21"+)' : '21"+ (' + cmRound(21) + ' cm+)';
+      } else {
+        stdRange = rangeDual(match.minIn, match.maxIn, stdUnit);
+      }
+
+      rangeEl.textContent = stdRange;
+      descEl.textContent = match.desc;
+
+      var stdTip;
+      if (match.key === 'xs') {
+        stdTip = 'We recommend sizing up to Extra Small.';
+      } else {
+        stdTip = 'If you measured exactly ' + stdBound + ', we recommend sizing up to ' + match.label + '.';
+      }
+      tipEl.innerHTML = stdTip;
+
+      setBar(match.key);
+
+      resultEl.style.display = 'block';
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    ctaBtn.addEventListener('click', calcStandard);
+
+    torsoInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') calcStandard();
+    });
+  }
+
+  function initAll() {
+    var roots = document.querySelectorAll('.hmg-sizer-std');
+    if (!roots.length) {
+      setTimeout(initAll, 100);
+      return;
+    }
+    roots.forEach(setupInstance);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+})();
+</script>

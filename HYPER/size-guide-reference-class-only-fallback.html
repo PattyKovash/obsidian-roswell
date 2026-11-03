@@ -1,0 +1,43 @@
+<!--
+  REFERENCE ONLY — not synced to Shopify, not committed to the theme.
+
+  Class-only fallback test: same shape as size-guide-reference-tier2-generic.html, but with every
+  data-hmg-* attribute removed. Only the legacy .hmg-std-* classes remain as hooks. Confirms
+  assets/size-guide-widget.js's CSS-selector fallback ('[data-hmg-x], .hmg-std-x') still finds these
+  elements when data-hmg-* is absent — the backward-compat path for content authored before this
+  convention existed, or an editor that strips data attributes but keeps classes.
+-->
+
+<hmg-size-widget
+  class="hmg-sizer-std"
+  sizes='[
+    {"key":"s","label":"Small","short":"S","minIn":0,"maxIn":10,"desc":"Placeholder description for the small tier."},
+    {"key":"m","label":"Medium","short":"M","minIn":10,"maxIn":20,"desc":"Placeholder description for the medium tier."},
+    {"key":"l","label":"Large","short":"L","minIn":20,"maxIn":99,"desc":"Placeholder description for the large tier."}
+  ]'
+>
+  <template>
+    <h2>Find Your Size</h2>
+    <p>Class-only fallback test — no data-hmg-* attributes anywhere below.</p>
+
+    <div class="hmg-std-form">
+      <label>
+        Your measurement
+        <input class="hmg-std-input hmg-std-torso" type="number" inputmode="decimal">
+      </label>
+      <button type="button" class="hmg-std-unit-btn hmg-std-unit-in active">IN</button>
+      <button type="button" class="hmg-std-unit-btn hmg-std-unit-cm">CM</button>
+      <div class="hmg-std-error"></div>
+      <button type="button" class="hmg-std-cta">Find My Size</button>
+    </div>
+
+    <div class="hmg-std-result">
+      <p class="hmg-std-result-size">—</p>
+      <p class="hmg-std-result-range"></p>
+      <div class="hmg-std-size-bar"></div>
+      <div class="hmg-std-size-ticks"></div>
+      <p class="hmg-std-result-desc"></p>
+      <div class="hmg-std-tip"></div>
+    </div>
+  </template>
+</hmg-size-widget>
