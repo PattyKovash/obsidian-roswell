@@ -57,22 +57,30 @@ ln -s "<vault>/.claude/skills/<name>" ~/.claude/skills/<name>
 ls -la ~/.claude/skills/<name>   # confirm it points at the vault copy
 ```
 
-## 4. Commit (vault only)
+## 4. Update the README
+
+Add a row for the skill to `<vault>/.claude/skills/README.md` under the
+section that fits (Issues and tickets, Sessions, Skill management, Testing;
+add a new section if none fits): linked name, one-line "What it does", and
+the trigger phrases. If it was moved in from `~/.claude/commands/`, remove it
+from the "Not in this vault" table.
+
+## 5. Commit (vault only)
 
 - No hardcoded absolute paths in the committed file; use `<vault-path>`-style
   placeholders. Check with `grep -n "/Users/" <file>`.
 - Stage with `-f` (Claude Code may exclude `.claude/` from git):
 
 ```bash
-git -C <vault> add -f ".claude/skills/<name>/SKILL.md"
-git -C <vault> diff --cached --name-only    # must list only this skill's files
+git -C <vault> add -f ".claude/skills/<name>/SKILL.md" .claude/skills/README.md
+git -C <vault> diff --cached --name-only    # must list only this skill and the README
 git -C <vault> commit -m "chore(skills): add <name>"
 ```
 
 - Commit straight to `main`. No `Co-Authored-By` line.
 - Don't push unless Patty asks.
 
-## 5. Report
+## 6. Report
 
 Say where the skill lives, that the link is in place, the commit hash, that
 it's not pushed, and how to invoke it (`/<name>` or the trigger phrases). A

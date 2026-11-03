@@ -9,7 +9,9 @@ git -C <vault-path> diff --cached --name-only                 # confirm staging 
 git -C <vault-path> commit -m "chore(skills): …"
 ```
 
-**Adding a skill:** create `.claude/skills/<name>/SKILL.md` here, then link it:
+**Skills index:** `.claude/skills/README.md` lists every skill by category, with what it does and how to trigger it. Keep it current when adding or removing a skill.
+
+**Adding a skill:** run `/vault-skill`, or create `.claude/skills/<name>/SKILL.md` here and link it:
 ```bash
 ln -s "<vault-path>/.claude/skills/<name>" ~/.claude/skills/<name>
 ```
