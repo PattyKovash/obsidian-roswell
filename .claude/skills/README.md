@@ -15,6 +15,12 @@ trigger phrases are listed below.
 |---|---|---|
 | [`edge-issue`](edge-issue/SKILL.md) | Drafts a GitHub issue for The Edge (`roswell-studios/roswell-agency`): bug, feature or open question. Uses the repo's templates, checks the code and the real ticket, and **shows the draft for approval before creating it**. | "create an issue", "write up a bug", "feature request", "put the question in an issue" |
 
+### Tickets
+
+| Skill | What it does | Say |
+|---|---|---|
+| [`start-ticket`](start-ticket/SKILL.md) | Starts an Edge ticket with Patty's workflow: pull the ticket, draft the PRD (Ticket Authoring Prompt v2), keep vault notes per the Documentation Protocol, test on the dev theme with Playwright (`preview_theme_id`, one theme at a time), and **ask before any push or Edge write**. | "start a ticket", "start HYPER-123", "pick up <ticket>", "begin work on <ticket>" |
+
 ### Sessions
 
 | Skill | What it does | Say |
