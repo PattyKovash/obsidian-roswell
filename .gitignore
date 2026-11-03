@@ -1,1 +1,4 @@
 .DS_Store
+
+# Allow skill files to be committed (Claude Code may exclude .claude/ via .git/info/exclude)
+!.claude/skills/
