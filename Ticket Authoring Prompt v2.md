@@ -70,9 +70,13 @@ Anything more technical (file paths, line numbers, code, root-cause analysis) go
 ## Vault (technical documentation)
 
 - Merchant vault: `roswell-vaults/vaults/<merchant>/`. Verify `01-mcd/mcd.md` frontmatter says the right merchant before writing; don't trust a `../vault` symlink.
-- Planning notes per ticket: `04-engineering/planning/<ticket-slug>/README.md` with current state, verification table, changes made, cleanup items for others; screenshots in `evidence/`.
-- Decisions worth remembering go in `02-decisions/decisions.md`.
-- Never edit `03-pm/issues/` (Edge-owned) or commit `.obsidian/`. Commit each vault change right away.
+- Planning notes per ticket: `04-engineering/planning/<ticket-slug>/README.md`, frontmatter `type: plan` (not `planning`; the `validate-frontmatter` CI check fails it). Contents: current state, verification table, changes made, cleanup items for others; screenshots in `evidence/`.
+- Decisions worth remembering go in `02-decisions/decisions.md`. Reusable how-tos go in `04-engineering/patterns/`.
+- **The Edge owns ticket content.** Scope, status, AC results and comments go on the Edge ticket via the Edge MCP, never into a vault file. `03-pm/issues/` and other generated paths are rebuilt from the Edge database and overwritten on every sync.
+- **Never touch a generated path.** The list is in roswell-agency `the-edge/packages/db/generated-paths.txt`; read the current file. As of 2026-11-03 it includes `03-pm/{issues,epics,discussions,client-updates}`, `99-archive/{issues,epics}`, `01-identity/team.md`, dated `01-calls/*.md`, `02-decisions/call-decisions.md`, most of `06-financial/`, `04-engineering/{deploys,releases}.md`, and `07-audit/` logs. The `generated-paths` CI guard fails a PR if *any* commit in it touches one, and a later fix-up commit doesn't clear it.
+- **Branch from `origin/main` for each piece of vault work.** Don't reuse long-lived personal branches; they pick up blocked history.
+- Commit each vault change right away. Never commit `.obsidian/`. Ask before pushing or opening a PR.
+- Before pushing, run the vault checks from a roswell-agency `origin/main` checkout: `pnpm validate:vault <vault> --files <paths>` and the `vault-guard/check-generated-paths.ts` script (see the roswell-vaults README/workflows for current usage).
 - **PRD links to the vault use the GitHub `main` URL**, not local paths or feature branches: `https://github.com/roswell-studios/roswell-vaults/blob/main/vaults/<merchant>/<path>`. The vault branch must reach `main` for these to resolve.
 
 ## Acceptance Criteria table — exact format
