@@ -92,13 +92,15 @@ Documentation lives closest to the kind of thing it is, not to an arbitrary code
 | A new non-negotiable constraint ("don't do X") | `vaults/{merchant}/01-mcd/do-not-touch.md` (Brand-level / Technical / Commercial / Editorial sections) |
 | A decision made with real alternatives considered | `vaults/{merchant}/02-decisions/decisions.md` — latest first, dated, with Context / Options considered / Decision / Reasoning / Recorded by |
 | A reusable technical pattern or a deeper mechanism worth its own writeup | `vaults/{merchant}/04-engineering/patterns/{topic}.md` |
-| Ticket working notes: current state, verification results, evidence screenshots, follow-up items | `vaults/{merchant}/04-engineering/planning/{ticket}/README.md` (`type: plan`), screenshots in `evidence/`. The Edge ticket's PRD links here instead of repeating the detail. |
+| Ticket working notes: current state, verification results, evidence screenshots, changes made to someone else's code, cleanup items for others | `vaults/{merchant}/04-engineering/planning/{ticket}/README.md` (`type: plan`), screenshots in `evidence/`. The Edge ticket's PRD links here instead of repeating the detail. |
 | Ticket scope, status, AC results, comments | The Edge ticket, never a vault file |
 | Anything cross-engagement (useful beyond this one merchant) | Promote to the agency-wide library: `roswell-agency/patterns/` (or `anti-patterns/`, `component-archetypes/`) |
 
 **Vault mechanics that CI enforces:**
 - Every `.md` you add or change needs a frontmatter `type` the validator knows (`plan`, `pattern`, `decisions-log`, `engineering-notes`, …; list in roswell-agency `schemas/` and `schemas/types-without-schema.json`). Missing or unknown types fail the `validate-frontmatter` check.
+- Before writing, confirm `vaults/{merchant}/01-mcd/mcd.md` names the right merchant. A `../vault` symlink can point at another merchant's vault.
 - Branch each piece of vault work from `origin/main`; long-lived personal branches pick up blocked history. Never commit `.obsidian/`.
+- Commit each vault change right away. Ask the engineer before pushing or opening a PR.
 - Before pushing, run `pnpm validate:vault <vault> --files <paths>` and the `vault-guard/check-generated-paths.ts` script from a roswell-agency `origin/main` checkout.
 
 There is no per-component or per-extension scoped file convention (e.g. no `.claude/context/extensions/{name}.md`). The real granularity is **per-merchant**: one `do-not-touch.md`, one `decisions.md`, a `patterns/` folder — not one file per code area.
