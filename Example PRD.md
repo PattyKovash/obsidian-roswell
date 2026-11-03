@@ -10,7 +10,7 @@ authored: 2026-06-05
 
 -  Confirmed on the call: the **model image is always the first / main image** of the product ([Fathom @39:18](https://fathom.video/calls/697645142?timestamp=2358.48)).
 
--  Root cause: the cart renders `line_item.image`, which resolves to the **variant's** image when one is set, otherwise the product's featured image — producing inconsistent thumbnails depending on which variant was added.
+-  Cause: the cart shows the added variant's own image when it has one, and the product's main image otherwise, so thumbnails change depending on which variant was added.
 
 -  Decision: use the product's **first (featured) image** always, falling back to the variant/line-item image only if the product has no image.
 
@@ -22,7 +22,7 @@ authored: 2026-06-05
 
 -  Surfaces: cart page + cart drawer (same partial). **Checkout is out of scope** — see Constraints / Scope.
 
--  Current state: no explicit fallback exists today. The cart relies on `line_item.image`, which already falls back to the product's featured image when the variant has none — but that's Shopify's default behavior, not something the theme codes for. This ticket adds explicit first-image-then-variant-image logic.
+-  Current state: the theme has no image rule of its own; it uses Shopify's default choice. This ticket adds an explicit rule: the product's first image, then the variant image.
 
 ## Constraints / Scope:
 
@@ -46,6 +46,17 @@ authored: 2026-06-05
 |  8 |  Scoped to the cart only — checkout is explicitly not addressed by this ticket (see Constraints / Scope). |   |   |   |
 
 ## Dev Notes:
+
+-  Claude Code session: `claude --resume SESSION_ID`
+
+-  File paths and code reflect a review at authoring time; confirm before implementing.
+
+-  Current code, root cause, and the proposed change: [vault notes](https://github.com/roswell-studios/roswell-vaults/blob/main/vaults/elie-tahari/04-engineering/planning/<ticket-slug>/README.md).
+   -  https://github.com/roswell-studios/roswell-vaults/blob/main/vaults/elie-tahari/04-engineering/planning/<ticket-slug>/README.md
+
+## Implementation Notes:
+
+-  TBD (post-execution)
 
 ## Testing Notes:
 
