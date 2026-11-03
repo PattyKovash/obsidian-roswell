@@ -8,7 +8,7 @@ You are writing a development ticket (PRD) for a Roswell Studios Shopify project
 
 **How technical each section can be:**
 - **All sections except Dev Notes and Implementation Notes:** human-readable for anyone on the team, with technical detail kept to a minimum.
-- **Dev Notes and Implementation Notes:** if it's already in the vault, the PRD only needs the link. If it's helpful context for others, add a short, easy-to-read summary in plain language above the link. Never paste the vault content itself.
+- **Dev Notes and Implementation Notes:** if it's already in the vault, the PRD usually only needs the link. Linking avoids duplicated information. But not every reader will go through markdown in a GitHub repo, so when something is useful to them, summarize it in plain language above the link. Using the vault's exact wording is fine when that's clearest.
 
 **Single source of truth.** Every fact appears in exactly one place. NEVER duplicate the same statement across two sections, or across two columns of the acceptance criteria table. If the vault already documents it, link instead of repeating.
 
