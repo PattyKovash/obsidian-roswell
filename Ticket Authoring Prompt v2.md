@@ -55,7 +55,7 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 4. **Objective/Acceptance Criteria:** The table (spec below), confirmed with the user per the Authoring Workflow.
 5. **Dev Notes:** See dedicated rules below.
 6. **Changes Made to Original Code Updates by `<Author>`:** *(only when the ticket reviews/merges someone else's code)* Short, easy-to-read bullets for the original author: what we changed from their code and why, with the file in parentheses. One line of intro ("Everything else was merged as they wrote it."). Only list actual changes to *their* code; a bug we introduced and fixed ourselves doesn't belong here.
-7. **Implementation Notes:** *(post-execution)* Key decisions as short, readable summaries, each followed by the link to where it's documented in the vault (decisions log, planning notes). Only summarize what's helpful for others to see; the rest is just the link.
+7. **Implementation Notes:** *(post-execution)* What changed, as short readable bullets: new settings (exact labels and defaults), behavior changes, go-live doc link, and key decisions with a link to their vault entry. End with one link to the vault notes for files, commits and test results. See the example under Dev Notes.
 8. **Testing Notes:** *(post-execution)* How to verify each AC: steps, test data/accounts, environments. For QA to follow, not a restatement of the AC.
 9. **Bugs from QA:** `TBD` placeholder.
 10. **Clarifying Questions:** Only questions still genuinely open after the interview. If none, "None."
@@ -69,7 +69,38 @@ Short. Not a play-by-play.
 - **Open:** items still outstanding (e.g. post-deploy checks).
 - A link to the vault planning notes for changes, test results, screenshots, and cleanup items.
 
+- Short plain-language notes on anything non-obvious a developer should know, one topic per bullet, led by a short label (`Swym:`). Say *why* something works the way it does, not how the code is written.
+
 Anything more technical (file paths, line numbers, code, root-cause analysis) goes in the vault notes and is referenced by link. If something there is important for others to see, distill it into a sentence or two of plain language above the link. When there are no vault notes yet (pre-execution ticket), a short "File paths and code reflect a review at authoring time; confirm before implementing" note plus the key file paths is fine.
+
+### Example: Dev Notes and Implementation Notes at the right level
+
+```markdown
+## Dev Notes:
+
+-  claude --resume 497dd857-8793-4464-9ee8-ba8fe1f81e0d
+
+-  Account icon: a new icon in the theme's icon snippet, with an optional "!" badge. The badge colors are CSS variables, so a button restyle doesn't change them.
+
+-  Swym: Swym only opens its wishlist from links to #swym-wishlist, so the header heart and the drawer "Wishlist" item are both links. The theme can't tell whether Swym's app embed is on, which is why "RS Enable Swym Wishlist" is a manual setting.
+
+## Implementation Notes:
+
+-  Go Live documentation here: https://docs.google.com/document/d/...
+
+-  Header section settings: "Show account icon on mobile" (on by default) and "Mobile wishlist" (Header, Drawer or Hidden; Header by default).
+
+-  Theme settings → Wishlist: "RS Enable Swym Wishlist" (on by default) removes the theme's wishlist heart, drawer link and PDP wishlist slot when off, and hides Swym's own PDP button if the app embed is still on.
+
+-  The drawer's "Account" menu link now goes to the same place as the header account icon.
+
+-  Files, commits and dev test results: [vault notes](https://github.com/roswell-studios/roswell-vaults/blob/main/vaults/<merchant>/04-engineering/planning/<ticket-slug>/README.md).
+```
+
+What makes it work:
+- **Dev Notes:** the resume line, then only the non-obvious *why*s, in plain words.
+- **Implementation Notes:** what changed from the merchant's and QA's point of view: settings with their exact labels and defaults, behavior changes, and a link to the go-live doc if there is one.
+- **Last bullet:** everything else (files, commits, test results) is one link to the vault notes.
 
 ## Vault (technical documentation)
 
