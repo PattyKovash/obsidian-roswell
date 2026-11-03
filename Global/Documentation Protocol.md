@@ -92,7 +92,7 @@ Documentation lives closest to the kind of thing it is, not to an arbitrary code
 | A new non-negotiable constraint ("don't do X") | `vaults/{merchant}/01-mcd/do-not-touch.md` (Brand-level / Technical / Commercial / Editorial sections) |
 | A decision made with real alternatives considered | `vaults/{merchant}/02-decisions/decisions.md` — latest first, dated, with Context / Options considered / Decision / Reasoning / Recorded by |
 | A reusable technical pattern or a deeper mechanism worth its own writeup | `vaults/{merchant}/04-engineering/patterns/{topic}.md` |
-| Ticket working notes: current state, verification results, evidence screenshots, changes made to someone else's code, cleanup items for others | `vaults/{merchant}/04-engineering/planning/{ticket}/README.md` (`type: plan`), screenshots in `evidence/`. The Edge ticket's PRD links here instead of repeating the detail. |
+| Ticket working notes: current state, verification results, evidence screenshots | `vaults/{merchant}/04-engineering/planning/{ticket}/README.md` (`type: plan`), screenshots in `evidence/`. The Edge ticket's PRD links here instead of repeating the detail. |
 | Ticket scope, status, AC results, comments | The Edge ticket, never a vault file |
 | Anything cross-engagement (useful beyond this one merchant) | Promote to the agency-wide library: `roswell-agency/patterns/` (or `anti-patterns/`, `component-archetypes/`) |
 

@@ -67,7 +67,7 @@ Short. Not a play-by-play.
 - **First bullet, always:** the Claude Code session to resume, as `claude --resume SESSION_ID` (the session ID is the current transcript's filename under `~/.claude/projects/<project>/`).
 - Branch name, and how commits are organized if that matters (e.g. "original changes committed as-is as a reference point, review fixes on top").
 - **Open:** items still outstanding (e.g. post-deploy checks).
-- A link to the vault planning notes for changes, test results, screenshots, and cleanup items.
+- A link to the vault planning notes.
 
 - Short plain-language notes on anything non-obvious a developer should know, one topic per bullet, led by a short label (`Swym:`). Say *why* something works the way it does, not how the code is written.
 
@@ -135,7 +135,7 @@ Rules:
 - **No references to other merchants/clients** in the ticket body (it's merchant-visible). Comparisons with other clients' work belong in the vault, if anywhere.
 - **Links (temporary Edge workaround):** the Edge viewer currently shows links as unstyled text, so they don't look clickable. Keep the markdown link, and add the full URL as an indented sub-bullet underneath:
   ```markdown
-  -  Changes, test results, and cleanup items: [vault notes](https://github.com/.../README.md).
+  -  Test results and screenshots: [vault notes](https://github.com/.../README.md).
      -  https://github.com/.../README.md
   ```
   Drop the sub-bullets once the Edge renders link styling.
