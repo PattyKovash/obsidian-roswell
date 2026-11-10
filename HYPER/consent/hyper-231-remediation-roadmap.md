@@ -13,8 +13,8 @@ We recommend three phases that build on each other:
 | Phase | Focus | Proposed timing |
 |---|---|---|
 | **1. Close the claim** | A decline stops every tracker named in the claim | Next 1–2 weeks |
-| **2. Opt-out, banner and categorization** | Opt-out for US law states, EU/UK per-category choices, every tag in the right category | Following 4–6 weeks |
-| **3. Verify vendors and govern** | Vendor questionnaires, contracts, policy updates, ongoing monitoring | Scoped separately, typically 2–3 months |
+| **2. Opt-out, banner and categorization** | Opt-out for US law states, EU/UK per-category choices, every tag in the right category, vendor questionnaires and contracts | Following 4–6 weeks |
+| **3. Govern** | Policy updates, rights requests, app approval process, ongoing monitoring | Scoped separately, typically 2–3 months |
 
 Timing depends on the decisions listed at the end. This plan is a technical roadmap, not legal advice. Items marked **(counsel)** need a legal decision.
 
@@ -22,7 +22,7 @@ Timing depends on the decisions listed at the end. This plan is a technical road
 
 - **When in doubt, use the strictest category.** Any tool whose purpose we can't confirm is treated as Marketing, so it stays off until the visitor accepts.
 - **Hyperlite and its counsel decide the risk.** If a tool can't be gated without breaking a feature, the choice is to turn it off or keep it and accept the risk. We'll lay out the trade-off for each one.
-- **For apps that run through Shopify, we can only send the signal.** The site passes the visitor's choice to Shopify, which passes it to app pixels. Whether an app honors it depends on the app. That's why Phase 3 includes contacting vendors.
+- **For apps that run through Shopify, we can only send the signal.** The site passes the visitor's choice to Shopify, which passes it to app pixels. Whether an app honors it depends on the app. That's why Phase 2 includes contacting vendors.
 
 ---
 
@@ -86,7 +86,7 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 
 **Goal:** visitors in law states can opt out, the EU/UK banner offers per-category choices, and every tag, script and app has a verified category.
 **Sequencing:** the opt-out and banner items come first. Several depend on counsel's decisions, which can be made while Phase 1 is underway.
-**Limit:** categorization relies on our judgment and public vendor documentation. Phase 3 confirms it with vendors.
+**Limit:** categorization relies on our judgment and public vendor documentation. Phase 2 confirms it with vendors (2.10).
 
 **First: opt-out and banner**
 
@@ -97,7 +97,7 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 | 2.A2 | **Honor Global Privacy Control (GPC)** as an opt-out | Required in California and most other law states. We'll confirm Cookiebot's setting **(counsel)** |
 | 2.A3 | **EU/UK per-category choices:** add a "Customize" option with Preferences, Statistics and Marketing toggles | EU and UK regulator guidance (EDPB, CNIL, ICO) expects consent per purpose. Before enabling it, confirm with Elevar that each destination's consent categories still fit when visitors can choose per category (for example, Google Ads requires Marketing, Statistics and Preferences). |
 | 2.A4 | **Fix the privacy page cookie section** | The Cookiebot cookie list and status panel are blank for everyone. This is where visitors change their choice later |
-| 2.A5 | **Unverified apps:** Swym, Shogun and Triple Whale set tracking storage before the visitor answers (Intelligems resolved Nov 9: app embed turned off on live, not in use) | Gate each one as Marketing, or **Hyperlite decides** to keep it as-is until Phase 3 confirms it |
+| 2.A5 | **Unverified apps:** Swym, Shogun and Triple Whale set tracking storage before the visitor answers (Intelligems resolved Nov 9: app embed turned off on live, not in use) | Gate each one as Marketing, or **Hyperlite decides** to keep it as-is until the vendor confirms it (2.10) |
 | 2.A6 | **Consent records:** confirm what Cookiebot logs and how to export it | |
 
 **Then: full categorization**
@@ -114,22 +114,22 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 | 2.7 | **GA4 audit:** consent signals received correctly, and no personal data collected | |
 | 2.8 | **Test every consent state:** first visit, accept, decline, change of mind, returning visitor, GPC, and mobile | Uses our automated region tests |
 | 2.9 | **Regional coverage review:** Canada (Québec), the Cyprus gap in Cookiebot, and whether law-state visitors should get a denied default | **(counsel)** |
+| 2.10 | **Vendor questionnaires:** privacy policy, data processing agreement (DPA), sub-processors, how it honors consent and GPC | Start with session recording (Clarity, Vibe), ad pixels, Klaviyo, and anything on checkout. **Hyperlite and counsel decide** about vendors that can't answer adequately |
+| 2.11 | **Contracts and EU data transfers:** DPAs on file, plus transfer safeguards | **(counsel)** |
 
 ---
 
-## Phase 3: Verify vendors and govern (scoped separately)
+## Phase 3: Govern (scoped separately)
 
 **Goal:** confirm each vendor's practices in writing, correct any misclassifications, and keep the site compliant as tools change.
 
 | # | Item | Notes |
 |---|---|---|
-| 3.1 | **Vendor questionnaires:** privacy policy, data processing agreement (DPA), sub-processors, how it honors consent and GPC | Start with session recording (Clarity, Vibe), ad pixels, Klaviyo, and anything on checkout. **Hyperlite and counsel decide** about vendors that can't answer adequately |
-| 3.2 | **Contracts and EU data transfers:** DPAs on file, plus transfer safeguards | **(counsel)** |
-| 3.3 | **Privacy and cookie policy update:** vendors and categories, session recording, rights requests, retention | Vendor responses feed this **(counsel)** |
-| 3.4 | **Rights requests:** a process for access, deletion and opt-out within legal deadlines | **(counsel)** |
-| 3.5 | **Saved consent when visitors travel:** consent applied automatically outside the banner regions persists when the visitor later browses from the EU | **(counsel)** |
-| 3.6 | **App and script approval process:** nothing goes live without a consent category and a check of how it loads; limit who can publish GTM changes | |
-| 3.7 | **Ongoing monitoring:** automated region tests after changes, regular Cookiebot scans, periodic vendor policy review | |
+| 3.1 | **Privacy and cookie policy update:** vendors and categories, session recording, rights requests, retention | Vendor responses feed this **(counsel)** |
+| 3.2 | **Rights requests:** a process for access, deletion and opt-out within legal deadlines | **(counsel)** |
+| 3.3 | **Saved consent when visitors travel:** consent applied automatically outside the banner regions persists when the visitor later browses from the EU | **(counsel)** |
+| 3.4 | **App and script approval process:** nothing goes live without a consent category and a check of how it loads; limit who can publish GTM changes | |
+| 3.5 | **Ongoing monitoring:** automated region tests after changes, regular Cookiebot scans, periodic vendor policy review | |
 
 ---
 
