@@ -12,9 +12,9 @@ We recommend three phases that build on each other:
 
 | Phase | Focus | Proposed timing |
 |---|---|---|
-| **1. Close the claim** | A decline stops every tracker named in the claim | Next 1–2 weeks |
-| **2. Opt-out, banner and categorization** | Opt-out for US law states, EU/UK per-category choices, every tag in the right category, vendor questionnaires and contracts | Following 4–6 weeks |
-| **3. Govern** | Policy updates, rights requests, app approval process, ongoing monitoring | Scoped separately, typically 2–3 months |
+| **1. Close the claim** | A decline stops every tracker named in the claim | To be scoped |
+| **2. Opt-out, banner and categorization** | Opt-out for US law states, EU/UK per-category choices, every tag in the right category, vendor questionnaires and contracts | To be scoped |
+| **3. Govern** | Policy updates, rights requests, app approval process, ongoing monitoring | To be scoped |
 
 Timing depends on the decisions listed at the end. This plan is a technical roadmap, not legal advice. Items marked **(counsel)** need a legal decision.
 
@@ -79,6 +79,7 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 | 1.4 | **GA4 and Google Ads:** stop user_id on denied hits; recommend basic vs advanced Consent Mode | user_id comes from Elevar's data layer. Recommendation: stay in advanced Consent Mode (keeps modeled conversions) but stop sending user_id when consent is denied, and remove a duplicate Google Ads tag that has no consent check. Elevar set up these tags and will put changes in a GTM workspace for Hyperlite's approval. Also asked Elevar whether its Strict Consent Mode is needed for server-side data (it lowers conversions reported for visitors who decline). **Hyperlite approves** |
 | 1.5 | **Retest and evidence package for counsel** | After 1.1–1.4. Retest from California and the EU with VPN ad blocking off. Deliver written per-tag answers and network screenshots or a recording |
 | 1.6 | **Classify Affirm and the fraud tools** (from Hyperlite's deck) | Affirm's script in the theme sets a long-lasting device ID and sends it with the page URL to Affirm on every page, even after a decline; we recommend Marketing (gate it, or remove it if on-site messaging isn't used). Fraud tools (Yofi, FraudLabs Pro, NoFraud) are likely necessary. **Hyperlite and counsel classify** |
+| 1.7 | **Additional recommended remediations** (Roswell recommendation) | "Do not sell or share" link: Cookiebot's link is on the privacy page but hidden (likely a Cookiebot setting; HMG or Cookiebot support to enable if counsel confirms it applies). Cookie classifications: HMG and counsel classify Cookiebot's 111 unclassified items (strictest category, Marketing, if unsure), ideally after a fresh scan. Order confirmation page test (needs a test order). Cookiebot setup review: bigger change, later phase; HMG to ask Cookiebot whether their plan includes a setup and Shopify integration review |
 
 ---
 
@@ -96,7 +97,7 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 | 2.A1 | **"Your Privacy Choices" / "Do Not Sell or Share" link** in the footer, connected to a working opt-out | For US law states (about 1.1 million sessions). Counsel may prefer showing it to all US visitors rather than state by state, which is simpler to maintain **(counsel)** |
 | 2.A2 | **Honor Global Privacy Control (GPC)** as an opt-out | Required in California and most other law states. We'll confirm Cookiebot's setting **(counsel)** |
 | 2.A3 | **EU/UK per-category choices:** add a "Customize" option with Preferences, Statistics and Marketing toggles | EU and UK regulator guidance (EDPB, CNIL, ICO) expects consent per purpose. Before enabling it, confirm with Elevar that each destination's consent categories still fit when visitors can choose per category (for example, Google Ads requires Marketing, Statistics and Preferences). |
-| 2.A4 | **Fix the privacy page cookie section** | The Cookiebot cookie list and status panel are blank for everyone. This is where visitors change their choice later |
+| 2.A4 | **Fix the privacy page cookie section** | Cookiebot's cookie list displays, but its consent controls vary: "Withdraw" only after Accept, the whole panel hidden for implied consent (outside banner regions), and its "Do not sell or share" link hidden in every state (likely a Cookiebot setting). This is where visitors change their choice later |
 | 2.A5 | **Unverified apps:** Swym, Shogun and Triple Whale set tracking storage before the visitor answers; Gorgias chat loads before consent (what it sends before chat opens not yet tested) (Intelligems resolved Nov 9: app embed turned off on live, not in use) | Gate each one as Marketing, or **Hyperlite decides** to keep it as-is until the vendor confirms it (2.10) |
 | 2.A6 | **Consent records:** confirm what Cookiebot logs and how to export it | |
 
@@ -105,13 +106,13 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 | # | Item | Notes |
 |---|---|---|
 | 2.0 | **Clean up duplicate pixels** (Meta, TikTok, Pinterest, Criteo in both GTM and Shopify) | One copy per channel. Not urgent: both copies wait for consent, so removing one changes nothing after a decline, and removing the wrong one could break conversion tracking. Roswell confirms the GTM and Elevar setup covers every event the app pixels send (especially checkout and purchase), sets up anything missing, then removes the duplicates |
-| 2.1 | **Inventory every tracker:** GTM tags, theme scripts, app embeds, and Shopify app and custom pixels, across every page type including cart and checkout | Produces a list with each vendor, how it loads, its category, and what a decline does |
+| 2.1 | **Inventory every tracker:** GTM tags (every tag, trigger and variable), theme scripts, app embeds, and Shopify app and custom pixels, across every page type including cart, checkout and the order confirmation page; trace every cookie to its tool and remove leftovers from uninstalled apps | Produces a list with each vendor, how it loads, its category, and what a decline does |
 | 2.2 | **Classify the remaining apps:** Affirm, Attentive, Redo, Gorgias, and the fraud and bot tools (Yofi, FraudLabsPro, NoFraud) | Whether the fraud tools are strictly necessary needs a decision **(counsel)**. NoFraud and Yofi also load through Shopify script tags, which stop on Mar 1, 2027: check the vendors' migration plans |
 | 2.3 | **GTM review:** every tag has the right consent requirement and trigger | **We'll ask Elevar**, which set up many of the GTM tags and triggers, to review its setup and confirm each one uses Google consent checks. Email sent to Elevar Nov 9 asking them to make the updates (consent settings on their tags and destinations, user_id, the duplicate Google Ads tag, the checkout pixels), with GTM changes in an unpublished workspace for Hyperlite to approve. Also remove unused tags, apply pending template updates, and fix the container quality issue |
 | 2.4 | **Classify Cookiebot's 111 unclassified cookies** | Accurate cookie declaration and banner categories |
 | 2.5 | **Load Cookiebot directly in the theme**, ahead of GTM | If GTM is blocked (some VPNs and ad blockers do this), there's no banner and no opt-out |
 | 2.6 | **Move theme trackers into GTM** (Clarity, Vibe) | One place to manage consent |
-| 2.7 | **GA4 audit:** consent signals received correctly, and no personal data collected | |
+| 2.7 | **GA4 and Google Consent Mode audit:** consent signals received correctly, no personal data collected, and the full Consent Mode setup (URL passthrough, ads data redaction, Consent Mode reporting, Google Signals off without consent) | |
 | 2.8 | **Test every consent state:** first visit, accept, decline, change of mind, returning visitor, GPC, and mobile | Uses our automated region tests |
 | 2.9 | **Regional coverage review:** Canada (Québec), the Cyprus gap in Cookiebot, and whether law-state visitors should get a denied default | **(counsel)** |
 | 2.10 | **Vendor questionnaires:** privacy policy, data processing agreement (DPA), sub-processors, how it honors consent and GPC | Start with session recording (Clarity, Vibe), ad pixels, Klaviyo, and anything on checkout. **Hyperlite and counsel decide** about vendors that can't answer adequately |
@@ -125,7 +126,7 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 
 | # | Item | Notes |
 |---|---|---|
-| 3.1 | **Privacy and cookie policy update:** vendors and categories, session recording, rights requests, retention | Vendor responses feed this **(counsel)** |
+| 3.1 | **Keep the privacy policy and cookie list current:** the policy (updated Sept 2026) already covers CCPA rights, advertising and cookies; Cookiebot's cookie list updates after each scan once cookies are classified; update the text if tools or uses change | Vendor responses feed this **(counsel)** |
 | 3.2 | **Rights requests:** a process for access, deletion and opt-out within legal deadlines | **(counsel)** |
 | 3.3 | **Saved consent when visitors travel:** consent applied automatically outside the banner regions persists when the visitor later browses from the EU | **(counsel)** |
 | 3.4 | **App and script approval process:** nothing goes live without a consent category and a check of how it loads; limit who can publish GTM changes | |
