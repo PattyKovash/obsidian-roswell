@@ -137,7 +137,7 @@
 <h3>Then: full categorization</h3>
 <div class="tw"><table>
   <tr><th>#</th><th>Item</th><th>Notes</th></tr>
-  <tr><td class="n">2.0</td><td><b>Clean up duplicate pixels</b> (Meta, TikTok, Pinterest, Criteo in both GTM and Shopify)</td><td>One copy per channel. Not urgent: the Shopify copies respect consent in banner regions. Confirm with Hyperlite which channels and copies are used</td></tr>
+  <tr><td class="n">2.0</td><td><b>Clean up duplicate pixels</b> (Meta, TikTok, Pinterest, Criteo in both GTM and Shopify)</td><td>One copy per channel. Not urgent: both copies wait for consent, so removing one changes nothing after a decline, and removing the wrong one could break conversion tracking. Roswell confirms the GTM and Elevar setup covers every event the app pixels send (especially checkout and purchase), sets up anything missing, then removes the duplicates</td></tr>
   <tr><td class="n">2.1</td><td><b>Inventory every tracker:</b> GTM tags, theme scripts, app embeds, and Shopify app and custom pixels, across every page type including cart and checkout</td><td>A list with each vendor, how it loads, its category, and what a decline does</td></tr>
   <tr><td class="n">2.2</td><td><b>Classify the remaining apps:</b> Affirm, Attentive, Redo, Gorgias, and the fraud and bot tools (Yofi, FraudLabsPro, NoFraud)</td><td>Whether the fraud tools are strictly necessary needs a decision <span class="counsel">(counsel)</span>. NoFraud and Yofi also load through Shopify script tags, which stop on Mar 1, 2027: check the vendors' migration plans</td></tr>
   <tr><td class="n">2.3</td><td><b>GTM review:</b> every tag has the right consent requirement and trigger</td><td><b>We'll ask Elevar</b>, which set up many of the GTM tags and triggers, to review its setup and confirm each one uses Google consent checks. Email sent to Elevar Nov 9 asking them to make the updates (consent settings on their tags and destinations, user_id, the duplicate Google Ads tag, the checkout pixels), with GTM changes in an unpublished workspace for Hyperlite to approve. Also remove unused tags, apply pending template updates, fix the container quality issue</td></tr>
@@ -170,7 +170,7 @@
 <ol class="tight" style="margin-top:0">
   <li>Klaviyo and Octane: gate, limit, or accept the risk (1.1, 1.2).</li>
   <li>Basic or advanced Consent Mode (1.4).</li>
-  <li>Leave the duplicate pixels in place for now (they respect consent in banner regions) and clean up in Phase 2.</li>
+  <li>Leave the duplicate pixels in place for now (both copies wait for consent); Roswell cleans them up in Phase 2 after confirming GTM and Elevar cover the same events.</li>
   <li>Opt-out link and GPC for all US visitors, or only law states (2.A1, 2.A2) <span class="counsel">(counsel)</span>. Can be decided while Phase 1 is underway.</li>
   <li>Whether to proceed with Phases 2 and 3, and when.</li>
   <li>Ask Cookiebot support to audit the setup and Shopify integration once Phase 1 is done, if Hyperlite's plan includes support (2.A0).</li>
