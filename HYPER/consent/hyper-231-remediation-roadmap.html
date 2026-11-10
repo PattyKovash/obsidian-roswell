@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyperlite Consent Roadmap</title>
+<style>
+  :root { --ink:#1f2a30; --muted:#5f6b72; --line:#e2e5e7; --bg:#f6f5f2; --card:#fff;
+          --t1:#c2462e; --t2:#b7791f; --t3:#2f6f8f; --done:#2e7d4f; --warn:#fbeee9; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.55 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  .wrap { max-width:1000px; margin:0 auto; padding:28px 16px 60px; }
+  .draft { font-size:12px; color:#a00; margin-bottom:10px; }
+  h1 { font-size:26px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 22px; }
+  h2 { font-size:18px; margin:30px 0 10px; }
+  h3 { font-size:14px; margin:18px 0 6px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:16px 18px; margin-bottom:16px; }
+  .tier { border-left:5px solid var(--c); }
+  .tier h2 { margin-top:0; color:var(--c); }
+  .t1 { --c:var(--t1); } .t2 { --c:var(--t2); } .t3 { --c:var(--t3); } .done { --c:var(--done); }
+  .meta { color:var(--muted); font-size:13px; margin:-4px 0 10px; }
+  .tw { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:13px; }
+  th, td { text-align:left; padding:7px 9px; border:1px solid var(--line); vertical-align:top; }
+  th { background:#f0f1f2; font-weight:600; }
+  td.n { white-space:nowrap; color:var(--muted); width:46px; }
+  td.num { text-align:right; white-space:nowrap; }
+  tr.gap td { background:var(--warn); }
+  .pill { display:inline-block; font-size:11px; font-weight:600; padding:1px 8px; border-radius:10px; color:#fff; background:var(--c); }
+  .counsel { font-size:11px; font-weight:600; color:#7a4fa0; white-space:nowrap; }
+  .decide { font-weight:600; }
+  ul.tight { margin:6px 0 0; padding-left:20px; }
+  ul.tight li { margin:3px 0; }
+  .foot { font-size:12px; color:var(--muted); margin-top:6px; }
+  .summary-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; }
+  .summary-grid .card { margin:0; border-top:4px solid var(--c); }
+  .summary-grid b { color:var(--c); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="draft">DRAFT for review. Not sent.</div>
+<h1>Cookie Consent Remediation: Roadmap</h1>
+<p class="sub">Hyperlite Mountain Gear · Prepared by Roswell Studios · November 2026 · Technical roadmap, not legal advice. Items marked <span class="counsel">(counsel)</span> need a legal decision.</p>
+
+<div class="card">
+  <p style="margin-top:0">The claim against Hyperlite is that tracking continues after a visitor declines cookies. The most important fixes for that went live Nov 6–7. A small number of tools still send data after a decline, and closing those is the first priority.</p>
+  <p style="margin-bottom:0">Beyond the claim, the largest gap by traffic is the <b>US states with privacy laws other than California</b>, about a quarter of all sessions. Visitors there have no banner and no opt-out link, so every tracker runs.</p>
+</div>
+
+<div class="summary-grid">
+  <div class="card t1"><span class="pill">Phase 1</span><p><b>Close the claim</b><br>A decline stops every tracker named in the claim.</p><div class="meta">Next 1–2 weeks</div></div>
+  <div class="card t2"><span class="pill">Phase 2</span><p><b>Opt-out, banner and categorization</b><br>Opt-out for US law states, EU/UK per-category choices, every tag in the right category.</p><div class="meta">Following 4–6 weeks</div></div>
+  <div class="card t3"><span class="pill">Phase 3</span><p><b>Verify vendors and govern</b><br>Vendor questionnaires, contracts, policy updates, ongoing monitoring.</p><div class="meta">Scoped separately, typically 2–3 months</div></div>
+</div>
+<p class="foot">Timing depends on the decisions listed at the end.</p>
+
+<h2>Guiding principles</h2>
+<div class="card">
+<ul class="tight" style="margin-top:0">
+  <li><b>When in doubt, use the strictest category.</b> Any tool whose purpose we can't confirm is treated as Marketing, so it stays off until the visitor accepts.</li>
+  <li><b>Hyperlite and its counsel decide the risk.</b> If a tool can't be gated without breaking a feature, the choice is to turn it off or keep it and accept the risk. We'll lay out the trade-off for each one.</li>
+  <li><b>For apps that run through Shopify, we can only send the signal.</b> The site passes the visitor's choice to Shopify, which passes it to app pixels. Whether an app honors it depends on the app. That's why Phase 3 includes contacting vendors.</li>
+</ul>
+</div>
+
+<h2>Where Hyperlite's traffic is, and what applies</h2>
+<p class="meta">Sessions from Nov 9, 2025 to Nov 8, 2026, about 3.63 million in total.</p>
+<div class="card tw">
+<table>
+  <tr><th>Region</th><th>Sessions</th><th>Share</th><th>Legal model</th><th>Today</th></tr>
+  <tr><td><b>California</b></td><td class="num">210,674</td><td class="num">5.8%</td><td>Opt-out (CCPA/CPRA), plus CIPA lawsuits over tracking after a decline</td><td>Banner, denied default</td></tr>
+  <tr><td><b>EU and UK</b></td><td class="num">198,529</td><td class="num">5.5%</td><td>Opt-in (GDPR, ePrivacy, UK PECR)</td><td>Banner, denied default</td></tr>
+  <tr><td>Switzerland, Norway, Iceland, Liechtenstein</td><td class="num">38,792</td><td class="num">1.1%</td><td>Opt-in</td><td>Banner, denied default</td></tr>
+  <tr><td>Florida</td><td class="num">68,578</td><td class="num">1.9%</td><td>State law may not apply at Hyperlite's size <span class="counsel">(counsel)</span></td><td>Banner, denied default</td></tr>
+  <tr><td>New Jersey</td><td class="num">34,796</td><td class="num">1.0%</td><td>Opt-out, with a universal opt-out signal requirement</td><td>Banner, denied default (added Nov 7)</td></tr>
+  <tr class="gap"><td><b>Other US states with privacy laws</b><br><span class="foot">Colorado, Virginia, Oregon, Texas, Utah, Iowa, Tennessee, Minnesota, New Hampshire, Montana, Maryland, Indiana, Connecticut, Kentucky, Nebraska, Rhode Island, Delaware</span></td><td class="num">892,000</td><td class="num">24.6%</td><td>Opt-out. Most require honoring opt-out signals such as GPC <span class="counsel">(counsel to confirm list)</span></td><td><b>No banner, no opt-out link, all tracking runs</b></td></tr>
+  <tr><td>Other US states (incl. Washington, New York, Massachusetts)</td><td class="num">1,194,535</td><td class="num">32.9%</td><td>No comprehensive privacy law</td><td>No banner, all tracking runs</td></tr>
+  <tr><td>Canada</td><td class="num">138,716</td><td class="num">3.8%</td><td>PIPEDA; Québec Law 25 is stricter <span class="counsel">(counsel)</span></td><td>No banner</td></tr>
+  <tr><td>China</td><td class="num">270,568</td><td class="num">7.5%</td><td>Likely largely bot traffic, worth checking</td><td>No banner</td></tr>
+  <tr><td>Rest of world</td><td class="num">~583,000</td><td class="num">~16%</td><td>Varies</td><td>No banner</td></tr>
+</table>
+</div>
+<div class="card">
+<ul class="tight" style="margin-top:0">
+  <li><b>Highest litigation risk: California.</b> This is where lawsuits over "Reject doesn't stop tracking" are being filed. Phase 1 addresses it directly.</li>
+  <li><b>Highest regulator risk: the EU and UK.</b> The banner is in place, but visitors can only accept everything or decline everything. This is addressed early in Phase 2.</li>
+  <li><b>Largest unaddressed audience: the other US law states.</b> That's about a quarter of all sessions. These laws don't require a banner, but they do require a way to opt out of data sharing for advertising, and most require honoring browser opt-out signals. This is addressed early in Phase 2, after counsel confirms the approach.</li>
+</ul>
+</div>
+
+<div class="card tier done">
+<h2>Completed (Nov 6–7)</h2>
+<div class="tw"><table>
+  <tr><th>Change</th><th>Result</th></tr>
+  <tr><td>Consent defaults set to denied for the EU/EEA, UK, Switzerland, California, Florida and New Jersey (GTM v100)</td><td>Tested on the live site from New Jersey and Germany: no ad tags fire before the visitor answers</td></tr>
+  <tr><td>New Jersey added to the Cookiebot banner regions</td><td>Banner shows for New Jersey visitors</td></tr>
+  <tr><td>Microsoft Clarity loads only after Statistics consent; Vibe only after Marketing consent</td><td>Neither loads before consent or after a decline</td></tr>
+  <tr><td>If a visitor accepts and then declines on the same page, the page refreshes once</td><td>Clarity, Vibe and ad tags stop; tracking cookies are removed</td></tr>
+  <tr><td>Heatmap.com removed from the theme and its Shopify pixel disconnected (Nov 9; kept, not deleted); unused Because script removed</td><td>No longer load</td></tr>
+  <tr><td>Cookiebot passes the visitor's choice to Shopify on every change</td><td>Shopify's privacy setting updates on the same page</td></tr>
+  <tr><td>Unused Clarity custom pixel deleted</td><td>Can't be switched on by accident</td></tr>
+</table></div>
+<p class="foot">We tested in Germany, California, Florida, New Jersey, and New York/Canada. At each step we compared cookies, browser storage and network requests.</p>
+</div>
+
+<div class="card tier t1">
+<h2>Phase 1: Close the claim</h2>
+<div class="meta">Next 1–2 weeks · Goal: a decline stops every tracker named in the claim, and counsel has evidence.</div>
+<div class="tw"><table>
+  <tr><th>#</th><th>Item</th><th>Notes</th></tr>
+  <tr><td class="n">1.1</td><td><b>Klaviyo:</b> stop its tracking until Marketing consent</td><td>Named in the claim. Since the Nov 6 fixes, after a decline Klaviyo sets no tracking cookie and sends no browsing or cart events (CA, MA, DE, UK). What remains is its sign-up form script: an anonymous pop-up view count and a few items stored in the browser. Klaviyo considers these form functions, not tracking; we've asked Klaviyo to confirm for Hyperlite. <b>Recommendation:</b> keep as is. If counsel prefers (EU/UK storage rules are stricter than US rules): stop only the pop-ups for visitors who decline, or don't load Klaviyo for them (forms, Customer Hub and back-in-stock off for those visitors). <b>Hyperlite and counsel decide</b></td></tr>
+  <tr><td class="n">1.2</td><td><b>Octane AI:</b> stop its tracking before consent</td><td>Octane's site-wide script is added by Shopify on Octane's behalf (a "script tag") and tracks before consent; its new app embed does the same, so don't enable it. We've asked Octane to make its scripts follow consent. As a stopgap we built and tested a theme fix that holds the script until the visitor accepts: after a decline nothing is sent and the quiz still works. It depends on how Shopify adds the script, so it's fragile; ideally Octane fixes it. On the quiz page, the quiz itself still records a visit on load (asked Octane). Shopify stops script tags on Mar 1, 2027. <b>Hyperlite decides</b> whether to use the stopgap now</td></tr>
+  <tr><td class="n">1.3</td><td><b>Shopify Customer events:</b> confirm every pixel respects consent</td><td>Done. In our Nov 9 tests from California, Massachusetts, Germany and the UK, every consent-gated pixel waits for consent, including the Shopify copies of Meta, TikTok, Pinterest and Criteo. The duplicates are gated, so we recommend leaving them for now and cleaning up in Phase 2. Elevar's checkout custom pixel was set to run regardless of consent and sent checkout data, including the email, to Elevar after a decline; per Hyperlite's fix list it now requires consent (Nov 9, retested). Wyllo (NoFraud) and BrandChamp are set to "Not required" by their apps: <b>Hyperlite decides</b> (classify; accept the risk or contact the vendor)</td></tr>
+  <tr><td class="n">1.4</td><td><b>GA4 and Google Ads:</b> stop user_id on denied hits; recommend basic vs advanced Consent Mode</td><td>user_id comes from Elevar's data layer. Recommendation: stay in advanced Consent Mode (keeps modeled conversions) but stop sending user_id when consent is denied, and remove a duplicate Google Ads tag that has no consent check. Elevar set up these tags and will put changes in a GTM workspace for Hyperlite's approval. Also asked Elevar whether its Strict Consent Mode is needed for server-side data (it lowers conversions reported for visitors who decline). <b>Hyperlite approves</b></td></tr>
+  <tr><td class="n">1.5</td><td><b>Retest and evidence package for counsel</b></td><td>After 1.1–1.4. Retest from California and the EU with VPN ad blocking off. Deliver written per-tag answers and network screenshots or a recording</td></tr>
+  <tr><td class="n">1.6</td><td><b>Classify Affirm and the fraud tools</b> (from Hyperlite's deck)</td><td>Affirm's script in the theme sets a long-lasting device ID and sends it with the page URL to Affirm on every page, even after a decline; we recommend Marketing (gate it, or remove it if on-site messaging isn't used). Fraud tools (Yofi, FraudLabs Pro, NoFraud) are likely necessary. <b>Hyperlite and counsel classify</b></td></tr>
+</table></div>
+</div>
+
+<div class="card tier t2">
+<h2>Phase 2: Opt-out, banner and full categorization</h2>
+<div class="meta">Following 4–6 weeks · Goal: visitors in law states can opt out, the EU/UK banner offers per-category choices, and every tag, script and app has a verified category.</div>
+<p class="foot" style="margin-top:0">The opt-out and banner items come first. Several depend on counsel's decisions, which can be made while Phase 1 is underway. Categorization relies on our judgment and public vendor documentation; Phase 3 confirms it with vendors.</p>
+<h3>First: opt-out and banner</h3>
+<div class="tw"><table>
+  <tr><th>#</th><th>Item</th><th>Notes</th></tr>
+  <tr><td class="n">2.A0</td><td><b>Cookiebot setup audit (Hyperlite to request):</b> once the Phase 1 fixes are in, ask Cookiebot support to review the Cookiebot setup and its integration with Shopify (Customer Privacy API sync, banner regions, GTM template)</td><td>If Hyperlite's Cookiebot plan includes support, it's an independent check on the configuration at no extra build cost The setup was built in stages over two years (Cookiebot is loaded through GTM). Points to check: how GTM and Cookiebot are installed vs Cookiebot's Shopify guide, whether to link the existing Cookiebot account to the Cookiebot Shopify app, and that Shopify's consent regions match Cookiebot's (confirmed for Germany and California on Nov 9; Florida and New Jersey not yet checked). Shopify's own cookie banner stays off. If auto-blocking is considered, check its effect on Klaviyo: Klaviyo users report Cookiebot blocking also hides sign-up forms for visitors who decline. Also decide whether the theme's own gated scripts (Clarity, Vibe) should use Cookiebot's standard markup (<code>type="text/plain" data-cookieconsent="statistics"</code>) instead of our bridge's queue; the bridge would still sync consent to Shopify and handle withdrawals. Test on the dev theme first, including with Cloudflare Rocket Loader.</td></tr>
+  <tr><td class="n">2.A1</td><td><b>"Your Privacy Choices" / "Do Not Sell or Share" link</b> in the footer, connected to a working opt-out</td><td>For US law states (about 1.1 million sessions). Counsel may prefer showing it to all US visitors, which is simpler to maintain <span class="counsel">(counsel)</span></td></tr>
+  <tr><td class="n">2.A2</td><td><b>Honor Global Privacy Control (GPC)</b> as an opt-out</td><td>Required in California and most other law states. We'll confirm Cookiebot's setting <span class="counsel">(counsel)</span></td></tr>
+  <tr><td class="n">2.A3</td><td><b>EU/UK per-category choices:</b> a "Customize" option with Preferences, Statistics and Marketing toggles</td><td>EU and UK regulator guidance (EDPB, CNIL, ICO) expects consent per purpose. Before enabling it, confirm with Elevar that each destination's consent categories still fit when visitors can choose per category (for example, Google Ads requires Marketing, Statistics and Preferences).</td></tr>
+  <tr><td class="n">2.A4</td><td><b>Fix the privacy page cookie section</b></td><td>The Cookiebot cookie list and status panel are blank for everyone. This is where visitors change their choice later</td></tr>
+  <tr><td class="n">2.A5</td><td><b>Unverified apps:</b> Swym, Shogun and Triple Whale set tracking storage before the visitor answers (Intelligems resolved Nov 9: app embed turned off on live, not in use)</td><td>Gate each one as Marketing, or <span class="decide">Hyperlite decides</span> to keep it as-is until Phase 3 confirms it</td></tr>
+  <tr><td class="n">2.A6</td><td><b>Consent records:</b> confirm what Cookiebot logs and how to export it</td><td></td></tr>
+</table></div>
+<h3>Then: full categorization</h3>
+<div class="tw"><table>
+  <tr><th>#</th><th>Item</th><th>Notes</th></tr>
+  <tr><td class="n">2.0</td><td><b>Clean up duplicate pixels</b> (Meta, TikTok, Pinterest, Criteo in both GTM and Shopify)</td><td>One copy per channel. Not urgent: the Shopify copies respect consent in banner regions. Confirm with Hyperlite which channels and copies are used</td></tr>
+  <tr><td class="n">2.1</td><td><b>Inventory every tracker:</b> GTM tags, theme scripts, app embeds, and Shopify app and custom pixels, across every page type including cart and checkout</td><td>A list with each vendor, how it loads, its category, and what a decline does</td></tr>
+  <tr><td class="n">2.2</td><td><b>Classify the remaining apps:</b> Affirm, Attentive, Redo, Gorgias, and the fraud and bot tools (Yofi, FraudLabsPro, NoFraud)</td><td>Whether the fraud tools are strictly necessary needs a decision <span class="counsel">(counsel)</span>. NoFraud and Yofi also load through Shopify script tags, which stop on Mar 1, 2027: check the vendors' migration plans</td></tr>
+  <tr><td class="n">2.3</td><td><b>GTM review:</b> every tag has the right consent requirement and trigger</td><td><b>We'll ask Elevar</b>, which set up many of the GTM tags and triggers, to review its setup and confirm each one uses Google consent checks. Email sent to Elevar Nov 9 asking them to make the updates (consent settings on their tags and destinations, user_id, the duplicate Google Ads tag, the checkout pixels), with GTM changes in an unpublished workspace for Hyperlite to approve. Also remove unused tags, apply pending template updates, fix the container quality issue</td></tr>
+  <tr><td class="n">2.4</td><td><b>Classify Cookiebot's 111 unclassified cookies</b></td><td>Accurate cookie declaration and banner categories</td></tr>
+  <tr><td class="n">2.5</td><td><b>Load Cookiebot directly in the theme</b>, ahead of GTM</td><td>If GTM is blocked (some VPNs and ad blockers do this), there's no banner and no opt-out</td></tr>
+  <tr><td class="n">2.6</td><td><b>Move theme trackers into GTM</b> (Clarity, Vibe)</td><td>One place to manage consent</td></tr>
+  <tr><td class="n">2.7</td><td><b>GA4 audit:</b> consent signals received correctly, and no personal data collected</td><td></td></tr>
+  <tr><td class="n">2.8</td><td><b>Test every consent state:</b> first visit, accept, decline, change of mind, returning visitor, GPC, and mobile</td><td>Uses our automated region tests</td></tr>
+  <tr><td class="n">2.9</td><td><b>Regional coverage review:</b> Canada (Québec), the Cyprus gap in Cookiebot, and whether law-state visitors should get a denied default</td><td><span class="counsel">(counsel)</span></td></tr>
+</table></div>
+</div>
+
+<div class="card tier t3">
+<h2>Phase 3: Verify vendors and govern</h2>
+<div class="meta">Scoped separately · Goal: confirm each vendor's practices in writing, correct any misclassifications, and keep the site compliant as tools change.</div>
+<div class="tw"><table>
+  <tr><th>#</th><th>Item</th><th>Notes</th></tr>
+  <tr><td class="n">3.1</td><td><b>Vendor questionnaires:</b> privacy policy, data processing agreement (DPA), sub-processors, how it honors consent and GPC</td><td>Start with session recording (Clarity, Vibe), ad pixels, Klaviyo, and anything on checkout. <span class="decide">Hyperlite and counsel decide</span> about vendors that can't answer adequately</td></tr>
+  <tr><td class="n">3.2</td><td><b>Contracts and EU data transfers:</b> DPAs on file, plus transfer safeguards</td><td><span class="counsel">(counsel)</span></td></tr>
+  <tr><td class="n">3.3</td><td><b>Privacy and cookie policy update:</b> vendors and categories, session recording, rights requests, retention</td><td>Vendor responses feed this <span class="counsel">(counsel)</span></td></tr>
+  <tr><td class="n">3.4</td><td><b>Rights requests:</b> a process for access, deletion and opt-out within legal deadlines</td><td><span class="counsel">(counsel)</span></td></tr>
+  <tr><td class="n">3.5</td><td><b>Saved consent when visitors travel:</b> consent applied automatically outside the banner regions persists when the visitor later browses from the EU</td><td><span class="counsel">(counsel)</span></td></tr>
+  <tr><td class="n">3.6</td><td><b>App and script approval process:</b> nothing goes live without a consent category and a check of how it loads; limit who can publish GTM changes</td><td></td></tr>
+  <tr><td class="n">3.7</td><td><b>Ongoing monitoring:</b> automated region tests after changes, regular Cookiebot scans, periodic vendor policy review</td><td></td></tr>
+</table></div>
+</div>
+
+<h2>Decisions needed from Hyperlite</h2>
+<div class="card">
+<ol class="tight" style="margin-top:0">
+  <li>Klaviyo and Octane: gate, limit, or accept the risk (1.1, 1.2).</li>
+  <li>Basic or advanced Consent Mode (1.4).</li>
+  <li>Leave the duplicate pixels in place for now (they respect consent in banner regions) and clean up in Phase 2.</li>
+  <li>Opt-out link and GPC for all US visitors, or only law states (2.A1, 2.A2) <span class="counsel">(counsel)</span>. Can be decided while Phase 1 is underway.</li>
+  <li>Whether to proceed with Phases 2 and 3, and when.</li>
+  <li>Ask Cookiebot support to audit the setup and Shopify integration once Phase 1 is done, if Hyperlite's plan includes support (2.A0).</li>
+  <li>Octane: approve option (a) or (b) for 1.2 after Octane support replies, or (a) now as a stopgap.</li>
+</ol>
+</div>
+
+</div>
+</body>
+</html>
