@@ -97,7 +97,7 @@ We tested in Germany, California, Florida, New Jersey, and New York/Canada. At e
 | 2.A2 | **Honor Global Privacy Control (GPC)** as an opt-out | Required in California and most other law states. We'll confirm Cookiebot's setting **(counsel)** |
 | 2.A3 | **EU/UK per-category choices:** add a "Customize" option with Preferences, Statistics and Marketing toggles | EU and UK regulator guidance (EDPB, CNIL, ICO) expects consent per purpose. Before enabling it, confirm with Elevar that each destination's consent categories still fit when visitors can choose per category (for example, Google Ads requires Marketing, Statistics and Preferences). |
 | 2.A4 | **Fix the privacy page cookie section** | The Cookiebot cookie list and status panel are blank for everyone. This is where visitors change their choice later |
-| 2.A5 | **Unverified apps:** Swym, Shogun and Triple Whale set tracking storage before the visitor answers (Intelligems resolved Nov 9: app embed turned off on live, not in use) | Gate each one as Marketing, or **Hyperlite decides** to keep it as-is until the vendor confirms it (2.10) |
+| 2.A5 | **Unverified apps:** Swym, Shogun and Triple Whale set tracking storage before the visitor answers; Gorgias chat loads before consent (what it sends before chat opens not yet tested) (Intelligems resolved Nov 9: app embed turned off on live, not in use) | Gate each one as Marketing, or **Hyperlite decides** to keep it as-is until the vendor confirms it (2.10) |
 | 2.A6 | **Consent records:** confirm what Cookiebot logs and how to export it | |
 
 **Then: full categorization**
