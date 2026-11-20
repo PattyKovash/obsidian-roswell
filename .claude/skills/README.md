@@ -20,6 +20,7 @@ trigger phrases are listed below.
 | Skill | What it does | Say |
 |---|---|---|
 | [`start-ticket`](start-ticket/SKILL.md) | Starts an Edge ticket with Patty's workflow: pull the ticket, draft the PRD (Ticket Authoring Prompt v2), keep vault notes per the Documentation Protocol, test on the dev theme with Playwright (`preview_theme_id`, one theme at a time), and **ask before any push or Edge write**. | "start a ticket", "start HYPER-123", "pick up <ticket>", "begin work on <ticket>" |
+| [`estimate-ticket`](estimate-ticket/SKILL.md) | Reviews and estimates an Edge ticket: how it works today (code and live site), whether it can be done today without code, an estimate as AI-implemented with human guidance (dev + QA + bug fix), a PRD draft, and a local HTML review page. **No pushes or Edge writes.** | "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket" |
 
 ### Sessions
 
