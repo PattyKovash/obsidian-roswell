@@ -60,6 +60,12 @@ Read these and follow them; this skill doesn't repeat them:
 - Trace **every surface** that renders it. Grep for the callers and check for
   duplicate copies of the logic (e.g. a search dropdown with its own badge
   code). Missing a surface is the most common estimating miss.
+- Before saying a surface does or doesn't support something, read that
+  file's logic all the way through. A grep cut short with `head` can miss
+  the part that proves it either way.
+- Scope the estimate to the code that's live. If a replacement build isn't
+  live yet (e.g. a Nosto search build), list it as a follow-up, not as part
+  of this estimate.
 - List the existing **settings** that control it (schema labels, defaults,
   `visible_if`), and any priority or ordering rules.
 - Check the **live site** to confirm what shoppers see (fetch the page, check
