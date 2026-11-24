@@ -1,6 +1,6 @@
 ---
 name: estimate-ticket
-description: Review and estimate an Edge ticket. Pull it, study how the feature works today in the codebase and on the live site, answer "can the merchant already do this without code?", estimate the build as AI-implemented with human guidance (dev + QA + bug fix), draft the PRD the start-ticket way, and open an HTML review page locally. Nothing is pushed or written to the Edge. Use when Patty says "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket", or pastes an Edge ticket URL and asks for an estimate.
+description: Review and estimate an Edge ticket. Pull it, study how the feature works today in the codebase and on the live site, answer "can the merchant already do this without code?", estimate the build as AI-implemented with human guidance (dev + QA + bug fix), draft the PRD the start-ticket way, and open an HTML review page locally. Nothing is pushed to the Edge without Patty's approval. Use when Patty says "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket", or pastes an Edge ticket URL and asks for an estimate.
 ---
 
 # Estimate ticket
@@ -29,7 +29,11 @@ agent can follow it with no prior context.
 - **No unverified claims.** Every "today it does X" points to a file or a live
   check. Otherwise, phrase it as a possibility or a question.
 - Merchant-visible text (the PRD body) names no other clients and carries no
-  Edge history figures. Those go on the review page only.
+  Edge history figures or hours. Those go on the review page only.
+- **Every Edge push needs Patty's approval**, each time. Right before pushing,
+  pull the ticket again (`get_ticket`) and compare it with what you last read.
+  If anything changed (description, brief, comments, version), show Patty and
+  merge it into the PRD before pushing.
 
 ## 2. Load the house rules
 
@@ -47,6 +51,9 @@ Read these and follow them; this skill doesn't repeat them:
 - `get_ticket`: note the `version`, description, brief (summary, criteria,
   not_included), comments, dates and named people. The ask often lives in
   the description or comments, not the title.
+- The original description is source material for the PRD, not something
+  the PRD sits under. List its parts (priority, problem, findings, fix steps,
+  code snippets); each one that's still relevant goes into a PRD section (§7).
 - `get_context_pack`: similar finished tickets, this client's estimate
   tendencies, and agency-wide size bands. Use them to calibrate, and cite
   ticket IDs on the review page only.
@@ -94,6 +101,11 @@ Basis: **AI implements, a human guides and reviews.** Break it out:
   breakpoints.
 - **Bug fix**: one QA round plus the client review round.
 
+Estimate dev from the steps, not from the size band: list each step (get
+files or data, the code change, the upload or config, the dev-theme check)
+with minutes, then add them up. Don't pad. A change the AI can write in
+minutes can be well under 1 h of dev; the time is in the steps around it.
+
 Calibrate against `get_context_pack` (closest past tickets, the client's
 estimate ratio, the agency size bands). Give a single number in hours, not a
 range. If a no-code fallback exists, estimate it separately.
@@ -104,33 +116,51 @@ range. If a no-code fallback exists, estimate it separately.
   Use the folder the project already has (`PRD` or `PRDs`).
 - Frontmatter: `edge_id`, `edge_version` (from step 3), `project_key`,
   `authored`, `status: draft (not pushed)`.
-- Follow the Authoring Prompt sections in order. Map the Edge brief criteria
-  into the AC table. Mark each candidate AC core, edge case or scope boundary
-  on the review page, for Patty to confirm.
+- Follow the Authoring Prompt sections in order (after the AC: Testing Notes,
+  Implementation Notes, Dev Notes). Map the Edge brief criteria into the AC
+  table. Mark each candidate AC core, edge case or scope boundary on the
+  review page, for Patty to confirm.
+- Fold the original description into the PRD (§3): every still-relevant part
+  goes into its section, code snippets included (as a code block in Dev
+  Notes). The PRD replaces the original description; nothing is repeated.
 - Dev Notes: the `claude --resume <session-id>` line first (the newest
-  `.jsonl` in `~/.claude/projects/<project>/`), then the **estimate**, the
+  `.jsonl` in `~/.claude/projects/<project>/`), then the
   **can-it-be-done-today** verdict in plain words, the non-obvious *why*s,
-  and the key file paths with "confirm before implementing".
+  and the key file paths with "confirm before implementing". **No hours**:
+  the estimate goes on the review page only.
 - Open questions (dates, priority conflicts, definitions such as "marked
   down", styling) go in Clarifying Questions.
 
 ## 8. HTML review page
 
-- Write `<obs-vault>/<PROJECT_KEY>/<EDGE_ID>-prd-review.html` and `open` it.
-  If it's already open after an edit, tell Patty to reload instead.
+- Write `<obs-vault>/<PROJECT_KEY>/<EDGE_ID>-prd-review.html` and `open` it
+  once, when it's created. After that, tell Patty when it's updated so she can
+  refresh; don't open it again.
 - Top to bottom: headline stats (estimate, dev/QA/bug-fix split, fallback
   estimate, deadline), the can-it-be-done-today table, the proposed build and
   hours table with its calibration note, AC candidates with core/edge/scope
   tags, "notes for you" (timing risk, out-of-scope findings for the cleanup
-  list, anything unverified), then the full PRD rendered from the markdown.
-  Embed the markdown and render it with `marked` from cdnjs, falling back to
-  `<pre>`.
+  list, anything unverified), an **"Original ticket → PRD" table** (each part
+  of the original description and the PRD section it now lives in), then the
+  full PRD rendered from the markdown. Embed the markdown and render it with
+  `marked` from cdnjs, falling back to `<pre>`.
+- Show proposed drafts and changes on this page, not in chat. The page embeds
+  the PRD markdown: whenever the markdown changes, update the HTML too, then
+  tell Patty to refresh.
 - Works in light and dark mode and at phone width; tables scroll sideways.
 
 ## 9. Report and stop
 
 In the reply: the verdict, the estimate with its split, the deadline risk,
 the paths to the PRD and the review page, and the open questions. Then
-**stop and wait** for Patty's review. Next steps such as pushing PRD
-sections or setting the Edge estimate follow start-ticket §8, each with its
-own approval.
+**stop and wait** for Patty's review.
+
+After she approves the PRD:
+- Pull the ticket again and check for changes (§1).
+- Push the whole PRD as the description in **one** `update_ticket` write
+  (`description_mode: "replace"`), so the original is replaced by the PRD
+  that includes it and no section is ever missing between writes. Read the
+  ticket back, then update `edge_version` and `status` in the frontmatter.
+- Stop there. Patty enters her own OE in the ticket drawer. The Billing
+  estimate and the step buttons ("Mark brief ready", "Send to merchant") are
+  the MP's. Don't set Edge estimates or press steps.

@@ -96,12 +96,9 @@ Documentation lives closest to the kind of thing it is, not to an arbitrary code
 | Ticket scope, status, AC results, comments | The Edge ticket, never a vault file |
 | Anything cross-engagement (useful beyond this one merchant) | Promote to the agency-wide library: `roswell-agency/patterns/` (or `anti-patterns/`, `component-archetypes/`) |
 
-**Vault mechanics that CI enforces:**
+**Vault mechanics:** follow `/Users/pk/Documents/obs-roswell/vault-pr-rules.md`. It's the single source for finding the right vault (confirm `vaults/{merchant}/01-mcd/mcd.md` names the merchant; ask for the path if it can't be found or doesn't match), branching (confirm with the engineer), the files the Edge generates, frontmatter, what never goes in the vault, and the CI checks to run before a push. In short:
 - Every `.md` you add or change needs a frontmatter `type` the validator knows (`plan`, `pattern`, `decisions-log`, `engineering-notes`, …; list in roswell-agency `schemas/` and `schemas/types-without-schema.json`). Missing or unknown types fail the `validate-frontmatter` check.
-- Before writing, confirm `vaults/{merchant}/01-mcd/mcd.md` names the right merchant. A `../vault` symlink can point at another merchant's vault.
-- Branch each piece of vault work from `origin/main`; long-lived personal branches pick up blocked history. Never commit `.obsidian/`.
 - Commit each vault change right away. Ask the engineer before pushing or opening a PR.
-- Before pushing, run `pnpm validate:vault <vault> --files <paths>` and the `vault-guard/check-generated-paths.ts` script from a roswell-agency `origin/main` checkout.
 
 There is no per-component or per-extension scoped file convention (e.g. no `.claude/context/extensions/{name}.md`). The real granularity is **per-merchant**: one `do-not-touch.md`, one `decisions.md`, a `patterns/` folder — not one file per code area.
 
@@ -195,6 +192,7 @@ As of Nov 2026 the Edge has replaced Monday as the ticket system, and the Edge w
 
 ## Revision History
 
+- **2026-11-24** — Vault mechanics now point to `vault-pr-rules.md` as the single source, instead of a partial copy here. Dropped "branch each piece of vault work from `origin/main`": it contradicted Patty's practice (one personal branch kept current by pulling `origin/main`), and the vault folder is shared by every session, so switching branches moves other sessions' commits. Branching is now confirmed with the engineer. Added: ask for the vault path when it can't be found. Found during HH-136.
 - **2026-11-03** — Moved tickets to the Edge: ticket content goes through the Edge MCP, Edge-generated vault paths are never hand-edited (`generated-paths` CI guard), project-code ticket IDs replace `ISSUE-`/`EPIC-`, `issues-index.md` is gone. Added the planning-notes location (`04-engineering/planning/{ticket}/README.md`, `type: plan`), the frontmatter `type` requirement, branch-from-main, and the local vault checks. Dropped Monday from the ingestion list. Found during HYPER-166, after `feature/pk-2` was blocked by hand edits to `03-pm/issues/HYPER-115.md`.
 
 - **2026-08-28** — Added **Writing Discipline — What Belongs in a Note**: no verbosity, no session play-by-play, no editorializing, no fabricated claims, no inference presented as fact. Found missing while reviewing `SocialThreads_THREADS`'s `CLAUDE.md`, where an unverified claim ("merchant-facing distillation") had been copy-pasted across three merchant repos with no one having checked it against the actual framework.

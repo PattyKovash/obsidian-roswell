@@ -25,16 +25,20 @@ status: draft
 | --- | --- | --- | --- | --- |
 |  1 |  |   |   |   |
 
-## Dev Notes:
+## Testing Notes:
 
--  Claude Code session: `claude --resume <session-id>`
+-  TBD
 
 
 ## Implementation Notes:
 
+-  TBD
 
-## Testing Notes:
-  
+
+## Dev Notes:
+
+-  Claude Code session: `claude --resume <session-id>`
+
 
 ## Bugs from QA:
 
