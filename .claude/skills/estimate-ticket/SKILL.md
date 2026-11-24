@@ -1,13 +1,13 @@
 ---
 name: estimate-ticket
-description: Review and estimate an Edge ticket. Pull it, study how the feature works today in the codebase and on the live site, answer "can the merchant already do this without code?", estimate the build as AI-implemented with human guidance (dev + QA + bug fix), draft the PRD the start-ticket way, and open an HTML review page locally. Nothing is pushed to the Edge without Patty's approval. Use when Patty says "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket", or pastes an Edge ticket URL and asks for an estimate.
+description: Review and estimate an Edge ticket. Pull it, study how the feature works today in the codebase and on the live site, answer "does the feature already exist?" (can the merchant already do this without code), estimate the build as AI-implemented with human guidance (dev + QA + bug fix), draft the PRD the start-ticket way, and open an HTML review page locally. Nothing is pushed to the Edge without Patty's approval. Use when Patty says "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket", or pastes an Edge ticket URL and asks for an estimate.
 ---
 
 # Estimate ticket
 
 Turns one Edge ticket into an answer and a draft PRD for Patty to review:
 1. **How it works today**, from the code and the live site.
-2. **Can it be done today** without code (settings, tags, metafields, apps)?
+2. **Does the feature already exist?** Can the merchant already do this without code (settings, tags, metafields, apps)?
    Say exactly where that falls short.
 3. **If not, an estimate** for building it with AI implementing and a human
    guiding: dev, QA and bug fix hours, broken out.
@@ -80,7 +80,7 @@ Read these and follow them; this skill doesn't repeat them:
   For browser checks, follow the project's Playwright rules
   (`preview_theme_id`, one preview theme at a time, confirm `Shopify.theme.id`).
 
-## 5. Answer "can it be done today?"
+## 5. Answer "does the feature already exist?"
 
 Make a table: **need** → **no-code today?** (Yes / Only with … / No) → **why**,
 with file or setting references. Cover:
@@ -125,7 +125,7 @@ range. If a no-code fallback exists, estimate it separately.
   Notes). The PRD replaces the original description; nothing is repeated.
 - Dev Notes: the `claude --resume <session-id>` line first (the newest
   `.jsonl` in `~/.claude/projects/<project>/`), then the
-  **can-it-be-done-today** verdict in plain words, the non-obvious *why*s,
+  **does-the-feature-already-exist** verdict in plain words, the non-obvious *why*s,
   and the key file paths with "confirm before implementing". **No hours**:
   the estimate goes on the review page only.
 - Open questions (dates, priority conflicts, definitions such as "marked
@@ -137,7 +137,7 @@ range. If a no-code fallback exists, estimate it separately.
   once, when it's created. After that, tell Patty when it's updated so she can
   refresh; don't open it again.
 - Top to bottom: headline stats (estimate, dev/QA/bug-fix split, fallback
-  estimate, deadline), the can-it-be-done-today table, the proposed build and
+  estimate, deadline), the does-the-feature-already-exist table, the proposed build and
   hours table with its calibration note, AC candidates with core/edge/scope
   tags, "notes for you" (timing risk, out-of-scope findings for the cleanup
   list, anything unverified), an **"Original ticket → PRD" table** (each part
