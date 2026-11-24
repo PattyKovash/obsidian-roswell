@@ -75,7 +75,6 @@ These rules apply to every kind of note this protocol produces — `CLAUDE.md` e
 
 - A new constraint was discovered that AI would violate without knowing it, and it's purely a code-level implementation detail — no business/brand reasoning attached, nobody outside engineering needs it
 - The tech stack changed (new dependency, deprecated pattern, changed API version)
-- A new theme/section setting was added that a future engineer needs to know exists
 
 **A newly discovered "do not touch" zone is *not* a `CLAUDE.md`-first case.** It's canonical in the vault's `01-mcd/do-not-touch.md` (see the table below) — that's where a non-technical PM or a vault-side AI session will see it, and it's the single source of truth for the reason. Add a short local pointer in `CLAUDE.md` only if it's directly useful for engineers working day-to-day in this specific repo; don't restate the full reason in both places — see **Why Files Stay Small** above.
 
