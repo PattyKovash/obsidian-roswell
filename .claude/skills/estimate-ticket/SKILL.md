@@ -14,10 +14,10 @@ Turns one Edge ticket into an estimate and a draft PRD for Patty to review. Work
 
 ## Steps
 
-1. **Load the rules.** `<obs-vault>/Ticket Authoring Prompt v2.md` (PRD writing, research, pushing), `<obs-vault>/Base Monday Ticket Template.md`, the repo's `CLAUDE.md` and any `docs/AGENT-GUIDELINES.md`, and the project's memory index.
+1. **Load the rules.** `<obs-vault>/Ticket Authoring Prompt v2.md` (PRD writing and research), `<obs-vault>/Base Monday Ticket Template.md`, the repo's `CLAUDE.md` and any `docs/AGENT-GUIDELINES.md`, and the project's memory index.
 2. **Pull the ticket.** From an Edge URL (`.../pod/<merchant>?issue=<ID>`) take the merchant slug and ID. `get_ticket`: version, description, brief, comments, dates, people. Note any **deadline** and compare it with today's date and the repo's release flow; a tight date is a headline risk.
 3. **Calibration.** `get_context_pack`: similar finished tickets, the client's estimate tendencies, agency size bands. Cite ticket IDs on the review page only.
-4. **How it works today**, per the Authoring Prompt's "Research before writing". Scope to the code that's live; a replacement build that isn't live yet is a follow-up, not part of this estimate.
+4. **How it works today**, per the Authoring Prompt's "Research" section. Scope to the code that's live; a replacement build that isn't live yet is a follow-up, not part of this estimate.
 5. **Does the feature already exist?** Check whether the merchant can already do it without code (settings, tags, metafields, apps), for each requirement and every surface, including side effects of a workaround and manual effort. Verdict: Yes, Partly or No. If Yes, the estimate covers configuring and verifying it.
 6. **Estimate.** AI implements, a human guides and reviews:
    - **Dev:** implementation, schema and settings, every surface, lint and theme check, dev-theme verification at the project's breakpoints.
@@ -27,4 +27,4 @@ Turns one Edge ticket into an estimate and a draft PRD for Patty to review. Work
    Estimate dev from the steps (each with minutes, added up), not the size band; don't pad. Calibrate against step 3. One number in hours, not a range. Estimate a no-code or partial fallback separately if one exists.
 7. **Draft the PRD** per the Authoring Prompt. Dev Notes carry the feature-exists verdict in plain words and the key file paths with "confirm before implementing". No hours in the PRD. Open questions (dates, priority conflicts, definitions, styling) go in Clarifying Questions.
 8. **Review page** with the `prd-review-page` skill, including the estimate section.
-9. **Report and stop.** Reply with the verdict, the estimate and its split, the deadline risk, the paths to the PRD and review page, and the open questions. Wait for Patty's review. After she approves, push the PRD per the Authoring Prompt's "Pushing to the Edge", then stop; Patty enters her own OE.
+9. **Report and stop.** Reply with the verdict, the estimate and its split, the deadline risk, the paths to the PRD and review page, and the open questions. Wait for Patty's review. After she approves, push the PRD per `<obs-vault>/Global/prd-edge-push.md`, then stop; Patty enters her own OE.

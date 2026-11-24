@@ -18,4 +18,4 @@ Patty's workflow for an Edge ticket, from pickup to hand-off. The Edge is the sy
 5. **Branch** in the theme repo per its `CLAUDE.md`, with the Edge ID in the name; reference the ID in the PR. Atomic, terse conventional commits, one fix per commit, committed right away.
 6. **Implement and test** with the `theme-test` skill. Final checks on a production build.
 7. **Vault notes** per `<obs-vault>/Global/Documentation Protocol.md` and `<obs-vault>/vault-pr-rules.md`. Out-of-scope findings go on a running cleanup list in the planning notes. Save screenshots Patty pastes into `evidence/` right away.
-8. **Wrap up.** Update the PRD (Dev ✅ re-verified on the current code, Implementation and Testing Notes) and push it per the Authoring Prompt's "Pushing to the Edge". Edge bugs: `edge-issue` skill. Ending the session: `session-handoff` skill.
+8. **Wrap up.** Update the PRD (Dev ✅ re-verified on the current code, Implementation and Testing Notes) and push it per `<obs-vault>/Global/prd-edge-push.md`. Edge bugs: `edge-issue` skill. Ending the session: `session-handoff` skill.
