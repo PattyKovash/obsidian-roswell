@@ -19,8 +19,9 @@ trigger phrases are listed below.
 
 | Skill | What it does | Say |
 |---|---|---|
-| [`start-ticket`](start-ticket/SKILL.md) | Starts an Edge ticket with Patty's workflow: pull the ticket, draft the PRD (Ticket Authoring Prompt v2), keep vault notes per the Documentation Protocol, test on the dev theme with Playwright (`preview_theme_id`, one theme at a time), and **ask before any push or Edge write**. | "start a ticket", "start HYPER-123", "pick up <ticket>", "begin work on <ticket>" |
-| [`estimate-ticket`](estimate-ticket/SKILL.md) | Reviews and estimates an Edge ticket: how it works today (code and live site), whether it can be done today without code, an estimate as AI-implemented with human guidance (dev + QA + bug fix), a PRD draft, and a local HTML review page. **No pushes or Edge writes.** | "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket" |
+| [`start-ticket`](start-ticket/SKILL.md) | Starts an Edge ticket with Patty's workflow: pull the ticket, draft the PRD early (Ticket Authoring Prompt v2) with a review page, reproduce, branch, implement and test, keep vault notes, and push per the prompt. Approvals follow `Global/agent-hard-rules.md`. | "start a ticket", "start HYPER-123", "pick up <ticket>", "begin work on <ticket>" |
+| [`estimate-ticket`](estimate-ticket/SKILL.md) | Reviews and estimates an Edge ticket: how it works today (code and live site), whether the feature already exists without code, an estimate as AI-implemented with human guidance (dev + QA + bug fix), a PRD draft, and a local review page. **No pushes or Edge writes.** | "review and estimate <ticket>", "estimate <ticket>", "can this be done today?", "scope this ticket" |
+| [`prd-review-page`](prd-review-page/SKILL.md) | Builds and keeps current the local HTML review page for a PRD: the PRD first, original ticket → PRD, notes for Patty, and the estimate on estimate pages. Opened once; Patty refreshes. | "make a review page", "HTML version of the PRD" |
 
 ### Sessions
 
@@ -38,6 +39,7 @@ trigger phrases are listed below.
 
 | Skill | What it does | Say |
 |---|---|---|
+| [`theme-test`](theme-test/SKILL.md) | Tests a Shopify theme with Playwright: right preview theme and confirmed theme ID, environments compared the same way, production build for final checks, walkthroughs. | "test on the dev theme", "walk me through", "reproduce this" |
 | [`pk-test`](pk-test/SKILL.md) | Does nothing. Used to test hook configuration. | `/pk-test` |
 
 ## Not in this vault

@@ -27,7 +27,7 @@ Avoid duplication by default: don't paste the same content into both places, don
 Don't draft the whole ticket in one shot and hand it over. Work through it interactively:
 
 1. **Research first.** Read the source material and inspect the codebase (see Research below) before drafting anything.
-2. **Draft Acceptance Criteria candidates, then confirm each with the user before finalizing the table.** Propose the items you intend to include (batching is fine), and for each flag whether it's core/happy-path, an edge case, or a scope boundary. Ask the user to confirm, reject, or reword each one. Only write confirmed items into the final table. Keep edge-case coverage reasonable.
+2. **Draft Acceptance Criteria candidates, then confirm each with the user before finalizing the table.** Propose the items you intend to include (batching is fine), and for each flag whether it's core/happy-path, an edge case, or a scope boundary. Ask the user to confirm, reject, or reword each one. Only write confirmed items into the final table. Keep edge-case coverage reasonable. Map the Edge brief's criteria into the candidates.
 3. **Surface your own clarifying questions to the user before writing them into the ticket.** They may already know the answer, or may tell you it's not applicable. Only questions that remain genuinely open go into **Clarifying Questions**.
 4. **Check AC traceability before finalizing.** Every confirmed AC item should map to work named in Dev Notes or the linked vault notes. If one doesn't, add the coverage or flag the gap.
 5. **Write the draft** once the above has settled, and show it right after the research. Don't go deep into reproduction or fixes before the user has seen a draft.
@@ -117,6 +117,11 @@ Rules:
 
 ## Research before writing
 - Inspect the actual codebase. Identify the source file(s) that need changing and note when one change covers multiple surfaces.
+- Read code from the production branch (e.g. `git show origin/main:<path>`), not a stale local checkout.
+- Trace **every surface** that renders the behavior: grep for callers and check for duplicate copies of the logic (e.g. a search dropdown with its own badge code). Missing a surface is the most common miss.
+- Before saying a surface does or doesn't support something, read that file's logic all the way through. A grep cut short with `head` can miss the part that proves it either way.
+- List the existing settings that control it (schema labels, defaults, `visible_if`) and any priority or ordering rules.
+- Check the live site to confirm what shoppers see; repo settings files may not match live. Browser checks follow the `theme-test` skill.
 - Verify platform/behavior claims against current official docs, not memory. If uncertain, flag it rather than asserting it.
 - **No unverified claims.** Don't write "often/usually" or process claims the user can't vouch for; phrase as possibilities.
 - When a meeting/transcript is the source, attribute points to the speaker and link the timestamp (e.g. Fathom links).
@@ -146,7 +151,7 @@ Rules:
   `monday_id` only if the ticket has one. `edge_version` and `status` track the last push; update them after each push.
 
 ## Output
-Save the draft as a **new file** in `/Users/pk/Documents/obs-roswell/<PROJECT_KEY>/PRDs/`, named:
+Save the draft as a **new file** in `/Users/pk/Documents/obs-roswell/<PROJECT_KEY>/PRDs/` (use the folder the project already has if it's named `PRD`), named:
 
 ```
 EDGE_ID-short-text-description.md
