@@ -46,9 +46,7 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 
 ## Reference files (read these first if available)
 - Base structure: `/Users/pk/Documents/obs-roswell/Base Monday Ticket Template.md`, the canonical empty section list, in order.
-- Worked examples:
-  - `/Users/pk/Documents/obs-roswell/Example PRD.md`: a filled-in pre-execution ticket showing tone, AC table format, Fathom attribution, and short Dev Notes.
-  - `/Users/pk/Documents/obs-roswell/HYPER/PRDs/HYPER-166-schema-review-and-merge.md`: the current Edge workflow end to end. Short PRD, technical detail linked to the vault, a section listing changes made to another developer's code, and the Edge link workaround.
+- Example: `/Users/pk/Documents/obs-roswell/Example PRD (short).md`, a shortened pushed PRD showing the section rules, AC labels and Notes, and concise Dev Notes. Its AC table is trimmed; a real ticket lists every criterion.
 
 ## Section structure (in this order)
 
@@ -183,7 +181,7 @@ EDGE_ID-short-text-description.md
 
 - `EDGE_ID`: the Edge ticket ID (e.g. `HYPER-166`).
 - `short-text-description`: a few kebab-case words summarizing the ticket.
-- Example: `HYPER-166-schema-review-and-merge.md`
+- Example: `HYPER-123-short-description.md`
 
 ## Pushing to the Edge
 - **Always get the user's approval.** Approval for one push doesn't carry to later ones.
