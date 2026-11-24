@@ -87,32 +87,6 @@ Full technical detail (file paths, line numbers, code, root-cause analysis) live
 
 For Dev Notes and Implementation Notes at the right level, see `/Users/pk/Documents/obs-roswell/Example PRD (short).md`.
 
-## Dev Notes:
-
--  claude --resume 497dd857-8793-4464-9ee8-ba8fe1f81e0d
-
--  Account icon: a new icon in the theme's icon snippet, with an optional "!" badge. The badge colors are CSS variables, so a button restyle doesn't change them.
-
--  Swym: Swym only opens its wishlist from links to #swym-wishlist, so the header heart and the drawer "Wishlist" item are both links. The theme can't tell whether Swym's app embed is on, which is why "RS Enable Swym Wishlist" is a manual setting.
-
-## Implementation Notes:
-
--  Go Live documentation here: https://docs.google.com/document/d/...
-
--  Header section settings: "Show account icon on mobile" (on by default) and "Mobile wishlist" (Header, Drawer or Hidden; Header by default).
-
--  Theme settings → Wishlist: "RS Enable Swym Wishlist" (on by default) removes the theme's wishlist heart, drawer link and PDP wishlist slot when off, and hides Swym's own PDP button if the app embed is still on.
-
--  The drawer's "Account" menu link now goes to the same place as the header account icon.
-
--  Files, commits and dev test results: [vault notes](https://github.com/roswell-studios/roswell-vaults/blob/main/vaults/<merchant>/04-engineering/planning/<ticket-slug>/README.md).
-```
-
-What makes it work:
-- **Dev Notes:** the resume line, then only the non-obvious *why*s, in plain words.
-- **Implementation Notes:** what changed from the merchant's and QA's point of view: settings with their exact labels and defaults, behavior changes, and a link to the go-live doc if there is one.
-- **Last bullet:** everything else (files, commits, test results) is one link to the vault notes.
-
 ## Screenshots
 
 Insert screenshots where they help readers understand the context, in the section where they're relevant. Other evidence screenshots stay in the vault (see What goes in the PRD vs. the vault).
