@@ -85,9 +85,8 @@ Full technical detail (file paths, line numbers, code, root-cause analysis) live
 - **No hours or estimates** in Dev Notes or anywhere in the PRD. Estimates live on the Edge estimate fields.
 - **Code from the original ticket stays.** If the original description had a code snippet that's still relevant, keep it in Dev Notes as a code block under the bullet it belongs to.
 
-### Example: Dev Notes and Implementation Notes at the right level
+For Dev Notes and Implementation Notes at the right level, see `/Users/pk/Documents/obs-roswell/Example PRD (short).md`.
 
-```markdown
 ## Dev Notes:
 
 -  claude --resume 497dd857-8793-4464-9ee8-ba8fe1f81e0d
