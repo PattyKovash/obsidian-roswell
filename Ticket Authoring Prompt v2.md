@@ -6,13 +6,13 @@ You are writing a development ticket (PRD) for a Roswell Studios Shopify project
 
 **Don't put everything in the PRD. Link to the vault.** File-level detail, code, validation results, evidence screenshots, decisions and their reasoning go in the merchant vault (`roswell-vaults/vaults/<merchant>/`), wherever the agent documented them. The PRD references each one by its roswell-vaults GitHub URL (see Vault below) instead of repeating it. (The PRD's own current-vs-expected screenshots are the exception; see Screenshots.)
 
-**PRD vs. vault test, for every note in every section:** put a note in the PRD only if people without quick access to the vault (QA, MPs) need it to test the work or to understand its scope and constraints. If it doesn't pass, it goes in the vault. When a pointer helps, a one-line note with a link to the vault "for full details" is enough.
+**What goes in the PRD vs. the vault.** The PRD is for whoever opens the ticket to understand it and act on it (testing, scoping, reviewing, implementing), often without opening anything else. The vault is where the more detailed record is kept.
 
-**How technical each section can be:**
-- **All sections except Dev Notes and Implementation Notes:** human-readable for anyone on the team, with technical detail kept to a minimum.
-- **Dev Notes and Implementation Notes:** if it's already in the vault, the PRD usually only needs the link. Linking avoids duplicated information. But not every reader will go through markdown in a GitHub repo, so when something is useful to them, summarize it in plain language above the link. Using the vault's exact wording is fine when that's clearest.
+For each note, ask whether someone reading the ticket needs it to understand or act on the work. If they don't, it lives in the vault, and the PRD links to it at most. If they need the gist of something whose full detail belongs in the vault, write a version for that reader in the PRD and link to the vault for the rest. That's a rewrite for a different audience, not a copy: concise, easy to read, and only what that reader needs. AI drafts tend to over-explain here; when in doubt, cut it and let the link carry the detail.
 
-**Single source of truth.** Every fact appears in exactly one place. NEVER duplicate the same statement across two sections, or across two columns of the acceptance criteria table. If the vault already documents it, link instead of repeating.
+The reader depends on the section. Most sections are for anyone reading the ticket, so they stay human-readable with technical detail kept to a minimum. Dev Notes is for whoever implements the work, including during an estimate or review: technical notes that would help them belong there, written for that reader, with the full detail in the vault.
+
+Avoid duplication by default: don't paste the same content into both places, don't restate the same point across PRD sections, and don't repeat an AC item in its Notes column. Every repeat makes the ticket harder to read and gives one more place to keep up to date.
 
 **Scope: one ticket in, one ticket out.** This prompt turns one existing Edge ticket into one refined PRD. It does not split a larger initiative into multiple tickets. That's a separate exercise, not this prompt's job.
 
@@ -54,7 +54,7 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 
 1. **Background:** Why we're doing this, in plain terms. Who raised it, what problem it solves. States the problem and why it was raised, nothing further.
    - Quote any external response in the original ticket (a vendor's or app's diagnosis, a support reply) word for word, attributed. If our assessment differs, add one sub-bullet pointing to where it lives (e.g. "In our review, their suggested fix doesn't address the issue consistently. See Dev Notes (Okendo).").
-   - Reproduction details and root cause aren't Background. Apply the PRD vs. vault test: usually a sentence or two in Dev Notes, with the full detail in the vault.
+   - Reproduction details and root cause aren't Background. Usually a short version goes in Dev Notes, with the full detail in the vault (see What goes in the PRD vs. the vault).
 2. **Necessary Info (Design/Documentation):** Context that helps devs and others during scoping and implementation: source, why, where it shows up, new settings, tool/doc links, whether new design is needed. **Not technical.** No file-level detail.
    - Short, human-readable and easy to read. No superfluous information, minimal technical detail. Technical detail goes in Dev Notes, and only when it's necessary or helpful for implementing the ticket.
    - When the investigation finds behaviors beyond the original report, say so explicitly ("The original report flagged X. Investigating it found related behaviors with the same cause, which this ticket also addresses:") and list them briefly.
@@ -64,7 +64,7 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
    - Leave out what testers won't run into (e.g. theme-editor-only behavior) or don't need (e.g. how the preview bar works).
    - A "Normal, not a bug" note only when it's verified on the build QA will test.
    - Phrase notes so a backup or fallback can't hide a failure (e.g. "Enter always lands on results because of a backup, so check the dropdown separately"), and so expected behavior isn't reported as a bug.
-6. **Implementation Notes:** *(post-execution; `TBD` until then)* What changed, as short readable bullets in plain language: the approach, new settings (exact labels and defaults), behavior changes, go-live doc link, and key decisions with a link to their vault entry. Apply the PRD vs. vault test: include what QA and MPs need; the rest is a link to the vault. End with one link to the vault notes for files, commits and test results. See the example under Dev Notes.
+6. **Implementation Notes:** *(post-execution; `TBD` until then)* What changed, as short readable bullets in plain language: the approach, new settings (exact labels and defaults), behavior changes, go-live doc link, and key decisions with a link to their vault entry. Write it for whoever reads the ticket; the rest lives in the vault (see What goes in the PRD vs. the vault). End with one link to the vault notes for files, commits and test results. See the example under Dev Notes.
 7. **Dev Notes:** See dedicated rules below.
 8. **Changes Made to Original Code Updates by `<Author>`:** *(only when the ticket reviews/merges someone else's code)* Short, easy-to-read bullets for the original author: what we changed from their code and why, with the file in parentheses. One line of intro ("Everything else was merged as they wrote it."). Only list actual changes to *their* code; a bug we introduced and fixed ourselves doesn't belong here.
 9. **Bugs from QA:** `TBD` placeholder.
@@ -72,17 +72,17 @@ Don't draft the whole ticket in one shot and hand it over. Work through it inter
 
 ## Dev Notes
 
-Short. Not a play-by-play. Apply the PRD vs. vault test to every bullet: keep it only if QA or MPs need it to test or to understand scope and constraints, or if it's necessary for implementing the ticket. Everything else lives in the vault.
+Short. Not a play-by-play. Written for whoever implements the work, including during an estimate or review: technical notes that help them are fine here, and everything else lives in the vault (see What goes in the PRD vs. the vault).
 
 - **First bullet, always:** the Claude Code session to resume, as `claude --resume SESSION_ID` (the session ID is the current transcript's filename under `~/.claude/projects/<project>/`).
 - **Root cause:** one or two plain sentences.
 - **Approach:** when there were real alternatives, what was tried, why it wasn't used, and why this one was chosen (e.g. "kept the change away from PLPs right before BFCM"). Known risks of the chosen approach go as a sub-bullet (e.g. it relies on an undocumented third-party function, and what happens if that changes).
 - **Open:** items still outstanding (e.g. post-deploy checks).
-- Last bullet: "For full dev notes (…), see the vault notes" with the link. Something that fails the PRD vs. vault test but is worth pointing to gets at most a one-line note here, covered by that link.
+- Last bullet: "For full dev notes (…), see the vault notes" with the link.
 
 - Short plain-language notes on anything non-obvious a developer should know, one topic per bullet, led by a short label (`Swym:`). Say *why* something works the way it does, not how the code is written.
 
-Anything more technical (file paths, line numbers, code, root-cause analysis) goes in the vault notes and is referenced by link. If something there is important for others to see, distill it into a sentence or two of plain language above the link. When there are no vault notes yet (pre-execution ticket), a short "File paths and code reflect a review at authoring time; confirm before implementing" note plus the key file paths is fine.
+Full technical detail (file paths, line numbers, code, root-cause analysis) lives in the vault notes and is referenced by link. Dev Notes carries only what the implementer needs from it, kept concise. When there are no vault notes yet (pre-execution ticket), a short "File paths and code reflect a review at authoring time; confirm before implementing" note plus the key file paths is fine.
 
 - **No hours or estimates** in Dev Notes or anywhere in the PRD. Estimates live on the Edge estimate fields.
 - **Code from the original ticket stays.** If the original description had a code snippet that's still relevant, keep it in Dev Notes as a code block under the bullet it belongs to.
@@ -118,7 +118,7 @@ What makes it work:
 
 ## Screenshots
 
-Insert screenshots where they help readers understand the context, in the section where they're relevant. Apply the PRD vs. vault test; other evidence screenshots stay in the vault.
+Insert screenshots where they help readers understand the context, in the section where they're relevant. Other evidence screenshots stay in the vault (see What goes in the PRD vs. the vault).
 - **For the Edge:** upload each one as an attachment to the ticket (an Edge write: ask first) and swap the returned URLs into the PRD before pushing.
 
 ## Vault (technical documentation)
@@ -140,6 +140,7 @@ Rules:
 - **Item** = the full, self-contained, human-readable acceptance statement. Must stand alone and be unambiguous. Do NOT split one criterion across Item and Notes.
   - Lead with a short label naming the exact action under test (e.g. **Enter (desktop):**, **Dropdown (before pressing Enter):**). One behavior per item; don't mix two actions in one criterion.
 - **Notes** = short, helpful context for that item, such as a relevant URL or a screenshot. Keep it concise. When there's a lot to say, put it in Testing Notes, Implementation Notes or wherever it fits best, and reference that section here (e.g. "See Testing Notes"). QA also adds their screenshots, links and observations here.
+- **Removing an item from the table** (at the user's request) changes what the ticket formally accepts. It doesn't mean dev stops checking that scenario: keep testing it during dev and record the results in the vault notes, unless the user says to stop.
 - **Dev** = ✅ once the item is verified during dev (not before). After any code change, re-verify before keeping a ✅; results from an earlier version don't count. **QA** = leave empty for QA.
 - Coverage: happy path and scope boundary are required; edge cases only where they trace back to something the user confirmed matters.
 
